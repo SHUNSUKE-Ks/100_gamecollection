@@ -1,0 +1,56 @@
+{
+    "se": [
+        {
+            "id": "se_decide",
+            "title": "決定",
+            "filename": "se_decide.mp3",
+            "description": "システム決定音",
+            "tags": [
+                "SYSTEM",
+                "UI"
+            ],
+            "category": "system",
+            "duration": 0.5,
+            "artist": "System"
+        },
+        {
+            "id": "se_cancel",
+            "title": "キャンセル",
+            "filename": "se_cancel.mp3",
+            "description": "システムキャンセル音",
+            "tags": [
+                "SYSTEM",
+                "UI"
+            ],
+            "category": "system",
+            "duration": 0.5,
+            "artist": "System"
+        },
+        {
+            "id": "se_card_flip",
+            "title": "カードめくり",
+            "filename": "se_card_flip.mp3",
+            "description": "カードをめくる音",
+            "tags": [
+                "CARD",
+                "UI"
+            ],
+            "category": "card",
+            "duration": 0.8,
+            "artist": "System"
+        },
+        {
+            "id": "se_battle_attack",
+            "title": "攻撃ヒット",
+            "filename": "se_attack.mp3",
+            "description": "物理攻撃ヒット音",
+            "tags": [
+                "BATTLE",
+                "HIT"
+            ],
+            "category": "battle",
+            "duration": 0.6,
+            "artist": "Battle"
+        }
+    ]
+}

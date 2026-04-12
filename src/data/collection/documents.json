@@ -1,0 +1,701 @@
+{
+  "version": "1.0.0",
+
+  "writingRules": [
+    {
+      "id": "RULE_TONE_01",
+      "category": "tone",
+      "title": "語尾・文体統一",
+      "body": "キャラクターごとに設定された語尾・口調を必ず守ること。設定外の言葉遣いは修正依頼対象となる。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_TONE_02",
+      "category": "tone",
+      "title": "地の文は三人称視点",
+      "body": "地の文（speakerが空のline）は三人称・過去形で統一する。一人称・現在形は禁止。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_FORMAT_01",
+      "category": "format",
+      "title": "storyID フォーマット",
+      "body": "storyIDは `{種別}_{話数2桁}_{章2桁}_{コマ3桁}` 形式。例: M_01_02_001（メイン第1話第2章1コマ目）、Q_03_01_005（クエスト3話第1章5コマ目）。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_FORMAT_02",
+      "category": "format",
+      "title": "1セリフの文字数上限",
+      "body": "textフィールドは全角200文字以内。UI上で表示が崩れるため厳守。改行が必要な場合は別のstoryオブジェクトに分割すること。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_FORMAT_03",
+      "category": "format",
+      "title": "選択肢テキストの文字数",
+      "body": "CHOICEイベントの選択肢テキスト（choices[].text）は全角20文字以内。ボタンUIに収まらないため厳守。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_CONTENT_01",
+      "category": "content",
+      "title": "NSFW・暴力表現禁止",
+      "body": "過激な性的表現・グロテスク描写は禁止。暴力はファンタジー文脈の間接的表現に留めること。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_CONTENT_02",
+      "category": "content",
+      "title": "固有名詞の表記統一",
+      "body": "characters.json / npcs.json / backgrounds.json に記載された固有名詞・地名はそのまま使用すること。表記揺れは修正依頼対象。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_CONTENT_03",
+      "category": "content",
+      "title": "フラグ・変数の整合性",
+      "body": "flagsフィールドに新しいキーを追加する場合は、発注者へ事前確認が必要。既存フラグの書き換えのみ可。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_TECHNICAL_01",
+      "category": "technical",
+      "title": "JSON構文の厳密性",
+      "body": "納品ファイルはJSONバリデーターで確認済みのものを提出すること。構文エラーは受け取り不可。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_TECHNICAL_02",
+      "category": "technical",
+      "title": "event.typeの値制限",
+      "body": "event.typeに設定できる値は 'CHOICE' | 'BATTLE' | 'FLAG' | 'ITEM' | 'JUMP' | 'NONE' のみ。それ以外はゲームがクラッシュする。",
+      "isRequired": true
+    },
+    {
+      "id": "RULE_TECHNICAL_03",
+      "category": "technical",
+      "title": "BGMタグの参照制約",
+      "body": "tags配列にBGM指定を含める場合はbgm.jsonに存在するidのみ使用可能。存在しないIDは無音になる。",
+      "isRequired": false
+    }
+  ],
+
+  "documents": [
+    {
+      "id": "DOC_001",
+      "type": "order",
+      "category": "scenario",
+      "role": "scenario_main",
+      "title": "【発注書】メインストーリー第1話 第2章「森の遺跡」",
+      "status": "issued",
+      "priority": "high",
+      "assignedTo": "",
+      "createdAt": "2026-04-11T00:00:00Z",
+      "dueDate": "2026-04-18T23:59:59Z",
+      "updatedAt": "2026-04-11T00:00:00Z",
+      "tags": ["メイン", "第1話", "第2章", "ダンジョン", "初稿"],
+
+      "linkedIds": {
+        "episodeId": "ep_01",
+        "chapterId": "ch_02",
+        "characterIds": ["char_remi", "char_leo", "char_mina"]
+      },
+
+      "brief": {
+        "overview": "メインストーリー第1話・第2章「森の遺跡」の本文シナリオを執筆する。主人公パーティが初めての遺跡探索に挑む、緊張感と発見が交錯する場面。",
+        "background": "第1章「始まりの塔」でギルドへの登録を終えた主人公・レミたちが、長老から「森の遺跡に向かった先行調査隊が連絡を絶った」という依頼を受け遺跡へ向かう。第2章はその探索と、遺跡の奥でスライムの群れと対峙するバトルシーンまでを描く。",
+        "requirements": [
+          "シーン数: 3シーン（遺跡入口・探索中・ボス前）",
+          "各シーンのstory配列は15〜25エントリが目安",
+          "第2シーンに選択肢イベント（CHOICE）を1回挿入",
+          "第3シーンの末尾でBATTLEイベントに接続",
+          "レミの感情変化（期待→緊張→興奮）を地の文で表現",
+          "遺跡の異様な静けさ・古代文明の痕跡を描写する"
+        ],
+        "constraints": [
+          "レミは方言を使わない（標準語キャラ）",
+          "レオは寡黙なので長セリフは1回まで",
+          "ミナは魔法用語を多用するが説明しすぎない",
+          "遺跡の謎の全容はここでは明かさない（伏線として残す）",
+          "バトル演出シナリオ本文は含めない（別発注: DOC_003）"
+        ],
+        "references": [
+          "src/data/novel/scenario.json — 第1章の文体・テンポを参照",
+          "src/data/collection/characters.json — レミ・レオ・ミナのprofileTag",
+          "src/data/collection/backgrounds.json — FOREST_RUINS の描写情報",
+          "src/data/collection/npcs.json — 長老キャラクターの口調"
+        ],
+        "toneKeywords": ["神秘的", "冒険", "緊張感", "仲間との連帯", "古代ロマン"],
+        "notes": "選択肢の分岐は合流型（どちらを選んでも次のシーンへ進む）で設計する。選択肢による恒久的なフラグ変化は不要。"
+      },
+
+      "deliverySchema": {
+        "format": "json",
+        "outputType": "full_chapter",
+        "description": "Story[]配列を3シーン分。各シーンはscenario.jsonの既存フォーマットに準拠する。",
+        "requiredFields": [
+          {
+            "key": "storyID",
+            "type": "string",
+            "label": "ストーリーID",
+            "description": "M_{話数2桁}_{章2桁}_{コマ3桁} 形式。第1話第2章は M_01_02_XXX",
+            "required": true,
+            "constraints": {
+              "pattern": "^M_\\d{2}_\\d{2}_\\d{3}$"
+            },
+            "example": "M_01_02_001"
+          },
+          {
+            "key": "speaker",
+            "type": "string",
+            "label": "話者名",
+            "description": "キャラクター名。地の文は空文字列 \"\"",
+            "required": true,
+            "constraints": {
+              "maxLength": 20
+            },
+            "example": "レミ"
+          },
+          {
+            "key": "text",
+            "type": "string",
+            "label": "本文テキスト",
+            "description": "セリフまたは地の文。全角200文字以内",
+            "required": true,
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "example": "…なんか嫌な予感がする。静かすぎるよ、この場所。"
+          },
+          {
+            "key": "tags",
+            "type": "array",
+            "label": "タグ配列",
+            "description": "BGM制御・立ち絵切替等。使用可能タグはbgm.jsonおよびcharacters.jsonのportrait設定を参照",
+            "required": true,
+            "constraints": {
+              "minItems": 0,
+              "maxItems": 5
+            },
+            "example": ["BGM_DUNGEON_01", "REMI_NERVOUS"]
+          },
+          {
+            "key": "event",
+            "type": "object",
+            "label": "イベント定義",
+            "description": "イベントがない場合は { type: 'NONE' }",
+            "required": true,
+            "example": { "type": "NONE" }
+          },
+          {
+            "key": "flags",
+            "type": "object",
+            "label": "フラグ操作",
+            "description": "このコマで設定するフラグ。変更がなければ空オブジェクト {}",
+            "required": true,
+            "example": {}
+          }
+        ],
+        "optionalFields": [
+          {
+            "key": "effects",
+            "type": "array",
+            "label": "エフェクト指示",
+            "description": "画面演出の指示配列。screen_shake, fade_in, fade_out など",
+            "required": false,
+            "example": ["fade_in"]
+          },
+          {
+            "key": "tips",
+            "type": "string",
+            "label": "Tips表示テキスト",
+            "description": "ゲームTipsとして表示するテキスト（省略可）",
+            "required": false,
+            "example": "遺跡の壁に刻まれた文字は古代魔法語です"
+          },
+          {
+            "key": "note",
+            "type": "string",
+            "label": "開発者メモ",
+            "description": "実装者向けコメント。ゲーム本編には表示されない",
+            "required": false,
+            "example": "ここで背景をFOREST_RUINSに切り替え"
+          }
+        ],
+        "validationRules": [
+          {
+            "id": "VAL_01",
+            "name": "storyID連番チェック",
+            "description": "同一シーン内のstoryIDは連番で欠番があってはならない",
+            "severity": "error",
+            "errorMessage": "storyIDに欠番または重複があります"
+          },
+          {
+            "id": "VAL_02",
+            "name": "CHOICEイベント構造チェック",
+            "description": "event.type === 'CHOICE' の場合、event.payload.choices が配列で2〜4要素必須",
+            "severity": "error",
+            "errorMessage": "CHOICEイベントにchoices配列（2〜4要素）が必要です"
+          },
+          {
+            "id": "VAL_03",
+            "name": "BATTLEイベント構造チェック",
+            "description": "event.type === 'BATTLE' の場合、event.payload.enemies が配列で1要素以上必須",
+            "severity": "error",
+            "errorMessage": "BATTLEイベントにenemies配列（1要素以上）が必要です"
+          },
+          {
+            "id": "VAL_04",
+            "name": "テキスト文字数チェック",
+            "description": "textフィールドが200文字を超えていないか",
+            "severity": "error",
+            "errorMessage": "textが200文字を超えています（全角換算）"
+          },
+          {
+            "id": "VAL_05",
+            "name": "選択肢テキスト文字数チェック",
+            "description": "choices[].textが20文字を超えていないか",
+            "severity": "error",
+            "errorMessage": "選択肢テキストが20文字を超えています"
+          }
+        ],
+        "exampleOutput": "[\n  {\n    \"storyID\": \"M_01_02_001\",\n    \"speaker\": \"\",\n    \"text\": \"鬱蒼とした森を抜けると、苔むした石造りの遺跡が姿を現した。\",\n    \"tags\": [\"BGM_DUNGEON_01\", \"BG_FOREST_RUINS\"],\n    \"event\": { \"type\": \"NONE\" },\n    \"flags\": {},\n    \"effects\": [\"fade_in\"],\n    \"note\": \"背景: FOREST_RUINS に切り替え\"\n  },\n  {\n    \"storyID\": \"M_01_02_002\",\n    \"speaker\": \"レミ\",\n    \"text\": \"…なんか嫌な予感がする。静かすぎるよ、この場所。\",\n    \"tags\": [\"REMI_NERVOUS\"],\n    \"event\": { \"type\": \"NONE\" },\n    \"flags\": {}\n  },\n  {\n    \"storyID\": \"M_01_02_003\",\n    \"speaker\": \"レオ\",\n    \"text\": \"…進むぞ。\",\n    \"tags\": [\"LEO_SERIOUS\"],\n    \"event\": { \"type\": \"NONE\" },\n    \"flags\": {}\n  }\n]"
+      }
+    },
+
+    {
+      "id": "DOC_002",
+      "type": "order",
+      "category": "character",
+      "role": "designer_char",
+      "title": "【発注書】サブキャラクター設定資料「謎の錬金術師ゼン」",
+      "status": "draft",
+      "priority": "medium",
+      "assignedTo": "",
+      "createdAt": "2026-04-11T00:00:00Z",
+      "dueDate": "2026-04-25T23:59:59Z",
+      "updatedAt": "2026-04-11T00:00:00Z",
+      "tags": ["キャラクター設定", "サブキャラ", "新規"],
+
+      "brief": {
+        "overview": "第2話から登場するサブキャラクター「謎の錬金術師ゼン」の詳細設定資料を作成する。",
+        "background": "第2話でレミたちが立ち寄る商業都市に住む錬金術師。胡散臭いが情報通。後に重要な役割を担う伏線キャラ。",
+        "requirements": [
+          "年齢設定: 40代前後（正確な年齢は不明にする）",
+          "口調: 敬語ベースだが時々砕ける、芝居がかった話し方",
+          "defaultTagsに立ち絵バリエーション3種類（通常・笑顔・怪訝）を含める",
+          "得意分野: 薬・毒・変異魔法",
+          "過去に王宮に仕えていたという設定（理由は謎）",
+          "セリフサンプルを10個以上"
+        ],
+        "constraints": [
+          "善悪どちらとも取れる曖昧なキャラクター性を保つ",
+          "主人公と仲良くなりすぎないキャラ設計",
+          "魔法の設定はworld_lore文書と矛盾しないこと（DOC_005参照）"
+        ],
+        "references": [
+          "src/data/collection/characters.json — 既存キャラの設定フォーマット参照",
+          "src/data/collection/npcs.json — NPCの設定粒度参照"
+        ],
+        "toneKeywords": ["ミステリアス", "皮肉屋", "老獪", "知的"],
+        "notes": "イラスト発注（DOC_006）と連携するため、外見描写を詳しく記載すること。"
+      },
+
+      "deliverySchema": {
+        "format": "json",
+        "outputType": "character_data",
+        "description": "characters.jsonに追記可能なCharacterオブジェクト1件",
+        "requiredFields": [
+          {
+            "key": "id",
+            "type": "string",
+            "label": "キャラクターID",
+            "description": "char_{英字スネークケース} 形式",
+            "required": true,
+            "constraints": {
+              "pattern": "^char_[a-z_]+$"
+            },
+            "example": "char_zen"
+          },
+          {
+            "key": "name",
+            "type": "string",
+            "label": "名前",
+            "description": "表示名（全角10文字以内）",
+            "required": true,
+            "constraints": { "maxLength": 10 },
+            "example": "ゼン"
+          },
+          {
+            "key": "description",
+            "type": "string",
+            "label": "キャラクター説明",
+            "description": "図鑑に表示される説明文（200文字以内）",
+            "required": true,
+            "constraints": { "maxLength": 200 },
+            "example": "都市に住む謎多き錬金術師。知識は確かだが…"
+          },
+          {
+            "key": "defaultTags",
+            "type": "array",
+            "label": "デフォルトタグ",
+            "description": "立ち絵・外見定義タグ。必ず _NORMAL を含める",
+            "required": true,
+            "constraints": { "minItems": 1 },
+            "example": ["ZEN_NORMAL", "ZEN_SMILE", "ZEN_SUSPICIOUS"]
+          },
+          {
+            "key": "portraitTag",
+            "type": "string",
+            "label": "デフォルト立ち絵タグ",
+            "description": "通常立ち絵のタグ（defaultTagsの先頭と一致させる）",
+            "required": true,
+            "example": "ZEN_NORMAL"
+          },
+          {
+            "key": "promptTemplate",
+            "type": "string",
+            "label": "画像生成プロンプト（英語）",
+            "description": "Gemini API画像生成用の外見記述。英語で記述",
+            "required": true,
+            "constraints": { "maxLength": 500 },
+            "example": "A mysterious middle-aged alchemist man, gray streaked hair, sharp eyes, wearing a dark coat with alchemical symbols..."
+          },
+          {
+            "key": "status",
+            "type": "object",
+            "label": "基本ステータス",
+            "description": "戦闘参加しない場合でも基準値として記載",
+            "required": true,
+            "example": { "hp": 120, "mp": 80, "str": 30, "dex": 40, "int": 90 }
+          },
+          {
+            "key": "dialogues",
+            "type": "array",
+            "label": "セリフサンプル",
+            "description": "口調確認用セリフ。10個以上",
+            "required": true,
+            "constraints": { "minItems": 10 },
+            "example": [
+              { "situation": "初対面", "text": "ほほう、また珍しい顔が来ましたねえ。何が御入り用で？" },
+              { "situation": "依頼を断るとき", "text": "ご期待に添えず…残念ですが。" }
+            ]
+          }
+        ],
+        "optionalFields": [
+          {
+            "key": "skills",
+            "type": "array",
+            "label": "スキル参照ID",
+            "description": "skills.jsonに定義済みのskillId配列",
+            "required": false,
+            "example": ["skill_alchemy_bomb"]
+          },
+          {
+            "key": "backstory",
+            "type": "string",
+            "label": "バックストーリー",
+            "description": "開発者向け詳細設定。ゲーム本編には出ない",
+            "required": false,
+            "constraints": { "maxLength": 1000 }
+          }
+        ],
+        "validationRules": [
+          {
+            "id": "VAL_CHAR_01",
+            "name": "idユニーク確認",
+            "description": "既存characters.jsonのidと重複していないこと",
+            "severity": "error",
+            "errorMessage": "IDが既存キャラクターと重複しています"
+          },
+          {
+            "id": "VAL_CHAR_02",
+            "name": "portraitTag整合性",
+            "description": "portraitTagがdefaultTagsに含まれていること",
+            "severity": "error",
+            "errorMessage": "portraitTagがdefaultTagsに存在しません"
+          },
+          {
+            "id": "VAL_CHAR_03",
+            "name": "セリフ件数",
+            "description": "dialoguesが10件以上あること",
+            "severity": "error",
+            "errorMessage": "dialoguesが10件未満です"
+          }
+        ],
+        "exampleOutput": "{\n  \"id\": \"char_zen\",\n  \"name\": \"ゼン\",\n  \"description\": \"商業都市ルクスに潜む謎の錬金術師。知識は確かだが、その真意は読めない。\",\n  \"defaultTags\": [\"ZEN_NORMAL\", \"ZEN_SMILE\", \"ZEN_SUSPICIOUS\"],\n  \"portraitTag\": \"ZEN_NORMAL\",\n  \"promptTemplate\": \"A mysterious middle-aged alchemist man...\",\n  \"status\": { \"hp\": 120, \"mp\": 80, \"str\": 30, \"dex\": 40, \"int\": 90 },\n  \"skills\": [],\n  \"dialogues\": [\n    { \"situation\": \"初対面\", \"text\": \"ほほう、また珍しい顔が来ましたねえ。\" }\n  ]\n}"
+      }
+    },
+
+    {
+      "id": "DOC_003",
+      "type": "order",
+      "category": "battle",
+      "role": "scenario_battle",
+      "title": "【発注書】バトル演出シナリオ「スライム群との遭遇戦」",
+      "status": "issued",
+      "priority": "high",
+      "assignedTo": "",
+      "createdAt": "2026-04-11T00:00:00Z",
+      "dueDate": "2026-04-20T23:59:59Z",
+      "updatedAt": "2026-04-11T00:00:00Z",
+      "tags": ["バトル", "第1話", "スライム", "チュートリアル戦闘"],
+
+      "linkedIds": {
+        "episodeId": "ep_01",
+        "chapterId": "ch_02",
+        "characterIds": ["char_remi", "char_leo", "char_mina"]
+      },
+
+      "brief": {
+        "overview": "遺跡探索中に突発するスライム群との戦闘前後のセリフシナリオ。戦闘開始前（プレ）・勝利後（ポスト）の2段構成。",
+        "background": "DOC_001のBATTLEイベントに接続するシナリオ。初めてのダンジョン戦闘なので、チュートリアル的な説明台詞も自然な形で含める。",
+        "requirements": [
+          "プレバトルシナリオ: 5〜8エントリ（緊張感を短く）",
+          "ポストバトルシナリオ（勝利）: 8〜12エントリ（達成感・仲間への感謝）",
+          "ミナが魔法の簡単な説明を1行でする（チュートリアル）",
+          "レミの初戦闘の興奮・恐怖を描写"
+        ],
+        "constraints": [
+          "敗北後シナリオは今回スコープ外",
+          "スライムの台詞は不要（行動描写のみ）",
+          "チュートリアル説明は過度に詳しくしない（1〜2行で完結）"
+        ],
+        "references": [
+          "src/data/collection/enemies.json — スライムのステータス・外見",
+          "src/data/novel/quest_001.json — バトルシナリオの既存サンプル"
+        ],
+        "toneKeywords": ["緊張", "スピード感", "チームワーク", "達成感"],
+        "notes": "バトル終了判定はゲームエンジン側で処理するため、シナリオ内にバトル終了フラグは不要。"
+      },
+
+      "deliverySchema": {
+        "format": "json",
+        "outputType": "story_lines",
+        "description": "プレバトル配列・ポストバトル配列をそれぞれ別キーで納品",
+        "requiredFields": [
+          {
+            "key": "pre_battle",
+            "type": "array",
+            "label": "バトル前シナリオ",
+            "description": "Story[]。末尾のeventは { type: 'BATTLE', payload: { enemies: ['enemy_slime'] } }",
+            "required": true,
+            "constraints": { "minItems": 5, "maxItems": 8 }
+          },
+          {
+            "key": "post_battle_win",
+            "type": "array",
+            "label": "バトル後（勝利）シナリオ",
+            "description": "Story[]。先頭に勝利演出タグを付与",
+            "required": true,
+            "constraints": { "minItems": 8, "maxItems": 12 }
+          }
+        ],
+        "optionalFields": [],
+        "validationRules": [
+          {
+            "id": "VAL_BATTLE_01",
+            "name": "BATTLEイベント末尾配置",
+            "description": "pre_battle配列の最後のエントリのevent.typeがBATTLEであること",
+            "severity": "error",
+            "errorMessage": "pre_battleの最後のエントリにBATTLEイベントを配置してください"
+          },
+          {
+            "id": "VAL_BATTLE_02",
+            "name": "enemies IDチェック",
+            "description": "enemies配列の値がenemies.jsonに存在するIDであること",
+            "severity": "error",
+            "errorMessage": "enemies配列に存在しないenemy IDが含まれています"
+          }
+        ],
+        "exampleOutput": "{\n  \"pre_battle\": [\n    {\n      \"storyID\": \"M_01_02_020\",\n      \"speaker\": \"\",\n      \"text\": \"その時、暗がりから複数の気配が這い寄ってきた。\",\n      \"tags\": [\"BGM_BATTLE_01\"],\n      \"event\": { \"type\": \"NONE\" },\n      \"flags\": {}\n    },\n    {\n      \"storyID\": \"M_01_02_021\",\n      \"speaker\": \"レミ\",\n      \"text\": \"ス、スライム！？しかも群れ…！\",\n      \"tags\": [\"REMI_SURPRISED\"],\n      \"event\": { \"type\": \"NONE\" },\n      \"flags\": {}\n    },\n    {\n      \"storyID\": \"M_01_02_022\",\n      \"speaker\": \"ミナ\",\n      \"text\": \"スキルを使って！MPを消費するけど強力よ。\",\n      \"tags\": [\"MINA_NORMAL\"],\n      \"event\": { \"type\": \"BATTLE\", \"payload\": { \"enemies\": [\"enemy_slime\", \"enemy_slime\"] } },\n      \"flags\": {}\n    }\n  ],\n  \"post_battle_win\": []\n}"
+      }
+    },
+
+    {
+      "id": "DOC_004",
+      "type": "schema",
+      "category": "general",
+      "role": "general",
+      "title": "【スキーマ定義書】Story型 完全仕様",
+      "status": "approved",
+      "priority": "low",
+      "assignedTo": "",
+      "createdAt": "2026-04-11T00:00:00Z",
+      "updatedAt": "2026-04-11T00:00:00Z",
+      "tags": ["スキーマ", "リファレンス", "Story型"],
+
+      "brief": {
+        "overview": "NovelScreenで使用されるStory型の完全なフィールド仕様書。シナリオライター向けリファレンス。",
+        "background": "src/core/types/scenario.ts に定義されたStory型の全フィールドを日本語で解説した資料。",
+        "requirements": ["全フィールドの型・制約・例を網羅すること"],
+        "constraints": [],
+        "references": ["src/core/types/scenario.ts"],
+        "toneKeywords": [],
+        "notes": "このドキュメントはschema定義書のため、briefの内容は読み飛ばして deliverySchema.requiredFields を参照のこと。"
+      },
+
+      "deliverySchema": {
+        "format": "json",
+        "outputType": "story_lines",
+        "description": "Story型全フィールドの完全仕様",
+        "requiredFields": [
+          {
+            "key": "storyID",
+            "type": "string",
+            "label": "ストーリーID",
+            "description": "一意の識別子。{種別}_{話数2桁}_{章2桁}_{コマ3桁}。種別: M=メイン, Q=クエスト, E=イベント",
+            "required": true,
+            "constraints": { "pattern": "^[MQE]_\\d{2}_\\d{2}_\\d{3}$" },
+            "example": "M_01_02_001"
+          },
+          {
+            "key": "speaker",
+            "type": "string",
+            "label": "話者",
+            "description": "地の文は空文字列。キャラ名はcharacters.json/npcs.jsonのnameフィールドと完全一致させること",
+            "required": true,
+            "example": "レミ"
+          },
+          {
+            "key": "text",
+            "type": "string",
+            "label": "本文",
+            "description": "表示テキスト。全角200文字以内",
+            "required": true,
+            "constraints": { "maxLength": 200, "minLength": 1 },
+            "example": "この遺跡…なんか変な気がする。"
+          },
+          {
+            "key": "tags",
+            "type": "array",
+            "label": "タグ",
+            "description": "BGM/SE/立ち絵/背景などを制御するタグ文字列配列。空配列[]可",
+            "required": true,
+            "example": ["BGM_DUNGEON_01", "REMI_NERVOUS", "BG_FOREST_RUINS"]
+          },
+          {
+            "key": "event",
+            "type": "object",
+            "label": "イベント",
+            "description": "NONE/CHOICE/BATTLE/FLAG/ITEM/JUMPのいずれかを指定",
+            "required": true,
+            "constraints": {
+              "enum": ["NONE", "CHOICE", "BATTLE", "FLAG", "ITEM", "JUMP"]
+            },
+            "example": {
+              "NONE例": { "type": "NONE" },
+              "CHOICE例": { "type": "CHOICE", "payload": { "choices": [{ "text": "進む", "nextStoryID": "M_01_02_010" }, { "text": "引き返す", "nextStoryID": "M_01_02_011" }] } },
+              "BATTLE例": { "type": "BATTLE", "payload": { "enemies": ["enemy_slime"] } },
+              "FLAG例": { "type": "FLAG", "payload": { "key": "visited_ruins", "value": true } },
+              "ITEM例": { "type": "ITEM", "payload": { "itemId": "item_herb", "count": 1 } },
+              "JUMP例": { "type": "JUMP", "payload": { "targetStoryID": "M_01_03_001" } }
+            }
+          },
+          {
+            "key": "flags",
+            "type": "object",
+            "label": "フラグ操作",
+            "description": "このコマ処理後に設定するフラグ。{ フラグ名: 値 }。変更なしは {}",
+            "required": true,
+            "example": { "entered_ruins": true }
+          }
+        ],
+        "optionalFields": [
+          {
+            "key": "effects",
+            "type": "array",
+            "label": "画面エフェクト",
+            "description": "演出指示文字列配列。使用可能: fade_in, fade_out, screen_shake, flash_white",
+            "required": false,
+            "constraints": { "enum": ["fade_in", "fade_out", "screen_shake", "flash_white"] },
+            "example": ["fade_in"]
+          },
+          {
+            "key": "tips",
+            "type": "string",
+            "label": "ゲームTips",
+            "description": "このコマで表示するTipsテキスト",
+            "required": false,
+            "example": "スキルはMPを使いますが、通常攻撃よりも強力です"
+          },
+          {
+            "key": "note",
+            "type": "string",
+            "label": "開発者メモ",
+            "description": "実装者向けコメント。本編未使用",
+            "required": false,
+            "example": "TODO: BGMフェードの調整"
+          }
+        ],
+        "validationRules": [],
+        "exampleOutput": "// Story型 完全サンプル（全フィールド使用例）\n[\n  {\n    \"storyID\": \"M_01_02_001\",\n    \"speaker\": \"\",\n    \"text\": \"鬱蒼とした森を抜けると、苔むした石造りの遺跡が現れた。\",\n    \"tags\": [\"BGM_DUNGEON_01\", \"BG_FOREST_RUINS\"],\n    \"event\": { \"type\": \"NONE\" },\n    \"flags\": {},\n    \"effects\": [\"fade_in\"],\n    \"note\": \"シーン1開始: 背景切替\"\n  },\n  {\n    \"storyID\": \"M_01_02_010\",\n    \"speaker\": \"レミ\",\n    \"text\": \"どうする？奥に進む？\",\n    \"tags\": [\"REMI_THINKING\"],\n    \"event\": {\n      \"type\": \"CHOICE\",\n      \"payload\": {\n        \"choices\": [\n          { \"text\": \"奥へ進む\", \"nextStoryID\": \"M_01_02_011\" },\n          { \"text\": \"様子をうかがう\", \"nextStoryID\": \"M_01_02_012\" }\n        ]\n      }\n    },\n    \"flags\": {}\n  }\n]"
+      }
+    },
+
+    {
+      "id": "DOC_005",
+      "type": "rule",
+      "category": "world",
+      "role": "scenario",
+      "title": "【ルール文書】世界観・魔法設定 共通ルール",
+      "status": "approved",
+      "priority": "low",
+      "assignedTo": "",
+      "createdAt": "2026-04-11T00:00:00Z",
+      "updatedAt": "2026-04-11T00:00:00Z",
+      "tags": ["世界観", "魔法", "共通設定", "必読"],
+
+      "brief": {
+        "overview": "本ゲームの世界観・魔法体系の共通設定。全シナリオライターが執筆前に必読とするルール文書。",
+        "background": "世界名は「テラノヴァ」。魔法は「理力（りりき）」と呼ばれ、自然界に流れる生命エネルギーを操る技術。ゲームタイトル「NanoNovel」とは関係なく、世界内ではこの概念は一般的。",
+        "requirements": [
+          "魔法描写は必ず「理力」「理術（りじゅつ）」という呼称を使用",
+          "魔法使い職は「術師（じゅつし）」「理術師」と呼ぶ",
+          "科学・テクノロジーは存在しない（中世ファンタジー世界）",
+          "神は複数存在するが、宗教描写は軽く留める"
+        ],
+        "constraints": [
+          "「魔法」「魔力」という単語は原則使用禁止（理力・理術に統一）",
+          "現代語・カタカナ語の過度な使用を避ける",
+          "既存シナリオで登場済みの設定と矛盾しないこと"
+        ],
+        "references": [
+          "src/data/novel/scenario.json — 既存シナリオの世界観描写",
+          "src/data/collection/backgrounds.json — 地名・地域設定"
+        ],
+        "toneKeywords": ["中世ファンタジー", "重厚", "神秘"],
+        "notes": "この文書はゲーム内には表示されない開発者・ライター向け資料。"
+      },
+
+      "deliverySchema": {
+        "format": "json",
+        "outputType": "world_lore",
+        "description": "世界観設定テキストのJSONオブジェクト（rule文書なので納品不要）",
+        "requiredFields": [],
+        "optionalFields": [],
+        "validationRules": [],
+        "exampleOutput": "// この文書はrule種別のため納品物なし"
+      }
+    }
+  ],
+
+  "statusOptions": ["draft", "issued", "in_progress", "delivered", "approved", "revision"],
+  "categoryOptions": ["scenario", "character", "dialogue", "event", "world", "battle", "general"],
+  "priorityOptions": ["low", "medium", "high", "urgent"],
+  "typeOptions": ["order", "rule", "schema", "template", "reference"],
+  "roleOptions": [
+    "scenario", "scenario_main", "scenario_sub", "scenario_battle",
+    "designer", "designer_char", "designer_bg", "designer_ui",
+    "sound", "sound_bgm", "sound_se", "sound_voice",
+    "general"
+  ],
+  "roleGroups": {
+    "scenario":  ["scenario", "scenario_main", "scenario_sub", "scenario_battle"],
+    "designer":  ["designer", "designer_char", "designer_bg", "designer_ui"],
+    "sound":     ["sound", "sound_bgm", "sound_se", "sound_voice"],
+    "general":   ["general"]
+  }
+}

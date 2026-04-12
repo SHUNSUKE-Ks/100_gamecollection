@@ -1,0 +1,60 @@
+[
+    {
+        "id": "goblin",
+        "name": "ゴブリン",
+        "description": "森に棲む小型の魔物。素早い動きで襲いかかる。",
+        "imageTag": "chara_enemy_goblin_1024x1024",
+        "promptTemplate": "small goblin monster, green skin, fantasy, anime style",
+        "status": {
+            "hp": 40,
+            "mp": 0,
+            "str": 8,
+            "dex": 12,
+            "int": 3
+        },
+        "skills": [
+            "scratch",
+            "bite"
+        ],
+        "drop": {
+            "items": [
+                "item_small_potion"
+            ],
+            "exp": 15,
+            "gold": 10
+        },
+        "ai": {
+            "pattern": "aggressive",
+            "thinkDelay": 0.8
+        }
+    },
+    {
+        "id": "slime",
+        "name": "スライム",
+        "description": "半透明のゼリー状の魔物。攻撃力は低いが意外としぶとい。",
+        "imageTag": "chara_enemy_slime_1024x1024",
+        "promptTemplate": "blue slime monster, cute, fantasy, anime style",
+        "status": {
+            "hp": 30,
+            "mp": 10,
+            "str": 5,
+            "dex": 6,
+            "int": 5
+        },
+        "skills": [
+            "tackle",
+            "dissolve"
+        ],
+        "drop": {
+            "items": [
+                "item_slime_jelly"
+            ],
+            "exp": 10,
+            "gold": 5
+        },
+        "ai": {
+            "pattern": "random",
+            "thinkDelay": 1.0
+        }
+    }
+]

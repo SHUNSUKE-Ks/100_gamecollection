@@ -1,0 +1,19 @@
+{
+  "categories": [
+    {
+      "id": "village",
+      "label": "村・町",
+      "color": "#10b981"
+    },
+    {
+      "id": "dungeon",
+      "label": "ダンジョン",
+      "color": "#ef4444"
+    },
+    {
+      "id": "room",
+      "label": "屋内",
+      "color": "#f59e0b"
+    }
+  ]
+}

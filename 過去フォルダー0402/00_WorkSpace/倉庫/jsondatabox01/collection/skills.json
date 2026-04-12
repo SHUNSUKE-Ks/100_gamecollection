@@ -1,0 +1,154 @@
+[
+    {
+        "id": "slash",
+        "name": "斬撃",
+        "description": "剣で敵を切りつける基本攻撃。",
+        "iconTag": "skill_slash_256x256",
+        "cost": {
+            "mp": 0,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 15,
+            "scale": "str"
+        },
+        "target": "enemy",
+        "effects": [
+            "hit_slash"
+        ],
+        "tags": [
+            "physical",
+            "melee"
+        ]
+    },
+    {
+        "id": "guard",
+        "name": "防御",
+        "description": "守りを固め、次のダメージを半減する。",
+        "iconTag": "skill_guard_256x256",
+        "cost": {
+            "mp": 0,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 0,
+            "scale": "str"
+        },
+        "target": "self",
+        "effects": [
+            "defense_up"
+        ],
+        "tags": [
+            "defensive"
+        ]
+    },
+    {
+        "id": "heal",
+        "name": "回復",
+        "description": "HPを少量回復する。",
+        "iconTag": "skill_heal_256x256",
+        "cost": {
+            "mp": 10,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 20,
+            "scale": "int"
+        },
+        "target": "self",
+        "effects": [
+            "heal"
+        ],
+        "tags": [
+            "magic",
+            "healing"
+        ]
+    },
+    {
+        "id": "scratch",
+        "name": "ひっかき",
+        "description": "鋭い爪で引っ掻く。",
+        "iconTag": "skill_scratch_256x256",
+        "cost": {
+            "mp": 0,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 8,
+            "scale": "dex"
+        },
+        "target": "enemy",
+        "effects": [
+            "hit_slash"
+        ],
+        "tags": [
+            "physical",
+            "melee"
+        ]
+    },
+    {
+        "id": "bite",
+        "name": "かみつき",
+        "description": "鋭い牙で噛みつく。",
+        "iconTag": "skill_bite_256x256",
+        "cost": {
+            "mp": 0,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 12,
+            "scale": "str"
+        },
+        "target": "enemy",
+        "effects": [
+            "hit_bite"
+        ],
+        "tags": [
+            "physical",
+            "melee"
+        ]
+    },
+    {
+        "id": "tackle",
+        "name": "たいあたり",
+        "description": "体当たりで攻撃する。",
+        "iconTag": "skill_tackle_256x256",
+        "cost": {
+            "mp": 0,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 6,
+            "scale": "str"
+        },
+        "target": "enemy",
+        "effects": [
+            "hit_impact"
+        ],
+        "tags": [
+            "physical"
+        ]
+    },
+    {
+        "id": "dissolve",
+        "name": "溶解液",
+        "description": "酸性の液体を飛ばす。",
+        "iconTag": "skill_dissolve_256x256",
+        "cost": {
+            "mp": 5,
+            "cooldown": 0
+        },
+        "power": {
+            "base": 10,
+            "scale": "int"
+        },
+        "target": "enemy",
+        "effects": [
+            "acid"
+        ],
+        "tags": [
+            "magic",
+            "special"
+        ]
+    }
+]

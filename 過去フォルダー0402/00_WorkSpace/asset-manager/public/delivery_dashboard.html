@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoNovel - Delivery Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-dark: #0f0f13;
+            --bg-card: #1a1a24;
+            --bg-card-hover: #22223a;
+            --bg-header: #16161e;
+            --bg-sidebar: #14141c;
+            --text-main: #e0e0e8;
+            --text-dim: #6e6e82;
+            --text-bright: #ffffff;
+            --accent: #6c5ce7;
+            --accent-glow: rgba(108, 92, 231, 0.3);
+            --accent-secondary: #00cec9;
+            --ordered: #f39c12;
+            --ordered-bg: rgba(243, 156, 18, 0.15);
+            --delivered: #3498db;
+            --delivered-bg: rgba(52, 152, 219, 0.15);
+            --checked: #2ecc71;
+            --checked-bg: rgba(46, 204, 113, 0.15);
+            --border: rgba(255, 255, 255, 0.06);
+            --gradient-1: linear-gradient(135deg, #6c5ce7, #a855f7);
+            --gradient-2: linear-gradient(135deg, #00cec9, #55efc4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ===== Header ===== */
+        header {
+            background: var(--bg-header);
+            padding: 0 24px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .logo-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 6px 16px 6px 8px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            background: rgba(108, 92, 231, 0.08);
+            user-select: none;
+        }
+
+        .logo-toggle:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .logo-toggle:active {
+            transform: scale(0.97);
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            background: var(--gradient-1);
+            box-shadow: 0 2px 8px var(--accent-glow);
+            transition: transform 0.3s;
+        }
+
+        .logo-toggle:hover .logo-icon {
+            transform: rotate(-10deg) scale(1.1);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-sub {
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .view-label {
+            font-size: 12px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 16px;
+        }
+
+        .stat-chip {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .stat-chip.ordered {
+            background: var(--ordered-bg);
+            color: var(--ordered);
+        }
+
+        .stat-chip.delivered {
+            background: var(--delivered-bg);
+            color: var(--delivered);
+        }
+
+        .stat-chip.checked {
+            background: var(--checked-bg);
+            color: var(--checked);
+        }
+
+        .stat-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .stat-dot.ordered {
+            background: var(--ordered);
+        }
+
+        .stat-dot.delivered {
+            background: var(--delivered);
+        }
+
+        .stat-dot.checked {
+            background: var(--checked);
+        }
+
+        /* ===== Main Layout ===== */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 240px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            padding: 16px 16px 8px;
+            font-size: 10px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .category-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 13px;
+            text-align: left;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .category-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .category-btn.active {
+            background: rgba(108, 92, 231, 0.1);
+            border-left-color: var(--accent);
+            color: var(--text-bright);
+        }
+
+        .category-btn .cat-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .category-btn .cat-count {
+            font-size: 11px;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .category-btn.active .cat-count {
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        /* Sidebar summary bar */
+        .sidebar-summary {
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+
+        .progress-bar-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .progress-segment {
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-segment.checked {
+            background: var(--checked);
+        }
+
+        .progress-segment.delivered {
+            background: var(--delivered);
+        }
+
+        .progress-segment.ordered {
+            background: var(--ordered);
+        }
+
+        .progress-label {
+            font-size: 10px;
+            color: var(--text-dim);
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* ===== Content ===== */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .content-title {
+            font-size: 22px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-title-icon {
+            font-size: 26px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: none;
+            color: var(--text-dim);
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .filter-chip:hover {
+            border-color: var(--accent);
+            color: var(--text-main);
+        }
+
+        .filter-chip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .filter-chip.active.f-ordered {
+            background: var(--ordered);
+            border-color: var(--ordered);
+        }
+
+        .filter-chip.active.f-delivered {
+            background: var(--delivered);
+            border-color: var(--delivered);
+        }
+
+        .filter-chip.active.f-checked {
+            background: var(--checked);
+            border-color: var(--checked);
+        }
+
+        /* ===== Asset Table ===== */
+        .asset-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+            font-size: 13px;
+        }
+
+        .asset-table thead th {
+            text-align: left;
+            padding: 8px 12px;
+            color: var(--text-dim);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            background: var(--bg-dark);
+            z-index: 2;
+        }
+
+        .asset-table tbody tr {
+            background: var(--bg-card);
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .asset-table tbody tr:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(2px);
+        }
+
+        .asset-table td {
+            padding: 10px 12px;
+            vertical-align: middle;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .asset-table td:first-child {
+            border-radius: 8px 0 0 8px;
+            border-left: 3px solid transparent;
+        }
+
+        .asset-table td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .asset-table tbody tr.status-row-ordered td:first-child {
+            border-left-color: var(--ordered);
+        }
+
+        .asset-table tbody tr.status-row-delivered td:first-child {
+            border-left-color: var(--delivered);
+        }
+
+        .asset-table tbody tr.status-row-checked td:first-child {
+            border-left-color: var(--checked);
+        }
+
+        /* Asset Preview */
+        .asset-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .asset-preview.img {
+            background: linear-gradient(135deg, #e91e63, #f48fb1);
+        }
+
+        .asset-preview.sound {
+            background: linear-gradient(135deg, #00bcd4, #80deea);
+        }
+
+        .asset-preview.icon {
+            background: linear-gradient(135deg, #ff9800, #ffcc02);
+        }
+
+        .asset-preview.bg {
+            background: linear-gradient(135deg, #4caf50, #81c784);
+        }
+
+        .asset-id {
+            font-family: 'Consolas', 'SF Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .asset-name {
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+
+        .asset-path {
+            font-family: 'Consolas', monospace;
+            font-size: 11px;
+            color: var(--accent-secondary);
+            opacity: 0.8;
+        }
+
+        .spec-badge {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-dim);
+            font-family: monospace;
+            white-space: nowrap;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.ordered {
+            background: var(--ordered-bg);
+            color: var(--ordered);
+        }
+
+        .status-badge.delivered {
+            background: var(--delivered-bg);
+            color: var(--delivered);
+        }
+
+        .status-badge.checked {
+            background: var(--checked-bg);
+            color: var(--checked);
+        }
+
+        .source-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: rgba(108, 92, 231, 0.15);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* Loading */
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px;
+            color: var(--text-dim);
+            gap: 12px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="/index.html" class="logo-toggle" id="logoToggle" title="← Asset Manager に戻る">
+            <div class="logo-icon">📦</div>
+            <div>
+                <div class="logo-text">NanoNovel</div>
+                <div class="logo-sub">DELIVERY DASHBOARD</div>
+            </div>
+        </a>
+
+        <div class="header-center">
+            <div class="view-label">Asset Delivery Tracker</div>
+        </div>
+
+        <div class="header-stats" id="headerStats">
+            <!-- JS fills -->
+        </div>
+    </header>
+
+    <!-- Main -->
+    <div class="main-layout">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-title">Categories</div>
+            <div id="categoryList">
+                <!-- JS fills -->
+            </div>
+
+            <div class="sidebar-summary" id="sidebarSummary">
+                <div class="progress-bar-container" id="progressBar"></div>
+                <div class="progress-label" id="progressLabel">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="content">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <span>マスターデータを読み込み中...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================
+        // Category Definitions
+        // ============================
+        const CATEGORIES = [
+            { id: 'character', icon: '🧑', label: 'キャラクター立ち絵', spec: 'PNG 1024×1024', previewType: 'img' },
+            { id: 'character_cg', icon: '🎨', label: 'キャラクターCG', spec: 'PNG 1920×1080', previewType: 'img' },
+            { id: 'enemy', icon: '👾', label: '敵モンスター', spec: 'PNG 512×512', previewType: 'img' },
+            { id: 'npc', icon: '🗣️', label: 'NPC', spec: 'PNG 1024×1024', previewType: 'img' },
+            { id: 'background', icon: '🏞️', label: '背景', spec: 'PNG/JPG 1920×1080', previewType: 'bg' },
+            { id: 'gallery', icon: '🖼️', label: 'ギャラリーCG', spec: 'PNG/JPG 1920×1080', previewType: 'img' },
+            { id: 'item', icon: '🧪', label: 'アイテムアイコン', spec: 'PNG 128×128', previewType: 'icon' },
+            { id: 'skill', icon: '⚡', label: 'スキルアイコン', spec: 'PNG 128×128', previewType: 'icon' },
+            { id: 'bgm', icon: '🎵', label: 'BGM', spec: 'MP3/M4A/WAV', previewType: 'sound' },
+            { id: 'se', icon: '🔔', label: 'SE（効果音）', spec: 'MP3', previewType: 'sound' },
+            { id: 'ui', icon: '🖥️', label: 'UI素材', spec: 'PNG/SVG', previewType: 'icon' },
+        ];
+
+        // ============================
+        // State
+        // ============================
+        let allAssets = [];        // { id, name, path, category, source, spec, previewType, status }
+        let activeCategory = 'all';
+        let activeFilter = 'all'; // all, ordered, delivered, checked
+
+        // ============================
+        // Init
+        // ============================
+        async function init() {
+            try {
+                const filesRes = await fetch('/api/files');
+                const files = await filesRes.json();
+
+                // Fetch all JSON files in parallel
+                const dataPromises = files.map(async f => {
+                    const res = await fetch(`/api/json/${f}`);
+                    return { filename: f, data: await res.json() };
+                });
+                const allData = await Promise.all(dataPromises);
+
+                // Extract assets from each JSON
+                for (const { filename, data } of allData) {
+                    extractAssets(filename, data);
+                }
+
+                // Determine status for each asset
+                await determineStatuses();
+
+                // Render
+                renderSidebar();
+                renderContent();
+                renderHeaderStats();
+                renderProgressBar();
+            } catch (e) {
+                document.getElementById('content').innerHTML =
+                    `<div class="empty-state"><div class="icon">⚠️</div><p>サーバーに接続できません<br><code>node 00_WorkSpace/asset-manager/server.js</code></p></div>`;
+            }
+        }
+
+        // ============================
+        // Extract Assets from JSON
+        // ============================
+        function extractAssets(filename, data) {
+            const baseName = filename.replace('.json', '');
+
+            switch (baseName) {
+                case 'characters':
+                    (data.characters || []).forEach(c => {
+                        if (c.image) addAsset(c.id, c.name, c.image, 'character', filename);
+                        (c.standing || []).forEach((s, i) => addAsset(`${c.id}_stand_${i}`, `${c.name} 立ち絵${i + 1}`, s, 'character', filename));
+                        (c.cgs || []).forEach((cg, i) => addAsset(`${c.id}_cg_${i}`, `${c.name} CG${i + 1}`, cg, 'character_cg', filename));
+                    });
+                    break;
+
+                case 'enemies':
+                    (data.enemies || []).forEach(e => {
+                        if (e.image) addAsset(e.id, e.name, e.image, 'enemy', filename);
+                    });
+                    break;
+
+                case 'items':
+                    (data.items || []).forEach(item => {
+                        if (item.icon) addAsset(item.id, item.name, item.icon, 'item', filename);
+                    });
+                    break;
+
+                case 'npcs':
+                    (data.npcs || []).forEach(npc => {
+                        if (npc.image) addAsset(npc.id, npc.name, npc.image, 'npc', filename);
+                        (npc.standing || []).forEach((s, i) => addAsset(`${npc.id}_stand_${i}`, `${npc.name} 立ち絵${i + 1}`, s, 'npc', filename));
+                    });
+                    break;
+
+                case 'gallery':
+                    (data.images || []).forEach(img => {
+                        if (img.filename) addAsset(img.id, img.title, img.filename, 'gallery', filename);
+                    });
+                    break;
+
+                case 'bgm':
+                    (data.bgm || []).forEach(track => {
+                        if (track.filename) addAsset(track.id, track.title, `sound/bgm/${track.filename}`, 'bgm', filename);
+                    });
+                    break;
+
+                case 'se':
+                    (data.se || []).forEach(sound => {
+                        if (sound.filename) addAsset(sound.id, sound.title, `sound/se/${sound.filename}`, 'se', filename);
+                    });
+                    break;
+
+                case 'skills':
+                    (data.skills || []).forEach(sk => {
+                        // Skills don't have icons yet, add as "ordered/planned"
+                        addAsset(sk.id, sk.name, `skill/${sk.id}.png`, 'skill', filename);
+                    });
+                    break;
+
+                case 'events':
+                    // Extract unique backgrounds
+                    const bgSet = new Set();
+                    (data.events || []).forEach(ev => {
+                        const bg = ev.relatedAssets?.background;
+                        if (bg && !bgSet.has(bg)) {
+                            bgSet.add(bg);
+                            addAsset(bg, `背景: ${bg}`, `bg/${bg}.png`, 'background', filename);
+                        }
+                    });
+                    break;
+            }
+        }
+
+        function addAsset(id, name, path, category, source) {
+            if (!path) return;
+            // Dedup by path
+            if (allAssets.some(a => a.path === path)) return;
+            const catDef = CATEGORIES.find(c => c.id === category) || CATEGORIES[0];
+            allAssets.push({
+                id, name, path, category, source,
+                spec: catDef.spec,
+                previewType: catDef.previewType,
+                status: 'ordered' // default, will be updated
+            });
+        }
+
+        // ============================
+        // Determine Asset Status
+        // ============================
+        async function determineStatuses() {
+            // Check if asset files exist in src/assets/
+            // Use the new API endpoint or simulate based on known data
+            try {
+                const res = await fetch('/api/asset-check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ paths: allAssets.map(a => a.path) })
+                });
+                const result = await res.json();
+
+                // Also check delivery folder
+                const deliveryRes = await fetch('/api/delivery');
+                const deliveryData = await deliveryRes.json();
+                const deliveryFiles = deliveryData.files || deliveryData;
+
+                allAssets.forEach((asset, i) => {
+                    if (result.exists && result.exists[i]) {
+                        asset.status = 'checked';
+                    } else {
+                        // Check if filename appears in delivery
+                        const fname = asset.path.split('/').pop();
+                        if (deliveryFiles.includes(fname)) {
+                            asset.status = 'delivered';
+                        } else {
+                            asset.status = 'ordered';
+                        }
+                    }
+                });
+            } catch (e) {
+                // API doesn't exist yet, fallback: check by known sound folder
+                try {
+                    const deliveryRes = await fetch('/api/delivery');
+                    const deliveryData = await deliveryRes.json();
+                    const deliveryFiles = deliveryData.files || deliveryData;
+
+                    allAssets.forEach(asset => {
+                        const fname = asset.path.split('/').pop();
+                        if (deliveryFiles.includes(fname)) {
+                            asset.status = 'delivered';
+                        }
+                        // Sound files that exist in bgm.json are likely already placed
+                        if (asset.category === 'bgm' || asset.category === 'se') {
+                            asset.status = 'checked'; // Assume sound assets exist based on JSON data
+                        }
+                    });
+                } catch (_) { }
+            }
+        }
+
+        // ============================
+        // Rendering
+        // ============================
+        function getCounts() {
+            const filtered = activeCategory === 'all' ? allAssets : allAssets.filter(a => a.category === activeCategory);
+            return {
+                total: filtered.length,
+                ordered: filtered.filter(a => a.status === 'ordered').length,
+                delivered: filtered.filter(a => a.status === 'delivered').length,
+                checked: filtered.filter(a => a.status === 'checked').length
+            };
+        }
+
+        function renderHeaderStats() {
+            const c = getCounts();
+            document.getElementById('headerStats').innerHTML = `
+                <div class="stat-chip ordered"><div class="stat-dot ordered"></div> 発注 ${c.ordered}</div>
+                <div class="stat-chip delivered"><div class="stat-dot delivered"></div> 納品 ${c.delivered}</div>
+                <div class="stat-chip checked"><div class="stat-dot checked"></div> 確認 ${c.checked}</div>
+            `;
+        }
+
+        function renderSidebar() {
+            const listEl = document.getElementById('categoryList');
+
+            // "All" button
+            const allCount = allAssets.length;
+            let html = `
+                <button class="category-btn ${activeCategory === 'all' ? 'active' : ''}" onclick="setCategory('all')">
+                    <span><span class="cat-icon">📋</span>すべて</span>
+                    <span class="cat-count">${allCount}</span>
+                </button>
+            `;
+
+            CATEGORIES.forEach(cat => {
+                const count = allAssets.filter(a => a.category === cat.id).length;
+                if (count === 0) return;
+                html += `
+                    <button class="category-btn ${activeCategory === cat.id ? 'active' : ''}" onclick="setCategory('${cat.id}')">
+                        <span><span class="cat-icon">${cat.icon}</span>${cat.label}</span>
+                        <span class="cat-count">${count}</span>
+                    </button>
+                `;
+            });
+
+            listEl.innerHTML = html;
+        }
+
+        function renderProgressBar() {
+            const total = allAssets.length || 1;
+            const checked = allAssets.filter(a => a.status === 'checked').length;
+            const delivered = allAssets.filter(a => a.status === 'delivered').length;
+            const ordered = allAssets.filter(a => a.status === 'ordered').length;
+
+            document.getElementById('progressBar').innerHTML = `
+                <div class="progress-segment checked" style="width:${(checked / total * 100)}%"></div>
+                <div class="progress-segment delivered" style="width:${(delivered / total * 100)}%"></div>
+                <div class="progress-segment ordered" style="width:${(ordered / total * 100)}%"></div>
+            `;
+            document.getElementById('progressLabel').textContent =
+                `${checked}/${total} 確認済み (${Math.round(checked / total * 100)}%)`;
+        }
+
+        function renderContent() {
+            let assets = activeCategory === 'all' ? [...allAssets] : allAssets.filter(a => a.category === activeCategory);
+            if (activeFilter !== 'all') {
+                assets = assets.filter(a => a.status === activeFilter);
+            }
+
+            const catDef = CATEGORIES.find(c => c.id === activeCategory);
+            const title = activeCategory === 'all' ? 'すべてのアセット' : (catDef?.label || activeCategory);
+            const icon = activeCategory === 'all' ? '📋' : (catDef?.icon || '📄');
+
+            const contentEl = document.getElementById('content');
+
+            if (assets.length === 0) {
+                contentEl.innerHTML = `
+                    <div class="content-header">
+                        <div class="content-title"><span class="content-title-icon">${icon}</span>${title}</div>
+                        <div class="filter-row">${renderFilterChips()}</div>
+                    </div>
+                    <div class="empty-state">
+                        <div class="icon">✨</div>
+                        <p>このカテゴリにはアセットがありません</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const rows = assets.map(a => {
+                const statusLabels = { ordered: '発注', delivered: '納品済', checked: '確認済' };
+                const catInfo = CATEGORIES.find(c => c.id === a.category);
+
+                return `
+                    <tr class="status-row-${a.status}">
+                        <td>
+                            <div class="asset-preview ${a.previewType}">
+                                ${a.previewType === 'img' ? '🖼️' : a.previewType === 'sound' ? '🎵' : a.previewType === 'bg' ? '🏞️' : '📦'}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="asset-name">${a.name || a.id}</div>
+                            <div class="asset-id">${a.id}</div>
+                        </td>
+                        <td><code class="asset-path">${a.path}</code></td>
+                        <td><span class="spec-badge">${a.spec}</span></td>
+                        <td><span class="source-badge">${a.source}</span></td>
+                        <td><span class="status-badge ${a.status}">● ${statusLabels[a.status]}</span></td>
+                    </tr>
+                `;
+            }).join('');
+
+            contentEl.innerHTML = `
+                <div class="content-header">
+                    <div class="content-title"><span class="content-title-icon">${icon}</span>${title}</div>
+                    <div class="filter-row">${renderFilterChips()}</div>
+                </div>
+                <table class="asset-table">
+                    <thead>
+                        <tr>
+                            <th style="width:56px"></th>
+                            <th>アセット名</th>
+                            <th>ファイルパス</th>
+                            <th>規格</th>
+                            <th>ソース</th>
+                            <th>ステータス</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+
+            renderHeaderStats();
+            renderProgressBar();
+        }
+
+        function renderFilterChips() {
+            const c = getCounts();
+            return `
+                <button class="filter-chip ${activeFilter === 'all' ? 'active' : ''}" onclick="setFilter('all')">All (${c.total})</button>
+                <button class="filter-chip f-ordered ${activeFilter === 'ordered' ? 'active' : ''}" onclick="setFilter('ordered')">🟡 発注 (${c.ordered})</button>
+                <button class="filter-chip f-delivered ${activeFilter === 'delivered' ? 'active' : ''}" onclick="setFilter('delivered')">🔵 納品 (${c.delivered})</button>
+                <button class="filter-chip f-checked ${activeFilter === 'checked' ? 'active' : ''}" onclick="setFilter('checked')">🟢 確認 (${c.checked})</button>
+            `;
+        }
+
+        // ============================
+        // Interactions
+        // ============================
+        function setCategory(cat) {
+            activeCategory = cat;
+            activeFilter = 'all';
+            renderSidebar();
+            renderContent();
+        }
+
+        function setFilter(filter) {
+            activeFilter = filter;
+            renderContent();
+        }
+
+        // ============================
+        // Start
+        // ============================
+        init();
+    </script>
+</body>
+
+</html>

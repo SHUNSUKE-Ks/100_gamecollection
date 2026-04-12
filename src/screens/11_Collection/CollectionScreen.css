@@ -1,0 +1,160 @@
+/* src/screens/11_Collection/CollectionScreen.css */
+
+.collection-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    width: 100vw;
+    background-color: #111827;
+    color: #9ca3af;
+    font-family: sans-serif;
+}
+
+/* Primary Navigation */
+.collection-nav-primary {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #1f2937;
+    background-color: #111827;
+    /* モバイルで横スクロール */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.collection-nav-primary::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-item-primary {
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+    cursor: pointer;
+    padding-bottom: 0.25rem;
+    transition: color 0.2s;
+    /* 縮まないようにする */
+    flex-shrink: 0;
+    /* タップ領域確保 */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-item-primary:hover {
+    color: #e5e7eb;
+}
+
+.nav-item-primary.active {
+    color: #facc15;
+    border-bottom: 2px solid #facc15;
+}
+
+/* Secondary Navigation */
+.collection-nav-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: #111827;
+    /* モバイルで横スクロール */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex-shrink: 0;
+}
+
+.collection-nav-secondary::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-item-secondary {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+    /* タップ領域確保 */
+    min-height: 36px;
+}
+
+.nav-item-secondary.inactive {
+    background-color: #1f2937;
+    color: #d1d5db;
+}
+
+.nav-item-secondary.inactive:hover {
+    background-color: #374151;
+}
+
+.nav-item-secondary.active {
+    background-color: #ca8a04;
+    color: #111827;
+}
+
+/* Main Content Area */
+.collection-content {
+    flex: 1;
+    padding: 1rem;
+    overflow-y: auto;
+    color: #fff;
+    /* iOS bounce scroll */
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+    .collection-content {
+        padding: 1.5rem;
+    }
+}
+
+.back-button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1rem;
+}
+
+.back-button {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    min-height: 44px;
+}
+
+.back-button:hover {
+    background: #374151;
+    color: #fff;
+}
+
+.collection-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.collection-title {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}

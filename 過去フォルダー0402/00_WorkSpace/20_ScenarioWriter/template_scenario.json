@@ -1,0 +1,56 @@
+[
+    {
+        "storyID": "EP_CH_01",
+        "scene": 1,
+        "type": "SCENE_START",
+        "questTitle": "エピソードタイトル",
+        "backgroundImage": "bg/xxx.png",
+        "bgm": "bgm_tag",
+        "note": "シーン開始の設定"
+    },
+    {
+        "storyID": "EP_CH_02",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "ここにナレーションを書きます。"
+    },
+    {
+        "storyID": "EP_CH_03",
+        "scene": 1,
+        "speaker": "キャラクター名",
+        "text": "ここにセリフを書きます。",
+        "characterImage": "ch/xxx.png"
+    },
+    {
+        "storyID": "EP_CH_04",
+        "scene": 1,
+        "speaker": "キャラクター名",
+        "text": "選択肢を出す場合はeventを使います。",
+        "event": {
+            "type": "CHOICE",
+            "payload": {
+                "choices": [
+                    {
+                        "label": "選択肢A",
+                        "nextStoryID": "EP_CH_10"
+                    },
+                    {
+                        "label": "選択肢B",
+                        "nextStoryID": "EP_CH_20"
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "storyID": "EP_CH_99",
+        "scene": 1,
+        "event": {
+            "type": "END",
+            "payload": {
+                "goto": "TITLE"
+            }
+        },
+        "note": "シーン終了"
+    }
+]

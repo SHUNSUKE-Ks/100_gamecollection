@@ -1,0 +1,139 @@
+{
+    "episodes": [
+        {
+            "id": "ep1",
+            "title": "Episode 1: 理の探求",
+            "chapters": [
+                {
+                    "id": "ep1-ch1",
+                    "title": "Chapter 1: 始まりの塔",
+                    "events": [
+                        {
+                            "id": "event-1-1-1",
+                            "title": "塔への招待",
+                            "description": "理の魔法使いとの邂逅。不思議な塔の前に立つあなたを待ち受けるものとは。",
+                            "location": "MAGIC_TOWER",
+                            "type": "main",
+                            "startStoryID": "M_01_01_01"
+                        },
+                        {
+                            "id": "event-1-1-2",
+                            "title": "理の選択",
+                            "description": "魔法使いから提示される二つの道。あなたはどちらを選ぶのか。",
+                            "location": "MAGIC_TOWER",
+                            "type": "main",
+                            "startStoryID": "M_01_01_10"
+                        }
+                    ]
+                },
+                {
+                    "id": "ep1-ch2",
+                    "title": "Chapter 2: 森の遺跡",
+                    "events": [
+                        {
+                            "id": "event-1-2-1",
+                            "title": "長老の依頼",
+                            "description": "村の長老から謎の遺跡調査を依頼される。",
+                            "location": "STARTING_VILLAGE",
+                            "type": "main",
+                            "startStoryID": "M_01_02_01"
+                        },
+                        {
+                            "id": "event-1-2-2",
+                            "title": "遺跡の奥へ",
+                            "description": "森の奥深くにある遺跡を探索する。",
+                            "location": "FOREST_RUINS",
+                            "type": "main",
+                            "startStoryID": "M_01_02_10"
+                        }
+                    ]
+                },
+                {
+                    "id": "ep1-ch3",
+                    "title": "Chapter 3: 真実の断片",
+                    "events": [
+                        {
+                            "id": "event-1-3-1",
+                            "title": "遺跡の秘密",
+                            "description": "遺跡の最奥で発見した古代の記録が物語る真実。",
+                            "location": "FOREST_RUINS",
+                            "type": "main",
+                            "startStoryID": "M_01_03_01"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ep2",
+            "title": "Episode 2: 交錯する運命",
+            "chapters": [
+                {
+                    "id": "ep2-ch1",
+                    "title": "Chapter 1: 新たな出会い",
+                    "events": [
+                        {
+                            "id": "event-2-1-1",
+                            "title": "旅人との邂逅",
+                            "description": "街道で出会った謎の旅人。彼女もまた理を求めているようだ。",
+                            "location": "CROSSROADS",
+                            "type": "main",
+                            "startStoryID": "M_02_01_01"
+                        }
+                    ]
+                },
+                {
+                    "id": "ep2-ch2",
+                    "title": "Chapter 2: 試練の洞窟",
+                    "events": [
+                        {
+                            "id": "event-2-2-1",
+                            "title": "洞窟への道",
+                            "description": "旅人と共に試練の洞窟を目指す。",
+                            "location": "MOUNTAIN_PATH",
+                            "type": "main",
+                            "startStoryID": "M_02_02_01"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "locations": [
+        {
+            "id": "STARTING_VILLAGE",
+            "label": "始まりの村",
+            "color": "#22c55e"
+        },
+        {
+            "id": "MAGIC_TOWER",
+            "label": "魔法の塔",
+            "color": "#8b5cf6"
+        },
+        {
+            "id": "FOREST_ENTRANCE",
+            "label": "森の入口",
+            "color": "#10b981"
+        },
+        {
+            "id": "FOREST_RUINS",
+            "label": "森の遺跡",
+            "color": "#059669"
+        },
+        {
+            "id": "CROSSROADS",
+            "label": "十字路",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "MOUNTAIN_PATH",
+            "label": "山道",
+            "color": "#78716c"
+        },
+        {
+            "id": "CAVE_ENTRANCE",
+            "label": "洞窟入口",
+            "color": "#64748b"
+        }
+    ]
+}

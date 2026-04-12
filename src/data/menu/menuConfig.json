@@ -1,0 +1,35 @@
+{
+    "menuItems": [
+        {
+            "id": "party",
+            "label": "パーティー",
+            "icon": "Users",
+            "viewComponent": "PartyView"
+        },
+        {
+            "id": "status",
+            "label": "ステータス",
+            "icon": "User",
+            "viewComponent": "StatusView"
+        },
+        {
+            "id": "inventory",
+            "label": "アイテム",
+            "icon": "Backpack",
+            "viewComponent": "InventoryView"
+        },
+        {
+            "id": "equipment",
+            "label": "装備",
+            "icon": "Sword",
+            "viewComponent": "EquipmentView"
+        },
+        {
+            "id": "save",
+            "label": "セーブ",
+            "icon": "Save",
+            "viewComponent": "SaveView"
+        }
+    ],
+    "defaultView": "party"
+}

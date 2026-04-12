@@ -1,0 +1,47 @@
+{
+    "skills": [
+        {
+            "id": "skill_xxx_001",
+            "name": "スキル名",
+            "type": "attack",
+            "icon": "skill/xxx.png",
+            "element": "fire",
+            "mpCost": 10,
+            "power": 100,
+            "accuracy": 95,
+            "target": "enemy_single",
+            "range": "ranged",
+            "effects": [
+                {
+                    "type": "damage",
+                    "element": "fire",
+                    "power": 100,
+                    "scaling": "matk"
+                }
+            ],
+            "animation": "anim_xxx",
+            "description": "スキルの説明",
+            "learnLevel": 5,
+            "learnClass": [
+                "mage"
+            ]
+        }
+    ],
+    "abilities": [
+        {
+            "id": "ability_xxx_001",
+            "name": "アビリティ名",
+            "type": "stat_boost",
+            "icon": "ability/xxx.png",
+            "effect": {
+                "stat": "hp",
+                "value": 10,
+                "isPercent": true
+            },
+            "cost": 3,
+            "stackable": false,
+            "description": "アビリティの説明",
+            "learnLevel": 10
+        }
+    ]
+}

@@ -1,0 +1,26 @@
+[
+    {
+        "id": "npc_merchant_001",
+        "name": "マルコ",
+        "role": "商人",
+        "dict": "王都で雑貨店を営む陽気な男。珍しい品物を求めて世界中を旅していた過去がある。",
+        "tags": [
+            "MERCHANT",
+            "FRIENDLY"
+        ],
+        "location": "CAPITAL_CITY",
+        "image": "npc/merchant_marco.png"
+    },
+    {
+        "id": "npc_guard_001",
+        "name": "門番のハンス",
+        "role": "衛兵",
+        "dict": "王都の南門を守る真面目な衛兵。新人だが責任感が強い。",
+        "tags": [
+            "GUARD",
+            "HUMAN"
+        ],
+        "location": "CAPITAL_CITY_GATE",
+        "image": "npc/guard_hans.png"
+    }
+]

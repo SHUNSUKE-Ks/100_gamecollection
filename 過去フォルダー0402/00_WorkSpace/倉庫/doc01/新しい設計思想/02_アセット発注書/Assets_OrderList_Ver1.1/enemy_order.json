@@ -1,0 +1,25 @@
+{
+    "//": "🎨 エネミー (Enemy Sprite) 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "ENEMY_SPRITE",
+        "STATUS": "PENDING"
+    },
+    "ENEMIES": [
+        {
+            "ID": "enemy_01",
+            "NAME": "Slime",
+            "DESCRIPTION": "Basic slime monster.",
+            "VISUAL_REFERENCE": {
+                "SPECIES": "Slime",
+                "COLOR": "Blue",
+                "TRAITS": "Transparent, Cute"
+            },
+            "OUTPUT_FILENAME": "src/assets/enemies/slime.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "512x512",
+        "FORMAT": "PNG"
+    }
+}

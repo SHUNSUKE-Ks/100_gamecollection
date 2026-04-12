@@ -1,0 +1,37 @@
+{
+    "ASSET_MANIFEST": {
+        "COMMON": {
+            "UI": {
+                "CARD_FRAME": "ui/card_frame_common.png",
+                "CARD_BACK": "ui/card_back_generic.png",
+                "CURSOR": "ui/cursor_hand.png"
+            },
+            "SOUND": {
+                "SE_DECIDE": "se/se_decide.mp3",
+                "SE_CANCEL": "se/se_cancel.mp3",
+                "SE_TheCARD_FLIP": "se/se_card_flip.mp3"
+            }
+        },
+        "TITLE_SCREEN": {
+            "BG": "bg/bg_title_tavern.png",
+            "BGM": "bgm/bgm_main_theme.mp3"
+        },
+        "MAP_SCREEN": {
+            "TILES": {
+                "GRASS": "tiles/tile_grass.png",
+                "FOREST": "tiles/tile_forest.png",
+                "WATER": "tiles/tile_water.png"
+            },
+            "PLAYER": "sprites/pawn_hero.png",
+            "BGM": "bgm/bgm_field.mp3"
+        },
+        "BATTLE_SCREEN": {
+            "BG": "bg/bg_battle_mat.png",
+            "UI": {
+                "GEM_BOX": "ui/battle_gem_box.png",
+                "DICE": "ui/battle_dice.png"
+            },
+            "BGM": "bgm/bgm_battle_normal.mp3"
+        }
+    }
+}

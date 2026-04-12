@@ -1,0 +1,112 @@
+[
+    {
+        "storyID": "Q_01_01_01",
+        "scene": 1,
+        "type": "SCENE_START",
+        "questTitle": "二人の旅立ちの時",
+        "backgroundImage": "bg/guild_hall.png",
+        "bgm": "guild_theme_01",
+        "note": "オープニング：ギルド結成"
+    },
+    {
+        "storyID": "Q_01_01_02",
+        "scene": 1,
+        "speaker": "ギルド嬢",
+        "text": "手続き完了です！これよりあなた方は正式に『ギルド公認パーティ』となります。",
+        "characterImage": "npc/receptionist.png",
+        "backgroundImage": "bg/guild_hall.png"
+    },
+    {
+        "storyID": "Q_01_01_03",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "ありがとう。……よし、ミナ。これから頼むぞ。俺が前衛で盾になる。",
+        "characterImage": "ch/knight_leo_stand.png"
+    },
+    {
+        "storyID": "Q_01_01_04",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "はいはい、分かってるって。あんたは私の魔法が当たるまで、敵を食い止めてればいいのよ。",
+        "characterImage": "ch/wizard_mina_smile.png"
+    },
+    {
+        "storyID": "Q_01_01_05",
+        "scene": 1,
+        "speaker": "ギルド嬢",
+        "text": "ふふ、頼もしいですね。初任務は『平原のスライム討伐』です。気をつけて行ってらっしゃいませ！"
+    },
+    {
+        "storyID": "Q_01_01_06",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "二人はギルドを後にし、街の外の平原へと向かった。",
+        "backgroundImage": "bg/plains_day.png",
+        "bgm": "adventure_start"
+    },
+    {
+        "storyID": "Q_01_01_07",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "いたぞ、スライムの群れだ。……油断するなよ、ミナ。",
+        "characterImage": "ch/knight_leo_battle.png",
+        "backgroundImage": "bg/plains_day.png"
+    },
+    {
+        "storyID": "Q_01_01_08",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "スライム相手に油断なんてしないわよ。さっさと片付けて、報酬で美味しいケーキでも食べましょ！",
+        "characterImage": "ch/wizard_mina_chant.png"
+    },
+    {
+        "storyID": "Q_01_01_09",
+        "scene": 1,
+        "event": {
+            "type": "BATTLE_START"
+        },
+        "speaker": "システム",
+        "text": "BATTLE START!!"
+    },
+    {
+        "storyID": "Q_01_01_10",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "ふぅ……なんとかなったな。怪我はないか？",
+        "characterImage": "ch/knight_leo_stand.png",
+        "backgroundImage": "bg/plains_day.png",
+        "bgm": "victory_fanfare"
+    },
+    {
+        "storyID": "Q_01_01_11",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "余裕よ！あんたの盾も、まあまあ役に立ったじゃない。",
+        "characterImage": "ch/wizard_mina_smile.png"
+    },
+    {
+        "storyID": "Q_01_01_12",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "（やれやれ……先が思いやられるな）",
+        "characterImage": "ch/knight_leo_sigh.png"
+    },
+    {
+        "storyID": "Q_01_01_13",
+        "scene": 1,
+        "speaker": "システム",
+        "text": "クエスト達成！報酬【500ゴールド】を獲得しました。",
+        "note": "リザルト画面へ遷移"
+    },
+    {
+        "storyID": "Q_01_01_14",
+        "scene": 1,
+        "event": {
+            "type": "END",
+            "payload": {
+                "goto": "COLLECTION"
+            }
+        },
+        "backgroundImage": "bg/plains_day.png"
+    }
+]

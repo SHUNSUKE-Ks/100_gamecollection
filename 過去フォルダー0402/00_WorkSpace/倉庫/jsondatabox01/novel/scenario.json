@@ -1,0 +1,499 @@
+[
+    {
+        "storyID": "01_01_01",
+        "speaker": "",
+        "text": "――深い森の奥、朝靄が立ち込める中、一人の若者が目を覚ました。",
+        "tags": [
+            "bg_forest_morning_1280x720",
+            "scene_prologue"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "game_started": true
+        },
+        "effects": [
+            "fade_in"
+        ],
+        "tips": [],
+        "note": "プロローグ開始"
+    },
+    {
+        "storyID": "01_01_02",
+        "speaker": "主人公",
+        "text": "ここは……どこだ？",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_01_03",
+        "speaker": "",
+        "text": "記憶がない。自分が誰なのかも、なぜここにいるのかも分からない。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_01_04",
+        "speaker": "主人公",
+        "text": "頭が……痛い。何か大切なことを忘れているような気がする。",
+        "tags": [
+            "chara_hero_thinking_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_01_05",
+        "speaker": "",
+        "text": "周囲を見渡すと、鬱蒼とした木々に囲まれていた。木漏れ日が差し込み、どこか神秘的な雰囲気が漂っている。",
+        "tags": [
+            "bg_forest_morning_1280x720"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [
+            "forest"
+        ],
+        "note": ""
+    },
+    {
+        "storyID": "01_01_06",
+        "speaker": "主人公",
+        "text": "……とにかく、このままここにいても仕方がない。",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "CHOICE",
+            "payload": {
+                "choices": [
+                    {
+                        "label": "森の奥へ進む",
+                        "nextStoryID": "01_02_01"
+                    },
+                    {
+                        "label": "周囲を調べる",
+                        "nextStoryID": "01_01_07"
+                    }
+                ]
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "最初の選択肢"
+    },
+    {
+        "storyID": "01_01_07",
+        "speaker": "",
+        "text": "周囲を見渡すと、地面に何かが落ちているのが見えた。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_01_08",
+        "speaker": "",
+        "text": "古びた剣だ。錆びてはいるが、まだ使えそうだ。",
+        "tags": [
+            "item_old_sword_512x512"
+        ],
+        "event": {
+            "type": "ITEM",
+            "payload": {
+                "itemID": "old_sword",
+                "count": 1
+            }
+        },
+        "flags": {
+            "found_sword": true
+        },
+        "effects": [
+            "item_get"
+        ],
+        "tips": [],
+        "note": "剣入手"
+    },
+    {
+        "storyID": "01_01_09",
+        "speaker": "主人公",
+        "text": "これがあれば、少しは心強い。",
+        "tags": [
+            "chara_hero_smile_1024x1024"
+        ],
+        "event": {
+            "type": "JUMP",
+            "payload": {
+                "nextStoryID": "01_02_01"
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "森の奥へ自動遷移"
+    },
+    {
+        "storyID": "01_02_01",
+        "speaker": "",
+        "text": "森の奥へと足を進める。木々の間から差し込む光が、道を照らしていた。",
+        "tags": [
+            "bg_forest_deep_1280x720"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "entered_deep_forest": true
+        },
+        "effects": [
+            "fade_in"
+        ],
+        "tips": [
+            "forest"
+        ],
+        "note": "深い森へ"
+    },
+    {
+        "storyID": "01_02_02",
+        "speaker": "",
+        "text": "しばらく歩いていると、茂みの中から何かが飛び出してきた！",
+        "tags": [
+            "bg_forest_deep_1280x720"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [
+            "shake"
+        ],
+        "tips": [],
+        "note": "敵遭遇"
+    },
+    {
+        "storyID": "01_02_02b",
+        "speaker": "主人公",
+        "text": "くっ……魔物か！",
+        "tags": [
+            "chara_hero_battle_1024x1024"
+        ],
+        "event": {
+            "type": "BATTLE",
+            "payload": {
+                "enemyIDs": [
+                    "goblin"
+                ],
+                "reward": {
+                    "items": [
+                        "item_small_potion"
+                    ],
+                    "exp": 15
+                }
+            }
+        },
+        "flags": {
+            "first_battle": true
+        },
+        "effects": [],
+        "tips": [],
+        "note": "最初のバトル - ゴブリン戦"
+    },
+    {
+        "storyID": "01_02_03",
+        "speaker": "主人公",
+        "text": "何とか倒せた……。この森には魔物がいるのか。気をつけなければ。",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "バトル後"
+    },
+    {
+        "storyID": "01_02_04",
+        "speaker": "",
+        "text": "しばらく歩くと、遠くに建物のようなものが見えてきた。",
+        "tags": [
+            "bg_forest_ruins_1280x720"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_02_05",
+        "speaker": "主人公",
+        "text": "あれは……廃墟か？ 誰かいるかもしれない。",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "CHOICE",
+            "payload": {
+                "choices": [
+                    {
+                        "label": "廃墟に近づく",
+                        "nextStoryID": "01_03_01"
+                    },
+                    {
+                        "label": "様子を見る",
+                        "nextStoryID": "01_02_06"
+                    }
+                ]
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "廃墟の選択肢"
+    },
+    {
+        "storyID": "01_02_06",
+        "speaker": "",
+        "text": "慎重に身を潜め、廃墟の様子をうかがう。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "cautious": true
+        },
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_02_07",
+        "speaker": "",
+        "text": "特に危険な気配はなさそうだ。近づいてみよう。",
+        "tags": [],
+        "event": {
+            "type": "JUMP",
+            "payload": {
+                "nextStoryID": "01_03_01"
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_02_03",
+        "speaker": "主人公",
+        "text": "あれは……廃墟か？ 誰かいるかもしれない。",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "CHOICE",
+            "payload": {
+                "choices": [
+                    {
+                        "label": "廃墟に近づく",
+                        "nextStoryID": "01_03_01"
+                    },
+                    {
+                        "label": "様子を見る",
+                        "nextStoryID": "01_02_04"
+                    }
+                ]
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "廃墟の選択肢"
+    },
+    {
+        "storyID": "01_02_04",
+        "speaker": "",
+        "text": "慎重に身を潜め、廃墟の様子をうかがう。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "cautious": true
+        },
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_02_05",
+        "speaker": "",
+        "text": "特に危険な気配はなさそうだ。近づいてみよう。",
+        "tags": [],
+        "event": {
+            "type": "JUMP",
+            "payload": {
+                "nextStoryID": "01_03_01"
+            }
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_03_01",
+        "speaker": "",
+        "text": "廃墟に近づくと、中から物音が聞こえた。",
+        "tags": [
+            "bg_ruins_entrance_1280x720"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "廃墟エリア"
+    },
+    {
+        "storyID": "01_03_02",
+        "speaker": "???",
+        "text": "誰だ！",
+        "tags": [
+            "chara_mysterious_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "謎の人物登場"
+    },
+    {
+        "storyID": "01_03_03",
+        "speaker": "",
+        "text": "影の中から、一人の人物が姿を現した。警戒した目でこちらを見ている。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "met_stranger": true
+        },
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_03_04",
+        "speaker": "主人公",
+        "text": "待ってくれ、敵じゃない！ ただ道に迷っているだけなんだ。",
+        "tags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_03_05",
+        "speaker": "???",
+        "text": "……ふん。まあいい。ここは危険だ。早く立ち去れ。",
+        "tags": [
+            "chara_mysterious_1024x1024"
+        ],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": ""
+    },
+    {
+        "storyID": "01_03_06",
+        "speaker": "",
+        "text": "謎の人物との出会い。この先、どんな運命が待っているのだろうか。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {
+            "chapter1_complete": true
+        },
+        "effects": [
+            "fade_out"
+        ],
+        "tips": [],
+        "note": "チャプター1終了"
+    },
+    {
+        "storyID": "01_03_07",
+        "speaker": "",
+        "text": "【第1章 終わり】\n\nお読みいただきありがとうございました。",
+        "tags": [],
+        "event": {
+            "type": "NONE",
+            "payload": {}
+        },
+        "flags": {},
+        "effects": [],
+        "tips": [],
+        "note": "エンド画面"
+    }
+]

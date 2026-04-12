@@ -1,0 +1,297 @@
+/* ============================================
+   NovelScreen Styles
+   ============================================ */
+
+.novel-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg-dark);
+    position: relative;
+}
+
+/* ===== Header ===== */
+.novel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-ui);
+}
+
+.novel-header-left,
+.novel-header-right {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.novel-header-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    background: rgba(37, 37, 50, 0.8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.novel-header-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text-primary);
+}
+
+.novel-header-btn.active {
+    background: var(--color-primary);
+    color: var(--color-bg-dark);
+    border-color: var(--color-primary);
+}
+
+/* Progress indicator */
+.novel-progress {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+/* ===== Main Content ===== */
+.novel-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    padding-bottom: 200px;
+    min-height: 100vh;
+}
+
+/* Background Layer */
+.novel-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: var(--z-background);
+}
+
+.novel-background-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg,
+            #1a2a1a 0%,
+            #0d150d 50%,
+            #0a100a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* Character Layer */
+.novel-character {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-character);
+}
+
+.novel-character-placeholder {
+    width: 300px;
+    height: 400px;
+    background: linear-gradient(180deg, transparent 0%, rgba(201, 162, 39, 0.1) 100%);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* ===== Dialog Box ===== */
+.novel-dialog {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-dialog);
+    padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg);
+}
+
+.novel-dialog-box {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: linear-gradient(180deg,
+            rgba(26, 26, 36, 0.95) 0%,
+            rgba(13, 13, 18, 0.98) 100%);
+    border: 2px solid var(--color-border-gold);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    position: relative;
+    cursor: pointer;
+}
+
+.novel-dialog-box::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 30px;
+    right: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+}
+
+.novel-speaker {
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
+    color: var(--color-text-gold);
+    margin-bottom: var(--spacing-sm);
+    min-height: 1.5em;
+}
+
+.novel-text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    line-height: 1.8;
+    min-height: 3em;
+}
+
+.novel-indicator {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-lg);
+    color: var(--color-text-gold);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ===== Choice Buttons ===== */
+.novel-choices {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.novel-choice-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-family: var(--font-display);
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg-medium) 100%);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.novel-choice-btn:hover {
+    border-color: var(--color-primary);
+    background: linear-gradient(180deg, var(--color-bg-medium) 0%, var(--color-bg-light) 100%);
+    box-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
+    transform: translateX(5px);
+}
+
+/* ===== Title Call Overlay ===== */
+.title-call-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(10, 10, 15, 0.95) 50%,
+            rgba(0, 0, 0, 0.9) 100%);
+    animation: titleCallFade 3s ease-in-out forwards;
+}
+
+.title-call-text {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--color-text-gold);
+    text-align: center;
+    text-shadow:
+        0 0 20px rgba(201, 162, 39, 0.5),
+        0 0 40px rgba(201, 162, 39, 0.3);
+    padding: var(--spacing-xl);
+    letter-spacing: 0.1em;
+    animation: titleTextGlow 3s ease-in-out forwards;
+}
+
+.title-call-decoration {
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-primary),
+            transparent);
+    margin-top: var(--spacing-lg);
+}
+
+@keyframes titleCallFade {
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes titleTextGlow {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+
+    20% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    80% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.05) translateY(-10px);
+    }
+}

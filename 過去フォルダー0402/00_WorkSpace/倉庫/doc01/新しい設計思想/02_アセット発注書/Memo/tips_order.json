@@ -1,0 +1,24 @@
+{
+    "//": "🎨 Tips画像 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "TIPS_IMAGE"
+    },
+    "TIPS_ASSETS": [
+        {
+            "ID": "tip_example_01",
+            "TITLE": "概念名（例：魔力の流れ）",
+            "DESCRIPTION": "画像の説明（例：青白く光るエネルギーの奔流が空間を漂っている抽象的なイメージ）",
+            "VISUAL_REFERENCE": {
+                "STYLE": "幻想的、抽象的、魔法的",
+                "COLORS": "青、白、半透明",
+                "ELEMENTS": "光の粒子、流線型"
+            },
+            "OUTPUT_FILENAME": "src/assets/tips/tip_magic_flow.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "1920x1080",
+        "FORMAT": "JPG or PNG"
+    }
+}

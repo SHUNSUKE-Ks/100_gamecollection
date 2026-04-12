@@ -1,0 +1,57 @@
+{
+    "enemies": [
+        {
+            "id": "monster_01",
+            "name": "スライム",
+            "label": "SLIME",
+            "tags": [
+                "WEAK",
+                "WATER"
+            ],
+            "image": "enemy/Monster_01.png",
+            "rarity": 1,
+            "stats": {
+                "hp": 50,
+                "mp": 0,
+                "atk": 10,
+                "def": 5
+            },
+            "skills": [
+                "溶解液"
+            ],
+            "description": "初心者向けのモンスター。ぷるぷるしている。"
+        },
+        {
+            "id": "monster_02",
+            "name": "ウルフ",
+            "label": "BEAST",
+            "tags": [
+                "FAST",
+                "PHYSICAL"
+            ],
+            "image": "enemy/Monster_02.png",
+            "rarity": 2,
+            "stats": {
+                "hp": 120,
+                "mp": 20,
+                "atk": 25,
+                "def": 10
+            },
+            "skills": [
+                "噛みつき",
+                "遠吠え"
+            ],
+            "description": "森に生息する凶暴な狼。"
+        }
+    ],
+    "categories": [
+        {
+            "id": "SLIME",
+            "label": "粘体"
+        },
+        {
+            "id": "BEAST",
+            "label": "魔獣"
+        }
+    ]
+}

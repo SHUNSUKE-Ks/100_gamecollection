@@ -1,0 +1,226 @@
+{
+    "//": "🎨 NPC画像生成依頼書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-01-12",
+        "PROJECT": "Novel PWA - 理の魔法使い",
+        "ARTIST": "",
+        "STATUS": "未着手",
+        "PRIORITY": "中"
+    },
+    "NPCS": [
+        {
+            "NPC_ID": "npc_merchant_001",
+            "NPC_NAME": "マルコ",
+            "ROLE": "商人",
+            "LOCATION": "王都",
+            "DESCRIPTION": "王都で雑貨店を営む陽気な商人。旅人に必要な物資を提供し、時折有益な情報も教えてくれる。",
+            "VISUAL_REFERENCE": {
+                "AGE": "30代後半",
+                "HAIR": "茶髪、短め",
+                "BUILD": "中肉、やや太め",
+                "OUTFIT": "商人の服、エプロン、革のベルトに金貨袋",
+                "ACCESSORIES": "そろばん、商品リスト",
+                "PERSONALITY_VISUAL": "笑顔が多い、人懐っこい表情"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/merchant_marco.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "店の前に立つ陽気な商人",
+                    "POSE": "両手を広げて歓迎するポーズ"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "通常（笑顔）",
+                        "FILENAME": "npc/faces/marco_normal.png"
+                    },
+                    {
+                        "EXPRESSION": "驚き",
+                        "FILENAME": "npc/faces/marco_surprised.png"
+                    }
+                ]
+            }
+        },
+        {
+            "NPC_ID": "npc_elder_001",
+            "NPC_NAME": "長老エルダン",
+            "ROLE": "村の長老",
+            "LOCATION": "始まりの村",
+            "DESCRIPTION": "始まりの村を治める賢明な長老。古の知識を持ち、主人公に旅の指針を与える。",
+            "VISUAL_REFERENCE": {
+                "AGE": "70代",
+                "HAIR": "白髪、長い髭",
+                "BUILD": "痩せ型、やや猫背",
+                "OUTFIT": "村長の質素なローブ、木の杖",
+                "ACCESSORIES": "古い書物、眼鏡",
+                "PERSONALITY_VISUAL": "穏やかで知恵に満ちた目"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/elder_eldan.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "杖を持って立つ老賢者",
+                    "POSE": "片手で杖を持ち、もう片手で語りかけるポーズ"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "穏やか",
+                        "FILENAME": "npc/faces/eldan_calm.png"
+                    },
+                    {
+                        "EXPRESSION": "心配",
+                        "FILENAME": "npc/faces/eldan_worried.png"
+                    }
+                ]
+            }
+        },
+        {
+            "NPC_ID": "npc_blacksmith_001",
+            "NPC_NAME": "ガルド",
+            "ROLE": "鍛冶屋",
+            "LOCATION": "鉱山街",
+            "DESCRIPTION": "腕利きの鍛冶職人。武器や防具の修理・強化を請け負う。口は悪いが腕は確か。",
+            "VISUAL_REFERENCE": {
+                "AGE": "40代",
+                "HAIR": "坊主頭、頭にバンダナ",
+                "BUILD": "筋肉質、がっしり",
+                "OUTFIT": "革のエプロン、腕まくりしたシャツ",
+                "ACCESSORIES": "鍛冶ハンマー、トング",
+                "PERSONALITY_VISUAL": "厳しい目つき、腕組みポーズ"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/blacksmith_gald.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "鍛冶場の前に立つ職人",
+                    "POSE": "腕組みして仕事を見定める姿"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "不機嫌",
+                        "FILENAME": "npc/faces/gald_grumpy.png"
+                    },
+                    {
+                        "EXPRESSION": "満足（良い仕事）",
+                        "FILENAME": "npc/faces/gald_satisfied.png"
+                    }
+                ]
+            }
+        },
+        {
+            "NPC_ID": "npc_innkeeper_001",
+            "NPC_NAME": "リサ",
+            "ROLE": "宿屋の女将",
+            "LOCATION": "森の入り口",
+            "DESCRIPTION": "森の入り口にある宿を切り盛りする明るい女性。冒険者たちの憩いの場を提供する。",
+            "VISUAL_REFERENCE": {
+                "AGE": "30代前半",
+                "HAIR": "栗色、後ろで束ねた髪",
+                "BUILD": "標準体型、健康的",
+                "OUTFIT": "宿屋の制服ワンピース、白いエプロン",
+                "ACCESSORIES": "トレイ、鍵束",
+                "PERSONALITY_VISUAL": "温かい笑顔、気さくな雰囲気"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/innkeeper_lisa.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "宿屋のカウンターに立つ女将",
+                    "POSE": "お盆を持って迎えるポーズ"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "笑顔",
+                        "FILENAME": "npc/faces/lisa_smile.png"
+                    },
+                    {
+                        "EXPRESSION": "心配",
+                        "FILENAME": "npc/faces/lisa_worried.png"
+                    }
+                ]
+            }
+        },
+        {
+            "NPC_ID": "npc_mage_001",
+            "NPC_NAME": "アルケイド",
+            "ROLE": "魔法学者",
+            "LOCATION": "魔法塔",
+            "DESCRIPTION": "魔法塔に住む風変わりな魔法学者。古代魔法の研究に没頭している。",
+            "VISUAL_REFERENCE": {
+                "AGE": "年齢不詳（見た目50代）",
+                "HAIR": "銀髪、ボサボサ",
+                "BUILD": "痩せ型、長身",
+                "OUTFIT": "星模様のローブ、尖った帽子",
+                "ACCESSORIES": "魔法書、水晶玉、杖",
+                "PERSONALITY_VISUAL": "好奇心に満ちた目、時々ぼんやり"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/mage_arcaid.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "魔法塔の書斎にいる魔法学者",
+                    "POSE": "魔法書を読みながら首をかしげる"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "興味津々",
+                        "FILENAME": "npc/faces/arcaid_curious.png"
+                    },
+                    {
+                        "EXPRESSION": "ひらめき",
+                        "FILENAME": "npc/faces/arcaid_eureka.png"
+                    }
+                ]
+            }
+        },
+        {
+            "NPC_ID": "npc_guard_001",
+            "NPC_NAME": "カイル",
+            "ROLE": "衛兵隊長",
+            "LOCATION": "王都",
+            "DESCRIPTION": "王都の衛兵隊を率いる若き隊長。正義感が強く、民を守ることに誇りを持つ。",
+            "VISUAL_REFERENCE": {
+                "AGE": "20代後半",
+                "HAIR": "金髪、短髪、整った髪型",
+                "BUILD": "筋肉質、長身",
+                "OUTFIT": "王国衛兵の鎧、マント、胸に紋章",
+                "ACCESSORIES": "剣と盾、衛兵隊長の証",
+                "PERSONALITY_VISUAL": "凛とした表情、真っ直ぐな目"
+            },
+            "ASSETS": {
+                "STANDING_ILLUSTRATION": {
+                    "FILENAME": "npc/guard_kyle.png",
+                    "SIZE": "1024x1536",
+                    "DESCRIPTION": "門の前に立つ衛兵隊長",
+                    "POSE": "敬礼または剣を構えた警戒姿勢"
+                },
+                "FACE_ICONS": [
+                    {
+                        "EXPRESSION": "真剣",
+                        "FILENAME": "npc/faces/kyle_serious.png"
+                    },
+                    {
+                        "EXPRESSION": "笑顔",
+                        "FILENAME": "npc/faces/kyle_smile.png"
+                    }
+                ]
+            }
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "FORMAT": "PNG (透過あり)",
+        "COLOR_PROFILE": "sRGB",
+        "STANDING_SIZE": "1024x1536px",
+        "FACE_ICON_SIZE": "256x256px",
+        "STYLE": "アニメ調イラスト、ファンタジーRPG風"
+    },
+    "OUTPUT_PATHS": {
+        "BASE_DIR": "src/assets/chara/npc/",
+        "FACES_DIR": "src/assets/chara/npc/faces/"
+    },
+    "TOTAL_ASSETS": {
+        "STANDING_ILLUSTRATIONS": 6,
+        "FACE_ICONS": 12,
+        "TOTAL": 18
+    }
+}

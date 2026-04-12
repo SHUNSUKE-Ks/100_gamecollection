@@ -1,0 +1,141 @@
+{
+    "events": [
+        {
+            "id": "quest_001",
+            "title": "二人の旅立ちの時",
+            "description": "ギルドで正式にパーティを結成した二人。初任務として平原のスライム討伐に向かう。",
+            "type": "quest",
+            "location": "FOREST_ENTRANCE",
+            "episode": "ep1",
+            "chapter": "ep1-ch1",
+            "reward": "ゴールド500",
+            "difficulty": 1,
+            "startStoryID": "Q_01_01_01",
+            "relatedAssets": {
+                "background": "loc_forest_entrance",
+                "bgm": "mori01",
+                "items": [
+                    "material_herb_001"
+                ],
+                "enemies": []
+            }
+        },
+        {
+            "id": "quest_002",
+            "title": "初任務達成",
+            "description": "スライム退治の任務を終え、ギルドへ報告に向かう。初めての報酬は目前だ。",
+            "type": "quest",
+            "location": "FOREST_ENTRANCE",
+            "episode": "ep1",
+            "chapter": "ep1-ch1",
+            "reward": "装備のメンテナンス",
+            "difficulty": 1,
+            "startStoryID": "Q_02_01_01",
+            "relatedAssets": {
+                "background": "loc_forest_entrance",
+                "bgm": "mori01",
+                "items": [],
+                "enemies": []
+            }
+        },
+        {
+            "id": "quest_003",
+            "title": "森の遺跡の調査",
+            "description": "長老からの依頼。森の奥にある遺跡の調査に向かう。危険なモンスターが出現するらしい。",
+            "type": "quest",
+            "location": "FOREST_RUINS",
+            "episode": "ep1",
+            "chapter": "ep1-ch2",
+            "reward": "ゴールド150、薬草x3",
+            "difficulty": 2,
+            "startStoryID": "Q_03_01_01",
+            "relatedAssets": {
+                "background": "loc_forest_ruins",
+                "bgm": "mori01",
+                "items": [
+                    "material_herb_001"
+                ],
+                "enemies": [
+                    "monster_01"
+                ]
+            }
+        },
+        {
+            "id": "quest_004",
+            "title": "行商人の護衛",
+            "description": "十字路付近で山賊の被害が増えている。行商人を次の町まで護衛してほしい。",
+            "type": "quest",
+            "location": "CROSSROADS",
+            "episode": "ep2",
+            "chapter": "ep2-ch1",
+            "reward": "ゴールド200、旅人のマント",
+            "difficulty": 2,
+            "startStoryID": "Q_04_01_01",
+            "relatedAssets": {
+                "background": "loc_crossroads",
+                "bgm": "field01",
+                "items": [],
+                "enemies": [
+                    "bandit_01"
+                ]
+            }
+        },
+        {
+            "id": "quest_005",
+            "title": "洞窟の魔物退治",
+            "description": "試練の洞窟に強力な魔物が住み着いた。旅人と協力して討伐せよ。",
+            "type": "quest",
+            "location": "CAVE_ENTRANCE",
+            "episode": "ep2",
+            "chapter": "ep2-ch2",
+            "reward": "ゴールド300、勇者の剣",
+            "difficulty": 3,
+            "startStoryID": "Q_05_01_01",
+            "relatedAssets": {
+                "background": "loc_cave",
+                "bgm": "dungeon01",
+                "items": [
+                    "material_ore_001"
+                ],
+                "enemies": [
+                    "boss_01"
+                ]
+            }
+        },
+        {
+            "id": "sub_001",
+            "title": "星空観測",
+            "description": "魔法使いの弟子から、塔の屋上で一緒に星を見ないかと誘われた。",
+            "type": "sub",
+            "location": "MAGIC_TOWER",
+            "episode": "ep1",
+            "chapter": "ep1-ch1",
+            "reward": "星のかけら",
+            "difficulty": 1,
+            "startStoryID": null,
+            "relatedAssets": {
+                "background": "loc_tower_roof",
+                "bgm": "night01",
+                "items": [],
+                "enemies": []
+            }
+        }
+    ],
+    "types": [
+        {
+            "id": "main",
+            "label": "メインストーリー",
+            "color": "#ef4444"
+        },
+        {
+            "id": "quest",
+            "label": "クエスト",
+            "color": "#f59e0b"
+        },
+        {
+            "id": "sub",
+            "label": "サブイベント",
+            "color": "#3b82f6"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+[
+    {
+        "id": "hero",
+        "name": "主人公",
+        "description": "記憶を失った若き剣士。森の中で目覚めた。",
+        "defaultTags": [
+            "chara_hero_normal_1024x1024"
+        ],
+        "portraitTag": "chara_hero_face_512x512",
+        "promptTemplate": "young swordsman, fantasy, anime style, brown hair",
+        "status": {
+            "hp": 100,
+            "mp": 30,
+            "str": 12,
+            "dex": 10,
+            "int": 8
+        },
+        "skills": [
+            "slash",
+            "guard"
+        ]
+    }
+]

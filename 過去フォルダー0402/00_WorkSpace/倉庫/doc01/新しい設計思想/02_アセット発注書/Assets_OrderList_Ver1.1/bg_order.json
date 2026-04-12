@@ -1,0 +1,25 @@
+{
+    "//": "🎨 背景 (Background) 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "BACKGROUND",
+        "STATUS": "PENDING"
+    },
+    "BACKGROUNDS": [
+        {
+            "ID": "bg_01",
+            "NAME": "Village Day",
+            "DESCRIPTION": "Peaceful village during the day.",
+            "VISUAL_REFERENCE": {
+                "SETTING": "Fantasy Village",
+                "TIME_OF_DAY": "Day",
+                "MOOD": "Peaceful"
+            },
+            "OUTPUT_FILENAME": "src/assets/bg/village_day.jpg"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "1920x1080",
+        "FORMAT": "JPG"
+    }
+}

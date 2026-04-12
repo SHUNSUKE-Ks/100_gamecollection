@@ -1,0 +1,158 @@
+{
+    "meta": {
+        "title": "理の魔法使い",
+        "type": "short_novel",
+        "version": "1.1",
+        "storyIdFormat": "[TYPE]_EP_CH_TXT"
+    },
+    "scenario": [
+        {
+            "storyID": "M_01_01_01",
+            "scene": 1,
+            "type": "SCENE_START",
+            "questTitle": "理の魔法使い - Chapter 1",
+            "sceneTags": [
+                "bg_magic_tower_interior_1280x720"
+            ],
+            "note": "Chapter1開始"
+        },
+        {
+            "storyID": "M_01_01_02",
+            "scene": 1,
+            "speaker": "ナレーション",
+            "text": "高くそびえる塔の前に、あなたは立っている。"
+        },
+        {
+            "storyID": "M_01_01_03",
+            "scene": 1,
+            "speaker": "理の魔法使い",
+            "text": "ここへ来た理由は、理を求めたからだろう。",
+            "tags": [
+                "chara_mage_calm_512x768"
+            ]
+        },
+        {
+            "storyID": "M_01_01_04",
+            "scene": 1,
+            "event": {
+                "type": "TAP_NEXT",
+                "payload": {
+                    "nextStoryID": "M_01_02_01"
+                }
+            }
+        },
+        {
+            "storyID": "M_01_02_01",
+            "scene": 2,
+            "type": "SCENE_START",
+            "questTitle": "理の魔法使い - Chapter 2",
+            "sceneTags": [
+                "bg_magic_tower_hall_1280x720"
+            ],
+            "note": "Chapter2開始"
+        },
+        {
+            "storyID": "M_01_02_02",
+            "scene": 2,
+            "speaker": "理の魔法使い",
+            "text": "理には道がある。君はどれを選ぶ？"
+        },
+        {
+            "storyID": "M_01_02_03",
+            "scene": 2,
+            "event": {
+                "type": "CHOICE",
+                "payload": {
+                    "choices": [
+                        {
+                            "label": "力の理",
+                            "nextStoryID": "M_01_03_01"
+                        },
+                        {
+                            "label": "調和の理",
+                            "nextStoryID": "M_01_03_10"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "storyID": "M_01_03_01",
+            "scene": 3,
+            "type": "SCENE_START",
+            "questTitle": "理の魔法使い - 力の理",
+            "sceneTags": [
+                "bg_magic_tower_library_1280x720"
+            ],
+            "note": "Chapter3 力の理"
+        },
+        {
+            "storyID": "M_01_03_02",
+            "scene": 3,
+            "speaker": "理の魔法使い",
+            "text": "力とは、理解を伴わねば破壊となる。"
+        },
+        {
+            "storyID": "M_01_03_03",
+            "scene": 3,
+            "event": {
+                "type": "TAP_NEXT",
+                "payload": {
+                    "nextStoryID": "M_01_04_01"
+                }
+            }
+        },
+        {
+            "storyID": "M_01_03_10",
+            "scene": 3,
+            "type": "SCENE_START",
+            "questTitle": "理の魔法使い - 調和の理",
+            "sceneTags": [
+                "bg_magic_tower_library_1280x720"
+            ],
+            "note": "Chapter3 調和の理"
+        },
+        {
+            "storyID": "M_01_03_11",
+            "scene": 3,
+            "speaker": "理の魔法使い",
+            "text": "調和とは、他者を知ることから始まる。"
+        },
+        {
+            "storyID": "M_01_03_12",
+            "scene": 3,
+            "event": {
+                "type": "TAP_NEXT",
+                "payload": {
+                    "nextStoryID": "M_01_04_01"
+                }
+            }
+        },
+        {
+            "storyID": "M_01_04_01",
+            "scene": 4,
+            "type": "SCENE_START",
+            "questTitle": "理の魔法使い - Final",
+            "sceneTags": [
+                "bg_magic_tower_rooftop_1280x720"
+            ],
+            "note": "Chapter4開始"
+        },
+        {
+            "storyID": "M_01_04_02",
+            "scene": 4,
+            "speaker": "理の魔法使い",
+            "text": "選んだ理こそが、君自身だ。"
+        },
+        {
+            "storyID": "M_01_04_03",
+            "scene": 4,
+            "event": {
+                "type": "END",
+                "payload": {
+                    "goto": "RESULT"
+                }
+            }
+        }
+    ]
+}

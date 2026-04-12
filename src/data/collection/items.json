@@ -1,0 +1,45 @@
+{
+    "categories": [
+        {
+            "id": "consumable",
+            "label": "消費アイテム"
+        },
+        {
+            "id": "equipment",
+            "label": "装備品"
+        },
+        {
+            "id": "key",
+            "label": "貴重品"
+        }
+    ],
+    "items": [
+        {
+            "id": "potion_hp_001",
+            "name": "ポーション",
+            "category": "consumable",
+            "icon": "item/potion.png",
+            "tags": [
+                "HEAL"
+            ],
+            "rarity": 1,
+            "price": 50,
+            "effect": "HPを50回復する。",
+            "description": "薬草を煮詰めて作った基本的な回復薬。"
+        },
+        {
+            "id": "sword_iron_001",
+            "name": "鉄の剣",
+            "category": "equipment",
+            "icon": "item/sword.png",
+            "tags": [
+                "WEAPON",
+                "SWORD"
+            ],
+            "rarity": 1,
+            "price": 200,
+            "effect": "攻撃力+10",
+            "description": "量産品の鉄剣。扱いやすい。"
+        }
+    ]
+}

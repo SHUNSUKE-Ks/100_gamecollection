@@ -1,0 +1,26 @@
+{
+    "skills": [
+        {
+            "id": "skill_slash",
+            "name": "強斬り",
+            "description": "力を込めて敵を斬りつける。",
+            "mp_cost": 5,
+            "effect": "敵単体に物理ダメージ(大)",
+            "tags": [
+                "PHYSICAL",
+                "SWORD"
+            ]
+        },
+        {
+            "id": "skill_fireball",
+            "name": "ファイアボール",
+            "description": "灼熱の火球を放つ魔法。",
+            "mp_cost": 10,
+            "effect": "敵単体に火属性ダメージ",
+            "tags": [
+                "MAGIC",
+                "FIRE"
+            ]
+        }
+    ]
+}

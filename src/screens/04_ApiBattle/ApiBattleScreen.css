@@ -1,0 +1,559 @@
+/* ApiBattleScreen.css */
+.api-battle-screen {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0c29, #1a1a3e, #24243e);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Connection Status Indicator */
+.api-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.api-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+.api-status-dot.connected { background: #68d391; box-shadow: 0 0 8px #68d391; }
+.api-status-dot.connecting { background: #fbd38d; box-shadow: 0 0 8px #fbd38d; }
+.api-status-dot.error { background: #fc8181; box-shadow: 0 0 8px #fc8181; }
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.api-status-text {
+    color: #a0aec0;
+}
+
+.api-status-label {
+    margin-left: auto;
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+}
+
+/* Header */
+.api-battle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 2rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.api-battle-turn {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Scene Background */
+.api-battle-scene {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.api-battle-scene-bg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+}
+
+.api-battle-scene-bg svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Main Battle Area */
+.api-battle-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    gap: 1rem;
+}
+
+/* Enemy Display */
+.api-battle-enemy-area {
+    text-align: center;
+    animation: enemy-appear 0.8s ease-out;
+}
+
+@keyframes enemy-appear {
+    0% { transform: scale(0.5) translateY(-30px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.api-battle-enemy-image {
+    width: 220px;
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 0.8rem;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 30px rgba(100, 100, 255, 0.15);
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.api-battle-enemy-image.hit {
+    animation: enemy-hit 0.4s ease-out;
+    box-shadow: 0 0 40px rgba(255, 80, 80, 0.5);
+}
+
+@keyframes enemy-hit {
+    0% { transform: translateX(0); filter: brightness(2); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); filter: brightness(1); }
+}
+
+.api-battle-enemy-image svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.api-battle-enemy-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0.3rem 0;
+    color: #e2e8f0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* HP Bar */
+.api-battle-hp-bar {
+    width: 260px;
+    height: 22px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 12px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.api-battle-hp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    border-radius: 12px;
+    transition: width 0.6s ease-out;
+    position: relative;
+}
+
+.api-battle-hp-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+    border-radius: 12px 12px 0 0;
+}
+
+.api-battle-hp-fill.low {
+    background: linear-gradient(90deg, #f56565, #e53e3e);
+}
+
+.api-battle-hp-fill.critical {
+    background: linear-gradient(90deg, #fc8181, #e53e3e);
+    animation: hp-critical 1s infinite;
+}
+
+@keyframes hp-critical {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.api-battle-hp-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Battle Log */
+.api-battle-log {
+    position: absolute;
+    top: 6.5rem;
+    right: 1rem;
+    width: 320px;
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 0.6rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    z-index: 5;
+}
+
+.api-battle-log-item {
+    margin-bottom: 0.3rem;
+    padding: 0.15rem 0.3rem;
+    border-radius: 4px;
+    animation: log-appear 0.3s ease-out;
+}
+
+@keyframes log-appear {
+    0% { opacity: 0; transform: translateX(10px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.api-battle-log-damage { color: #fc8181; }
+.api-battle-log-heal { color: #68d391; }
+.api-battle-log-info { color: #cbd5e0; }
+.api-battle-log-system { color: #fbd38d; }
+
+/* Command Buttons */
+.api-battle-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1.2rem 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+    backdrop-filter: blur(6px);
+    flex-wrap: wrap;
+}
+
+.api-battle-cmd-btn {
+    padding: 0.9rem 1.8rem;
+    background: linear-gradient(135deg, #4a5568, #2d3748);
+    border: 1px solid #718096;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 120px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.api-battle-cmd-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.api-battle-cmd-btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.api-battle-cmd-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #667eea, #5a67d8);
+    border-color: #818cf8;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.api-battle-cmd-btn:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.api-battle-cmd-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.api-battle-cmd-btn .cmd-type {
+    display: block;
+    font-size: 0.7rem;
+    color: #a0aec0;
+    margin-top: 0.2rem;
+}
+
+/* Result Overlay */
+.api-battle-result-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: overlay-appear 0.5s ease-out;
+}
+
+@keyframes overlay-appear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.api-battle-result {
+    text-align: center;
+    animation: result-pop 0.6s ease-out;
+}
+
+@keyframes result-pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.api-battle-result-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.5rem;
+}
+
+.api-battle-result-title.victory {
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3);
+}
+
+.api-battle-result-title.fled {
+    color: #63b3ed;
+    text-shadow: 0 0 20px rgba(99, 179, 237, 0.5);
+}
+
+.api-battle-result-rewards {
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.api-battle-result-rewards p {
+    margin: 0.4rem 0;
+}
+
+.api-battle-result-btn {
+    padding: 0.8rem 3rem;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #667eea, #5a67d8);
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.api-battle-result-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* Error Display */
+.api-battle-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(200, 30, 30, 0.9);
+    padding: 2rem 3rem;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 50;
+    border: 1px solid rgba(255, 100, 100, 0.5);
+    max-width: 450px;
+}
+
+.api-battle-error h3 {
+    color: #ffd700;
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+}
+
+.api-battle-error p {
+    color: #fed7d7;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.api-battle-error button {
+    padding: 0.6rem 2rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: background 0.2s;
+}
+
+.api-battle-error button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Loading Spinner */
+.api-battle-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 1.5rem;
+}
+
+.api-battle-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 215, 0, 0.2);
+    border-top-color: #ffd700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.api-battle-loading-text {
+    color: #a0aec0;
+    font-size: 1.1rem;
+}
+
+/* Message display */
+.api-battle-message {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.6);
+    text-align: center;
+    font-size: 1.1rem;
+    color: #fbd38d;
+    border-top: 1px solid rgba(255, 215, 0, 0.15);
+    min-height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: msg-appear 0.3s ease-out;
+}
+
+@keyframes msg-appear {
+    0% { opacity: 0; transform: translateY(5px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── [1B-2] プレイヤーHP/MPバー ──────────────────────── */
+.api-player-status {
+    width: 100%;
+    padding: 0.5rem 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.api-player-stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.api-player-stat-label {
+    font-family: 'DotGothic16', 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: #a0aec0;
+    width: 22px;
+    flex-shrink: 0;
+}
+
+.api-player-bar-outer {
+    flex: 1;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.api-player-bar-hp {
+    height: 100%;
+    background: linear-gradient(90deg, #48bb78, #68d391);
+    border-radius: 6px;
+    transition: width 0.5s ease-out;
+}
+
+.api-player-bar-hp.low {
+    background: linear-gradient(90deg, #ed8936, #fbd38d);
+}
+
+.api-player-bar-hp.critical {
+    background: linear-gradient(90deg, #e53e3e, #fc8181);
+    animation: hp-critical 1s infinite;
+}
+
+.api-player-bar-mp {
+    height: 100%;
+    background: linear-gradient(90deg, #4299e1, #63b3ed);
+    border-radius: 6px;
+    transition: width 0.4s ease-out;
+}
+
+.api-player-stat-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: #e2e8f0;
+    width: 56px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* ── [1B-2-5] MPコスト表示 / MP不足 ──────────────────── */
+.cmd-mp {
+    display: block;
+    font-size: 0.65rem;
+    color: #63b3ed;
+    margin-top: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.api-battle-cmd-btn.mp-lacking {
+    opacity: 0.35;
+}
+
+/* ── [1B-3] 敵アクションログ色 ────────────────────────── */
+.api-battle-log-enemy {
+    color: #fc8181;
+}

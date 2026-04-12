@@ -1,0 +1,25 @@
+{
+    "//": "🎨 アイテムアイコン 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "ITEM_ICON"
+    },
+    "ITEM_ASSETS": [
+        {
+            "ID": "item_example_01",
+            "NAME": "アイテム名（例：炎の剣）",
+            "DESCRIPTION": "アイテムの説明（例：赤く燃え盛る刀身を持つ剣）",
+            "VISUAL_REFERENCE": {
+                "TYPE": "Weapon / Sword",
+                "MATERIAL": "Steel, Fire",
+                "COLOR": "Red, Orange, Metallic"
+            },
+            "OUTPUT_FILENAME": "src/assets/items/item_fire_sword.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "128x128 (or 256x256 for high res)",
+        "FORMAT": "PNG (Transparent Background)",
+        "STYLE": "Game Icon, Flat or Semi-Realistic"
+    }
+}

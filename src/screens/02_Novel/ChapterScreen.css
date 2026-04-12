@@ -1,0 +1,173 @@
+/* ============================================
+   ChapterScreen Styles
+   ============================================ */
+
+.chapter-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-dark);
+    position: relative;
+    cursor: pointer;
+
+    /* Fade-in on enter */
+    animation: chapterFadeIn 1s ease forwards;
+}
+
+/* Fade-out state */
+.chapter-screen.fading-out {
+    animation: chapterFadeOut 0.8s ease forwards;
+}
+
+@keyframes chapterFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes chapterFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.chapter-content {
+    text-align: center;
+    animation: chapterSlideUp 1.2s ease forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+@keyframes chapterSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chapter-number {
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-secondary);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+    animation: chapterTextFade 1s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+@keyframes chapterTextFade {
+    from {
+        opacity: 0;
+        letter-spacing: 0.5em;
+    }
+
+    to {
+        opacity: 1;
+        letter-spacing: 0.3em;
+    }
+}
+
+.chapter-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-3xl);
+    color: var(--color-text-gold);
+    text-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
+    margin-bottom: var(--spacing-lg);
+    animation: chapterTitleGlow 2s ease-in-out infinite;
+    animation-delay: 1.5s;
+}
+
+@keyframes chapterTitleGlow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(201, 162, 39, 0.4);
+    }
+
+    50% {
+        text-shadow: 0 0 40px rgba(201, 162, 39, 0.7),
+            0 0 60px rgba(201, 162, 39, 0.4);
+    }
+}
+
+.chapter-description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-muted);
+    max-width: 500px;
+    line-height: 1.8;
+    animation: chapterDescFade 1s ease forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+@keyframes chapterDescFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.chapter-skip {
+    position: absolute;
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    z-index: 10;
+}
+
+.chapter-skip:hover {
+    color: var(--color-text-primary);
+}
+
+/* Click hint */
+.chapter-hint {
+    position: absolute;
+    bottom: var(--spacing-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    opacity: 0;
+    animation: hintPulse 2s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+@keyframes hintPulse {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Fading out state - hide hint */
+.chapter-screen.fading-out .chapter-hint {
+    display: none;
+}

@@ -1,0 +1,46 @@
+[
+    {
+        "storyID": "API_TEST_01",
+        "scene": 1,
+        "type": "SCENE_START",
+        "questTitle": "API Battle テスト",
+        "backgroundImage": "bg/plains_day.png",
+        "bgm": "adventure_start",
+        "note": "APIバトルテスト開始"
+    },
+    {
+        "storyID": "API_TEST_02",
+        "scene": 1,
+        "speaker": "システム",
+        "text": "BS01 API バトルテストを開始します。APIサーバー (localhost:3000) との通信を確認します。",
+        "backgroundImage": "bg/plains_day.png"
+    },
+    {
+        "storyID": "API_TEST_03",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "目の前にモンスターが現れた！ APIバトル開始！",
+        "backgroundImage": "bg/plains_day.png",
+        "event": {
+            "type": "API_BATTLE_START"
+        }
+    },
+    {
+        "storyID": "API_TEST_04",
+        "scene": 1,
+        "speaker": "システム",
+        "text": "APIバトルテスト完了！ 正常にAPIとの通信ができました。",
+        "backgroundImage": "bg/plains_day.png"
+    },
+    {
+        "storyID": "API_TEST_05",
+        "scene": 1,
+        "event": {
+            "type": "END",
+            "payload": {
+                "goto": "TITLE"
+            }
+        },
+        "note": "テスト終了、タイトルに戻る"
+    }
+]

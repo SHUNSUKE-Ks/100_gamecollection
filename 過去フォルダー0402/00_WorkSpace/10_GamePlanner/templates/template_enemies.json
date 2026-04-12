@@ -1,0 +1,47 @@
+{
+    "enemies": [
+        {
+            "id": "monster_xxx_001",
+            "name": "モンスター名",
+            "label": "BEAST",
+            "image": "enemy/xxx.png",
+            "rarity": 1,
+            "level": 5,
+            "tags": [
+                "TAG1",
+                "TAG2"
+            ],
+            "stats": {
+                "hp": 100,
+                "mp": 20,
+                "atk": 15,
+                "def": 10,
+                "matk": 5,
+                "mdef": 5,
+                "spd": 10,
+                "luk": 5
+            },
+            "skills": [
+                "スキル名1",
+                "スキル名2"
+            ],
+            "resistance": {
+                "fire": 0,
+                "ice": 0
+            },
+            "immunities": [],
+            "ai": "random",
+            "exp": 50,
+            "gold": 30,
+            "drops": [
+                {
+                    "itemId": "material_xxx",
+                    "chance": 50,
+                    "minCount": 1,
+                    "maxCount": 2
+                }
+            ],
+            "description": "モンスターの説明"
+        }
+    ]
+}

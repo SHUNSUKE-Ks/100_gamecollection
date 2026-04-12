@@ -1,0 +1,94 @@
+{
+    "description": "Home画面用キャラクター生成依頼リスト",
+    "characters": [
+        {
+            "id": "char_hoshino_rin",
+            "design": {
+                "name": "星野 凛 (Hoshino Rin)",
+                "base_prompt": "Anime style, 1girl, short black hair, purple eyes, calm expression, school uniform with blazer, green screen background, full body, standing pose",
+                "negative_prompt": "realistic, 3d, low quality, bad anatomy, text, watermark, extra limbs, deformed"
+            },
+            "emotion_prompts": [
+                {
+                    "emotion": "normal",
+                    "prompt": "neutral expression, slight smile, looking at viewer",
+                    "description": "通常"
+                },
+                {
+                    "emotion": "surprised",
+                    "prompt": "surprised expression, wide eyes, open mouth, blushing slightly",
+                    "description": "驚き"
+                },
+                {
+                    "emotion": "idle",
+                    "prompt": "sleepy expression, half-closed eyes, yawning, relaxed posture",
+                    "description": "アイドル（待機）"
+                },
+                {
+                    "emotion": "super",
+                    "prompt": "extremely happy, sparkling eyes, big smile, hearts around, blushing",
+                    "description": "超喜び"
+                },
+                {
+                    "emotion": "biribiri",
+                    "prompt": "angry expression, electric sparks, furrowed brows, clenched fists",
+                    "description": "ビリビリ（怒）"
+                },
+                {
+                    "emotion": "nadelu_reaction",
+                    "prompt": "embarrassed, blushing heavily, looking away, shy smile, hands on cheeks",
+                    "description": "撫でられ反応"
+                }
+            ],
+            "images": {},
+            "dialogues": []
+        },
+        {
+            "id": "char_sakura_mio",
+            "design": {
+                "name": "桜 澪 (Sakura Mio)",
+                "base_prompt": "Anime style, 1girl, long pink hair, blue eyes, cheerful expression, maid outfit, green screen background, full body, cute pose",
+                "negative_prompt": "realistic, 3d, low quality, bad anatomy, text, watermark, extra limbs, deformed"
+            },
+            "emotion_prompts": [
+                {
+                    "emotion": "normal",
+                    "prompt": "cheerful smile, hands clasped, looking at viewer",
+                    "description": "通常"
+                },
+                {
+                    "emotion": "surprised",
+                    "prompt": "surprised, eyes wide, hands up, gasping",
+                    "description": "驚き"
+                },
+                {
+                    "emotion": "idle",
+                    "prompt": "daydreaming, looking up, slight smile, relaxed",
+                    "description": "アイドル（待機）"
+                },
+                {
+                    "emotion": "super",
+                    "prompt": "overjoyed, jumping, sparkles, heart eyes, very happy",
+                    "description": "超喜び"
+                },
+                {
+                    "emotion": "biribiri",
+                    "prompt": "pouting, puffed cheeks, annoyed expression, arms crossed",
+                    "description": "ビリビリ（怒）"
+                },
+                {
+                    "emotion": "nadelu_reaction",
+                    "prompt": "melting, very happy, closed eyes, blushing, steam from head",
+                    "description": "撫でられ反応"
+                }
+            ],
+            "images": {},
+            "dialogues": []
+        }
+    ],
+    "notes": {
+        "green_screen": "背景はクロマキー処理のため緑一色を指定",
+        "emotion_count": "各キャラクター6種類の表情が必要",
+        "format": "生成後、imagesにBase64形式で格納"
+    }
+}

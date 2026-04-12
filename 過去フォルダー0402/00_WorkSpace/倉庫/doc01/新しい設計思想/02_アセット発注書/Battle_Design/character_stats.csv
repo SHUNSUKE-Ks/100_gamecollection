@@ -1,0 +1,4 @@
+ID,Name,Description,Tags,Image,HP,MP,ATK,DEF,Skills
+remi_unant,レミ・ウナント,"A mysterious young woman dressed in elegant dark attire...",GOTHIC_LOLI|TACTICIAN|WHITE_HAIR|MYSTERIOUS|ALLY,remi_unant/standing_01.png,100,50,20,15,Strategy|Shadow Bind
+latelle,ラテル,"実直な戦士。レミ宇ナントの盟友であり、前線でパーティーを支える。",ALLY|WARRIOR,hakuhatu.png,150,20,30,25,Slash|Guard
+justia,ユースティア,"高潔な騎士。自らの信念に従い、弱きを助けるために剣を振る。",ALLY|KNIGHT,Curea.png,140,30,25,28,Holy Smite|Heal

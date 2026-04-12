@@ -1,0 +1,1093 @@
+/* Story View Styles */
+
+.story-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #1e293b;
+}
+
+/* Sub Navigation */
+.story-sub-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background: #334155;
+    border-bottom: 1px solid #475569;
+}
+
+.story-sub-tabs {
+    display: flex;
+    gap: 4px;
+}
+
+.story-sub-tab {
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.story-sub-tab:hover {
+    background: #475569;
+    color: #e2e8f0;
+}
+
+.story-sub-tab.active {
+    background: #fbbf24;
+    color: #0f172a;
+}
+
+.story-view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #1e293b;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.view-toggle-btn {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.view-toggle-btn:hover {
+    background: #334155;
+}
+
+.view-toggle-btn.active {
+    background: #475569;
+    color: #fbbf24;
+}
+
+/* Content Layout */
+.story-content {
+    flex: 1;
+    overflow: hidden;
+}
+
+.story-main-layout {
+    display: flex;
+    height: 100%;
+}
+
+.story-event-layout {
+    height: 100%;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+/* Side Panel */
+.story-side-panel {
+    width: 280px;
+    min-width: 280px;
+    background: #0f172a;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: width 0.3s, min-width 0.3s;
+}
+
+.story-side-panel.closed {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.toggle-panel-btn {
+    position: absolute;
+    right: -24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 48px;
+    background: #334155;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    border-radius: 0 6px 6px 0;
+    z-index: 10;
+}
+
+.toggle-panel-btn:hover {
+    background: #475569;
+    color: #fbbf24;
+}
+
+/* Stepper */
+.story-stepper {
+    padding: 16px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.stepper-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fbbf24;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #334155;
+}
+
+.stepper-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.episode-item {
+    background: #1e293b;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.episode-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: none;
+    background: transparent;
+    color: #e2e8f0;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+}
+
+.episode-header:hover {
+    background: #334155;
+}
+
+.episode-toggle {
+    font-size: 10px;
+    color: #64748b;
+}
+
+.episode-title {
+    flex: 1;
+}
+
+.chapters-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px 8px 8px;
+}
+
+.chapter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.chapter-item:hover {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.chapter-item.active {
+    background: #475569;
+    color: #fbbf24;
+}
+
+.chapter-marker {
+    font-size: 10px;
+}
+
+.chapter-title {
+    flex: 1;
+}
+
+.chapter-count {
+    font-size: 10px;
+    color: #64748b;
+}
+
+/* Main Area */
+.story-main-area {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.chapter-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #334155;
+}
+
+.no-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Events Grid */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.quest-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+/* Event Card */
+.story-event-card {
+    background: #1e293b;
+    border-radius: 8px;
+    border-left: 4px solid #6b7280;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.story-event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.event-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background: #0f172a;
+}
+
+.event-type-badge {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.event-difficulty {
+    font-size: 12px;
+    color: #fbbf24;
+}
+
+.event-card-body {
+    padding: 12px;
+    flex: 1;
+}
+
+.event-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0 0 8px 0;
+}
+
+.event-description {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.event-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 12px;
+}
+
+.event-tag {
+    font-size: 11px;
+    color: #94a3b8;
+    background: #0f172a;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.event-reward {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #fbbf24;
+    background: #0f172a;
+    margin: 8px 12px 0 12px;
+    border-radius: 4px;
+}
+
+.event-start-btn {
+    margin: 12px;
+    padding: 10px;
+    border: none;
+    background: #fbbf24;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.event-start-btn:hover:not(:disabled) {
+    background: #f59e0b;
+}
+
+.event-start-btn:disabled {
+    background: #475569;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* List View */
+.story-list-view {
+    height: 100%;
+    overflow: auto;
+}
+
+/* ============================================
+   PlotNotebook - プロット手帳
+   ============================================ */
+
+.plot-notebook {
+    display: flex;
+    height: 100%;
+    background: #1e293b;
+    overflow: hidden;
+}
+
+/* ── 左サイドバー（カードリスト） ── */
+
+.plot-sidebar {
+    width: 260px;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    background: #0f172a;
+    border-right: 1px solid #334155;
+}
+
+.plot-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    border-bottom: 1px solid #334155;
+}
+
+.plot-sidebar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fbbf24;
+    letter-spacing: 0.05em;
+}
+
+.plot-add-btn {
+    padding: 5px 12px;
+    border: 1px solid #fbbf24;
+    border-radius: 6px;
+    background: transparent;
+    color: #fbbf24;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.plot-add-btn:hover {
+    background: #fbbf24;
+    color: #0f172a;
+}
+
+.plot-card-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.plot-empty {
+    text-align: center;
+    color: #64748b;
+    font-size: 13px;
+    padding: 24px 12px;
+}
+
+.plot-card-item {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: #1e293b;
+}
+
+.plot-card-item:hover {
+    background: #334155;
+    border-color: #475569;
+}
+
+.plot-card-item.active {
+    background: #1e3a5f;
+    border-color: #3b82f6;
+}
+
+.plot-card-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.plot-card-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.plot-status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.plot-ep-label {
+    font-size: 10px;
+    color: #64748b;
+}
+
+.plot-scene-tag {
+    margin-top: 5px;
+    font-size: 10px;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── 右エディター ── */
+
+.plot-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.plot-no-selection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 15px;
+}
+
+/* エディターヘッダー（タイトル + 削除ボタン） */
+
+.plot-editor-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #334155;
+    background: #0f172a;
+}
+
+.plot-title-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #334155;
+    color: #f1f5f9;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 4px 0;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.plot-title-input:focus {
+    border-bottom-color: #fbbf24;
+}
+
+.plot-title-input::placeholder {
+    color: #475569;
+}
+
+.plot-delete-card-btn {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #64748b;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.plot-delete-card-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: #ef444411;
+}
+
+/* メタ情報バー */
+
+.plot-meta-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 10px 20px;
+    background: #1a2744;
+    border-bottom: 1px solid #334155;
+    flex-wrap: wrap;
+}
+
+.plot-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.plot-meta-scene {
+    flex: 1;
+    min-width: 160px;
+}
+
+.plot-meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.plot-select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.plot-select:focus {
+    border-color: #fbbf24;
+}
+
+.plot-select:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.plot-scene-input {
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.plot-scene-input:focus {
+    border-color: #fbbf24;
+}
+
+.plot-scene-input::placeholder {
+    color: #475569;
+}
+
+/* 会話ラインリスト */
+
+.plot-lines-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plot-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: border-color 0.15s;
+}
+
+.plot-line:hover {
+    border-color: #334155;
+}
+
+.plot-line-speaker {
+    flex-shrink: 0;
+    width: 110px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 5px;
+    color: #fbbf24;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 8px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.plot-line-speaker:focus {
+    border-color: #fbbf24;
+}
+
+.plot-line-speaker::placeholder {
+    color: #475569;
+    font-weight: 400;
+}
+
+.plot-line-text {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    padding: 4px 0;
+    min-height: 44px;
+}
+
+.plot-line-text::placeholder {
+    color: #475569;
+}
+
+.plot-line-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex-shrink: 0;
+}
+
+.plot-line-btn {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #64748b;
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1;
+}
+
+.plot-line-btn:hover:not(:disabled) {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.plot-line-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+.plot-line-btn.delete:hover:not(:disabled) {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: #ef444411;
+}
+
+/* 台詞追加バー */
+
+.plot-add-line-bar {
+    padding: 12px 20px;
+    border-top: 1px solid #334155;
+    background: #0f172a;
+}
+
+.plot-add-line-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border: 1px dashed #334155;
+    border-radius: 6px;
+    background: transparent;
+    color: #64748b;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.plot-add-line-btn:hover {
+    border-color: #fbbf24;
+    color: #fbbf24;
+    background: #fbbf2408;
+}
+
+.plot-add-line-hint {
+    font-size: 10px;
+    color: #475569;
+    margin-left: auto;
+    font-family: monospace;
+}
+
+/* ── ScreenState インジケーター ── */
+
+.plot-screen-state {
+    display: flex;
+    align-items: center;
+    padding: 4px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #1e293b;
+    transition: background 0.2s, color 0.2s;
+}
+
+.plot-screen-state.default {
+    background: #0f172a;
+    color: #334155;
+}
+
+.plot-screen-state.typing {
+    background: #1e3a5f;
+    color: #60a5fa;
+}
+
+/* ── キャストスロット ── */
+
+.plot-cast-section {
+    padding: 10px 20px 12px;
+    border-bottom: 1px solid #334155;
+    background: #0f172a;
+}
+
+.plot-cast-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plot-cast-hint {
+    font-size: 10px;
+    font-weight: 400;
+    color: #334155;
+    letter-spacing: 0;
+    font-family: monospace;
+}
+
+.plot-cast-slots {
+    display: flex;
+    gap: 10px;
+}
+
+.plot-cast-slot-wrap {
+    flex: 1;
+}
+
+/* 空スロット */
+.plot-cast-slot.empty {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: #1e293b;
+    border: 1px dashed #334155;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #475569;
+}
+
+.plot-cast-slot.empty:hover {
+    border-color: #fbbf24;
+    color: #fbbf24;
+    background: #fbbf2408;
+}
+
+/* 登録済みスロット */
+.plot-cast-slot.filled {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: #1e3a5f;
+    border: 1px solid #3b82f655;
+    border-radius: 6px;
+    position: relative;
+}
+
+.plot-cast-slot-num {
+    font-size: 9px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.05em;
+}
+
+.plot-cast-slot-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #93c5fd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+    text-align: center;
+}
+
+.plot-cast-slot-plus {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.plot-cast-slot-clear {
+    position: absolute;
+    top: 2px;
+    right: 4px;
+    background: transparent;
+    border: none;
+    color: #475569;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 0 2px;
+    line-height: 1;
+    transition: color 0.15s;
+}
+
+.plot-cast-slot-clear:hover {
+    color: #ef4444;
+}
+
+/* スロットpopup */
+.plot-slot-popup {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    z-index: 100;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 12px;
+    min-width: 200px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.plot-slot-popup-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.plot-slot-popup-btn {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background: #0f172a;
+    color: #cbd5e1;
+    font-size: 12px;
+    cursor: pointer;
+    margin-bottom: 4px;
+    transition: all 0.15s;
+}
+
+.plot-slot-popup-btn:hover {
+    background: #334155;
+    color: #fbbf24;
+}
+
+.plot-slot-text-input {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    color: #e2e8f0;
+    font-size: 13px;
+    padding: 6px 10px;
+    outline: none;
+    margin-bottom: 8px;
+}
+
+.plot-slot-text-input:focus {
+    border-color: #fbbf24;
+}
+
+.plot-slot-popup-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.plot-slot-confirm-btn {
+    flex: 1;
+    padding: 6px;
+    background: #fbbf24;
+    color: #0f172a;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.plot-slot-confirm-btn:hover {
+    background: #f59e0b;
+}
+
+.plot-slot-cancel-btn {
+    padding: 6px 10px;
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.plot-slot-char-list {
+    max-height: 160px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.plot-slot-char-item {
+    width: 100%;
+    text-align: left;
+    padding: 7px 10px;
+    background: #0f172a;
+    border: none;
+    border-radius: 4px;
+    color: #cbd5e1;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.plot-slot-char-item:hover {
+    background: #334155;
+    color: #fbbf24;
+}
+
+/* ── ライン: フォーカス・文字数・＋ボタン ── */
+
+.plot-line.focused {
+    border-color: #3b82f655;
+    background: #0d1b2a;
+}
+
+.plot-line-text-wrap {
+    flex: 1;
+    position: relative;
+}
+
+.plot-line-text {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #e2e8f0;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: none;
+    outline: none;
+    padding: 4px 0;
+}
+
+.plot-line-text::placeholder {
+    color: #475569;
+}
+
+.plot-line-charcount {
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-size: 9px;
+    color: #475569;
+    font-family: monospace;
+    pointer-events: none;
+}
+
+.plot-line-charcount.warn {
+    color: #f59e0b;
+}
+
+/* insert ボタン */
+.plot-line-btn.insert {
+    color: #3b82f6;
+    border-color: #3b82f644;
+}
+
+.plot-line-btn.insert:hover:not(:disabled) {
+    background: #3b82f622;
+    color: #60a5fa;
+    border-color: #3b82f6;
+}

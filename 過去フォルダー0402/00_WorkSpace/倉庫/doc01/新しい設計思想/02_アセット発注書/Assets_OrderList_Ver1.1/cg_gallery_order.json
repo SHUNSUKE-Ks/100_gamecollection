@@ -1,0 +1,41 @@
+{
+    "//": "🎨 CG・ギャラリー (Event CG / Cut-in / Movie) 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "CG_GALLERY",
+        "STATUS": "PENDING"
+    },
+    "GALLERY_ITEMS": [
+        {
+            "ID": "cg_01",
+            "TITLE": "Meeting Scene",
+            "CATEGORY": "EVENT_CG",
+            "DESCRIPTION": "Hero meets Heroine.",
+            "VISUAL_REFERENCE": {
+                "SCENE": "Forest under moonlight",
+                "CHARACTERS": [
+                    "Hero",
+                    "Heroine"
+                ],
+                "MOOD": "Romantic"
+            },
+            "OUTPUT_FILENAME": "src/assets/cg/meeting.png"
+        },
+        {
+            "ID": "cutin_01",
+            "TITLE": "Skill Cut-in",
+            "CATEGORY": "CUTIN",
+            "DESCRIPTION": "Heroine uses special skill.",
+            "VISUAL_REFERENCE": {
+                "POSE": "Dynamic Action",
+                "EFFECTS": "Lightning"
+            },
+            "OUTPUT_FILENAME": "src/assets/ui/cutin_heroine.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "CG_SIZE": "1920x1080",
+        "CUTIN_SIZE": "1920x540",
+        "FORMAT": "PNG"
+    }
+}

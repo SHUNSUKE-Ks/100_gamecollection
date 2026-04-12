@@ -1,0 +1,24 @@
+{
+    "id": "remi_unant",
+    "name": "レミ・ウナント",
+    "description": "A mysterious young woman dressed in elegant dark attire with a military flair. She possesses a calm and composed demeanor, often found in the shadows of the royal library or scouting the front lines with a silent, sharp presence.",
+    "tags": [
+        "GOTHIC_LOLI",
+        "TACTICIAN",
+        "WHITE_HAIR",
+        "MYSTERIOUS",
+        "ALLY"
+    ],
+    "assets": {
+        "standing": [
+            "standing_01.png"
+        ],
+        "faces": {
+            "default": "face_smile.png",
+            "angry": "face_angry.png"
+        },
+        "cgs": [
+            "cg_event_01.png"
+        ]
+    }
+}

@@ -1,0 +1,119 @@
+/* ============================================
+   ChatLog Modal Styles
+   ============================================ */
+
+.chat-log-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn var(--transition-fast) ease;
+}
+
+.chat-log-modal {
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    background: linear-gradient(180deg, var(--color-bg-light) 0%, var(--color-bg-medium) 100%);
+    border: 2px solid var(--color-border-gold);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp var(--transition-normal) ease;
+}
+
+.chat-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.chat-log-title {
+    font-family: var(--font-display);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-gold);
+}
+
+.chat-log-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    transition: all var(--transition-fast);
+}
+
+.chat-log-close:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text-primary);
+}
+
+.chat-log-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.chat-log-item {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    transition: background var(--transition-fast);
+}
+
+.chat-log-item:hover {
+    background: rgba(201, 162, 39, 0.05);
+}
+
+.chat-log-item:last-child {
+    border-bottom: none;
+}
+
+.chat-log-speaker {
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-gold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.chat-log-speaker.narrator {
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+.chat-log-text {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+}
+
+/* Scrollbar styling */
+.chat-log-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-log-content::-webkit-scrollbar-track {
+    background: var(--color-bg-dark);
+}
+
+.chat-log-content::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 4px;
+}
+
+.chat-log-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary);
+}

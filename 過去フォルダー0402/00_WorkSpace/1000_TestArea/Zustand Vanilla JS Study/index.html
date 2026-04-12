@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Zustand Vanilla JS Study</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .count {
+            font-size: 3rem;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Zustand Counter</h1>
+    <div id="count-display" class="count">0</div>
+    <div>
+        <button id="inc">増加 +</button>
+        <button id="dec">減少 -</button>
+    </div>
+
+    <script type="module">
+        // Vanilla用のcreateをインポート
+        import { createStore } from 'https://esm.sh/zustand/vanilla';
+
+        // 1. ストアの作成
+        const store = createStore((set) => ({
+            count: 0,
+            increase: () => set((state) => ({ count: state.count + 1 })),
+            decrease: () => set((state) => ({ count: state.count - 1 })),
+        }));
+
+        // 2. DOMの取得
+        const display = document.getElementById('count-display');
+        const incBtn = document.getElementById('inc');
+        const decBtn = document.getElementById('dec');
+
+        // 3. 状態の変化を監視（Subscribe）
+        // 状態が変わるたびにこの関数が実行される
+        store.subscribe((state) => {
+            display.innerText = state.count;
+            console.log('現在の状態:', state);
+        });
+
+        // 4. アクションの実行（Dispatch）
+        incBtn.onclick = () => store.getState().increase();
+        decBtn.onclick = () => store.getState().decrease();
+
+    </script>
+</body>
+
+</html>

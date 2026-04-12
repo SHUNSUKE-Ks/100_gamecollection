@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story Preview</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400&family=Noto+Serif+JP:wght@300;500&family=Mrs+Saint+Delafield&display=swap"
+        rel="stylesheet">
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* 青い背景のグラデーション */
+        .container {
+            background: linear-gradient(135deg, #3a68d8 0%, #2140a8 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* "story" 部分 */
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(60px, 12vw, 100px);
+            font-weight: 300;
+            margin: 0;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+
+        /* "anemoi" 部分 (筆記体風) */
+        .subtitle {
+            font-family: 'Mrs Saint Delafield', cursive;
+            /* より近い筆記体を選択 */
+            font-size: clamp(24px, 5vw, 40px);
+            color: #ff9a9e;
+            /* 画像に近い淡いピンク */
+            margin-top: -15px;
+            margin-bottom: 60px;
+            letter-spacing: 0.05em;
+        }
+
+        /* 日本語テキスト */
+        .japanese-text {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(18px, 3.5vw, 28px);
+            font-weight: 500;
+            line-height: 2;
+            letter-spacing: 0.15em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="main-title">story</h1>
+        <div class="subtitle">anemoi</div>
+        <div class="japanese-text">
+            10年前に埋めた<br>
+            タイムカプセルを開ける日が近づいていた。
+        </div>
+    </div>
+</body>
+
+</html>

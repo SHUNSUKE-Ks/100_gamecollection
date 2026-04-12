@@ -1,0 +1,35 @@
+{
+    "characters": [
+        {
+            "id": "remi_unant",
+            "name": "レミ・ウナント",
+            "description": "本作のヒロイン。明るく元気な性格だが、どこか影がある。",
+            "tags": [
+                "MAIN",
+                "HEROINE",
+                "MAGIC"
+            ],
+            "image": "chara/remi_unant/standing_01.png",
+            "standing": [
+                "chara/remi_unant/standing_01.png",
+                "chara/remi_unant/face_smile.png",
+                "chara/remi_unant/face_angry.png"
+            ],
+            "cgs": [
+                "chara/remi_unant/cg_event_01.png"
+            ]
+        },
+        {
+            "id": "dummy_chara_02",
+            "name": "ダミー・キャラ02",
+            "description": "テスト用のダミーキャラクター。",
+            "tags": [
+                "SUB",
+                "UNKNOWN"
+            ],
+            "image": "chara/remi_unant/standing_01.png",
+            "standing": [],
+            "cgs": []
+        }
+    ]
+}

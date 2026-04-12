@@ -1,0 +1,90 @@
+{
+    "devDiary": [
+        {
+            "id": "diary_001",
+            "title": "タイトル画面実装",
+            "status": "実装済み",
+            "genre": "UI",
+            "date": "2026-02-01",
+            "content": "TitleScreen.tsx を作成しました"
+        },
+        {
+            "id": "diary_002",
+            "title": "Menu システム Ver1.1",
+            "status": "実装済み",
+            "genre": "システム",
+            "date": "2026-02-09",
+            "content": "パーティー管理、設定画面を追加"
+        },
+        {
+            "id": "diary_003",
+            "title": "バトルシステム SRPG モード",
+            "status": "確認済み",
+            "genre": "バトル",
+            "date": "2026-02-08",
+            "content": "SRPG バトルモードの統合を確認"
+        },
+        {
+            "id": "diary_004",
+            "title": "アセットマネージャー",
+            "status": "未実装",
+            "genre": "ツール",
+            "date": "2026-02-09",
+            "content": "ドラッグ&ドロップ対応予定"
+        },
+        {
+            "id": "diary_005",
+            "title": "サウンド API 連携",
+            "status": "変更依頼",
+            "genre": "オーディオ",
+            "date": "2026-02-07",
+            "content": "音量設定の永続化方式を変更"
+        }
+    ],
+    "manuals": [
+        {
+            "id": "manual_001",
+            "title": "シナリオ JSON 仕様書",
+            "category": "シナリオ",
+            "date": "2026-01-20"
+        },
+        {
+            "id": "manual_002",
+            "title": "キャラクター定義マニュアル",
+            "category": "データ",
+            "date": "2026-01-25"
+        }
+    ],
+    "tutorials": [
+        {
+            "id": "tutorial_001",
+            "title": "はじめてのシナリオ作成",
+            "difficulty": "初級",
+            "date": "2026-02-01"
+        }
+    ],
+    "tips": [
+        {
+            "id": "tips_001",
+            "title": "効率的なデバッグ方法",
+            "category": "開発",
+            "date": "2026-02-05"
+        }
+    ],
+    "statusOptions": [
+        "未実装",
+        "確認済み",
+        "実装済み",
+        "変更依頼"
+    ],
+    "genreOptions": [
+        "UI",
+        "システム",
+        "バトル",
+        "ツール",
+        "オーディオ",
+        "シナリオ",
+        "データ",
+        "その他"
+    ]
+}

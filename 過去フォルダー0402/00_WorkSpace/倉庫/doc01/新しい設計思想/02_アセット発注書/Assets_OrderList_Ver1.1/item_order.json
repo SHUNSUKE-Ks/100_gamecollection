@@ -1,0 +1,25 @@
+{
+    "//": "🎨 アイテム (Item Icon) 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "ITEM_ICON",
+        "STATUS": "PENDING"
+    },
+    "ITEMS": [
+        {
+            "ID": "item_01",
+            "NAME": "Potion",
+            "DESCRIPTION": "Red healing potion.",
+            "VISUAL_REFERENCE": {
+                "TYPE": "Potion",
+                "MATERIAL": "Glass, Red Liquid",
+                "STYLE": "Shiny"
+            },
+            "OUTPUT_FILENAME": "src/assets/items/potion.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "128x128",
+        "FORMAT": "PNG"
+    }
+}

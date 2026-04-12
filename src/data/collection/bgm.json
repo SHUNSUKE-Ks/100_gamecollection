@@ -1,0 +1,280 @@
+{
+    "bgm": [
+        {
+            "id": "op",
+            "title": "OP",
+            "filename": "_OP_.mp3",
+            "description": "ゲームのオープニングテーマ",
+            "tags": [
+                "OPENING",
+                "MAIN"
+            ],
+            "category": "theme",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "battle_igiigi",
+            "title": "Battle Theme (igiigi)",
+            "filename": "Battle_igiigi.mp3",
+            "description": "緊迫した戦闘シーン用BGM",
+            "tags": [
+                "BATTLE",
+                "INTENSE"
+            ],
+            "category": "battle",
+            "duration": null,
+            "artist": "igiigi"
+        },
+        {
+            "id": "bgm_heiya1",
+            "title": "平野",
+            "filename": "bgm_heiya1.wav",
+            "description": "フィールド探索用BGM",
+            "tags": [
+                "FIELD",
+                "PEACEFUL"
+            ],
+            "category": "field",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "cafeinebgm",
+            "title": "Cafeine BGM",
+            "filename": "Cafeinebgm.m4a",
+            "description": "カフェイン風のBGM",
+            "tags": [
+                "CASUAL",
+                "AMBIENT"
+            ],
+            "category": "ambient",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "evergreen_inst",
+            "title": "Evergreen (Inst)",
+            "filename": "evergreen_inst-4キー_hu_ringo_inst_202507100648.mp3",
+            "description": "エバーグリーン・インストゥルメンタル",
+            "tags": [
+                "INSTRUMENTAL",
+                "CALM"
+            ],
+            "category": "ambient",
+            "duration": null,
+            "artist": "hu_ringo"
+        },
+        {
+            "id": "game_op",
+            "title": "Game OP",
+            "filename": "Game_Op.mp3",
+            "description": "ゲームオープニング曲",
+            "tags": [
+                "OPENING",
+                "MAIN"
+            ],
+            "category": "theme",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "gameop",
+            "title": "GameOp (Alt)",
+            "filename": "GameOp.m4a",
+            "description": "ゲームオープニング曲（別バージョン）",
+            "tags": [
+                "OPENING",
+                "MAIN"
+            ],
+            "category": "theme",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "kazeno",
+            "title": "風の",
+            "filename": "kazeno.mp3",
+            "description": "風をテーマにした穏やかなBGM",
+            "tags": [
+                "PEACEFUL",
+                "NATURE"
+            ],
+            "category": "ambient",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "mori01",
+            "title": "森01",
+            "filename": "mori01.m4a",
+            "description": "森の中を探索するシーン用BGM",
+            "tags": [
+                "FIELD",
+                "FOREST"
+            ],
+            "category": "field",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "op_fukashigi",
+            "title": "OP 不可思議",
+            "filename": "OP不可思議.m4a",
+            "description": "不思議な雰囲気のオープニング曲",
+            "tags": [
+                "OPENING",
+                "MYSTERIOUS"
+            ],
+            "category": "theme",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "rakushun_bgm1",
+            "title": "Rakushun BGM1",
+            "filename": "Rakushun - bgm1.m4a",
+            "description": "Rakushun作曲のBGM",
+            "tags": [
+                "AMBIENT",
+                "CALM"
+            ],
+            "category": "ambient",
+            "duration": null,
+            "artist": "Rakushun"
+        },
+        {
+            "id": "break1",
+            "title": "ブレイク１",
+            "filename": "ブレイク１.mp3",
+            "description": "休憩・インタールード用BGM",
+            "tags": [
+                "BREAK",
+                "INTERLUDE"
+            ],
+            "category": "ambient",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "sora_ga_aoi_riyuu",
+            "title": "空が青い理由",
+            "filename": "空が青い理由_hyuganatsu_ongaku.mp3",
+            "description": "美しいメロディのBGM",
+            "tags": [
+                "EMOTIONAL",
+                "CALM"
+            ],
+            "category": "event",
+            "duration": null,
+            "artist": "hyuganatsu_ongaku"
+        },
+        {
+            "id": "kimi_to_egaita",
+            "title": "君と描いたあの日から…",
+            "filename": "君と描いたあの日から…_hatsushiba_kenji_202507100655.mp3",
+            "description": "感動的なシーン用BGM",
+            "tags": [
+                "EMOTIONAL",
+                "NOSTALGIC"
+            ],
+            "category": "event",
+            "duration": null,
+            "artist": "hatsushiba_kenji"
+        },
+        {
+            "id": "gensou_no_deai",
+            "title": "幻想の出会い",
+            "filename": "幻想の出会い.mp3",
+            "description": "幻想的な出会いのシーン用BGM",
+            "tags": [
+                "MYSTERIOUS",
+                "FANTASY"
+            ],
+            "category": "event",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "kamihikouki_inst",
+            "title": "紙飛行機 (Inst)",
+            "filename": "紙飛行機_inst．_hu_ringo_inst_202507100646.mp3",
+            "description": "紙飛行機をテーマにしたインストゥルメンタル",
+            "tags": [
+                "INSTRUMENTAL",
+                "NOSTALGIC"
+            ],
+            "category": "event",
+            "duration": null,
+            "artist": "hu_ringo"
+        },
+        {
+            "id": "shuuen_no_yaiba",
+            "title": "終焉の刃",
+            "filename": "終焉の刃.mp3",
+            "description": "終焉をテーマにした激しいバトル曲",
+            "tags": [
+                "BATTLE",
+                "BOSS",
+                "INTENSE"
+            ],
+            "category": "battle",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "tatakai_no_kodou",
+            "title": "戦いの鼓動",
+            "filename": "戦いの鼓動.mp3",
+            "description": "戦闘の緊張感を表現したBGM",
+            "tags": [
+                "BATTLE",
+                "INTENSE"
+            ],
+            "category": "battle",
+            "duration": null,
+            "artist": "Unknown"
+        },
+        {
+            "id": "tatakai_no_koukyoukyoku",
+            "title": "戦いの交響曲",
+            "filename": "戦いの交響曲.mp3",
+            "description": "壮大な戦闘シーン用オーケストラBGM",
+            "tags": [
+                "BATTLE",
+                "BOSS",
+                "EPIC"
+            ],
+            "category": "battle",
+            "duration": null,
+            "artist": "Unknown"
+        }
+    ],
+    "categories": [
+        {
+            "id": "theme",
+            "name": "テーマ曲",
+            "icon": "🎼"
+        },
+        {
+            "id": "battle",
+            "name": "戦闘",
+            "icon": "⚔️"
+        },
+        {
+            "id": "field",
+            "name": "フィールド",
+            "icon": "🌄"
+        },
+        {
+            "id": "event",
+            "name": "イベント",
+            "icon": "🎭"
+        },
+        {
+            "id": "ambient",
+            "name": "環境音楽",
+            "icon": "🌙"
+        }
+    ]
+}

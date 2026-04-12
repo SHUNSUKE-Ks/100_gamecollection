@@ -1,0 +1,50 @@
+{
+    "npcs": [
+        {
+            "id": "npc_merchant_001",
+            "name": "行商人",
+            "role": "MERCHANT",
+            "dict": "村々を渡り歩く陽気な商人。",
+            "tags": [
+                "HUMAN",
+                "FRIENDLY"
+            ],
+            "location": "loc_starting_village",
+            "relatedEvents": [],
+            "image": "npc/merchant.png",
+            "standing": [],
+            "icons": []
+        },
+        {
+            "id": "npc_guard_001",
+            "name": "門番",
+            "role": "GUARD",
+            "dict": "村の入り口を守る真面目な兵士。",
+            "tags": [
+                "HUMAN",
+                "SERIOUS"
+            ],
+            "location": "loc_starting_village",
+            "relatedEvents": [],
+            "image": "npc/guard.png",
+            "standing": [],
+            "icons": []
+        }
+    ],
+    "roles": [
+        {
+            "id": "MERCHANT",
+            "label": "商人"
+        },
+        {
+            "id": "GUARD",
+            "label": "衛兵"
+        }
+    ],
+    "locations": [
+        {
+            "id": "loc_starting_village",
+            "label": "始まりの村"
+        }
+    ]
+}

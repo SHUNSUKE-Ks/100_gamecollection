@@ -1,0 +1,25 @@
+{
+    "//": "🎨 エネミー画像 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "ENEMY_SPRITE"
+    },
+    "ENEMY_ASSETS": [
+        {
+            "ID": "enemy_example_01",
+            "NAME": "エネミー名（例：フォレストウルフ）",
+            "DESCRIPTION": "森に生息する獰猛な狼",
+            "VISUAL_REFERENCE": {
+                "SPECIES": "Wolf",
+                "COLOR": "Green, Brown",
+                "TRAITS": "Fangs, Aggressive eyes, Leaf-like fur"
+            },
+            "OUTPUT_FILENAME": "src/assets/enemies/enemy_forest_wolf.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "512x512 (adjust based on size)",
+        "FORMAT": "PNG (Transparent Background)",
+        "STYLE": "Fantasy RPG, Painted Style"
+    }
+}

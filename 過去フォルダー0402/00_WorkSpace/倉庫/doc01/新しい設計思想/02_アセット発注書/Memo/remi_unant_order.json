@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Remi Unant (Standing 1)",
+        "type": "Standing",
+        "filename": "remi_unant/standing_01.png",
+        "description": "Standard standing pose"
+    },
+    {
+        "name": "Remi Unant (Standing 2)",
+        "type": "Standing",
+        "filename": "remi_unant/standing_02.png",
+        "description": "Action/Alternate pose"
+    },
+    {
+        "name": "Remi Unant (Expression 1)",
+        "type": "Expression",
+        "filename": "remi_unant/face_smile.png",
+        "description": "Smiling expression"
+    },
+    {
+        "name": "Remi Unant (Expression 2)",
+        "type": "Expression",
+        "filename": "remi_unant/face_angry.png",
+        "description": "Angry expression"
+    },
+    {
+        "name": "Remi Unant (Expression 3)",
+        "type": "Expression",
+        "filename": "remi_unant/face_sad.png",
+        "description": "Sad expression"
+    },
+    {
+        "name": "Remi Unant (CG 1)",
+        "type": "CG",
+        "filename": "remi_unant/cg_event_01.png",
+        "description": "Event CG 1"
+    },
+    {
+        "name": "Remi Unant (CG 2)",
+        "type": "CG",
+        "filename": "remi_unant/cg_event_02.png",
+        "description": "Event CG 2"
+    }
+]

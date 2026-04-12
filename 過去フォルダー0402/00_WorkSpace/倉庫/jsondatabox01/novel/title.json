@@ -1,0 +1,11 @@
+{
+    "title": "NanoNovel",
+    "subtitle": "AI駆動ノベルゲーム",
+    "backgroundTag": "bg_title_1280x720",
+    "logoPath": "/assets/ui/logo.png",
+    "ui": {
+        "startLabel": "New Game",
+        "continueLabel": "Continue",
+        "settingsLabel": "Settings"
+    }
+}

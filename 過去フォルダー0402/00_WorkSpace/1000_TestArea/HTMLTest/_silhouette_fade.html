@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Silhouette Fade</title>
+    <style>
+        body {
+            margin: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+
+        .stage {
+            display: flex;
+            gap: 40px;
+        }
+
+        .sil {
+            width: 90px;
+            height: 200px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp .8s forwards;
+        }
+
+        .sil:nth-child(1) {
+            animation-delay: .2s
+        }
+
+        .sil:nth-child(2) {
+            animation-delay: .6s
+        }
+
+        .sil:nth-child(3) {
+            animation-delay: 1s
+        }
+
+        .sil:nth-child(4) {
+            animation-delay: 1.4s
+        }
+
+        .sil:nth-child(5) {
+            animation-delay: 1.8s
+        }
+
+        .sil:nth-child(6) {
+            animation-delay: 2.2s
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="stage">
+
+        <!-- ① -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <rect x="30" y="40" width="40" height="120" rx="20" fill="#5b7cfa" />
+            <circle cx="50" cy="25" r="20" fill="#5b7cfa" />
+        </svg>
+
+        <!-- ② -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <rect x="35" y="50" width="30" height="110" rx="15" fill="#5b7cfa" />
+            <circle cx="50" cy="30" r="18" fill="#5b7cfa" />
+        </svg>
+
+        <!-- ③ 中央：足元濃 → 頭薄グラデ -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <defs>
+                <linearGradient id="grad" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0%" stop-color="#2f4cff" />
+                    <stop offset="100%" stop-color="#a9bbff" />
+                </linearGradient>
+            </defs>
+            <rect x="28" y="45" width="44" height="120" rx="22" fill="url(#grad)" />
+            <circle cx="50" cy="28" r="20" fill="url(#grad)" />
+        </svg>
+
+        <!-- ④ -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <rect x="32" y="55" width="36" height="105" rx="18" fill="#5b7cfa" />
+            <circle cx="50" cy="35" r="17" fill="#5b7cfa" />
+        </svg>
+
+        <!-- ⑤ -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <rect x="34" y="50" width="32" height="110" rx="16" fill="#5b7cfa" />
+            <circle cx="50" cy="30" r="18" fill="#5b7cfa" />
+        </svg>
+
+        <!-- ⑥ NEW: Based on pose01.png -->
+        <svg class="sil" viewBox="0 0 100 200">
+            <path
+                d="M50 15 C42 15 35 20 35 30 L35 35 C30 40 25 50 25 70 L30 80 C20 90 20 110 30 130 L40 180 H60 L70 130 C80 110 80 90 70 80 L75 70 C75 50 70 40 65 35 L65 30 C65 20 58 15 50 15 Z"
+                fill="#5b7cfa" />
+            <!-- Hair elements -->
+            <path d="M35 25 Q20 35 25 60 M65 25 Q80 35 75 60" fill="none" stroke="#5b7cfa" stroke-width="4"
+                stroke-linecap="round" />
+        </svg>
+
+    </div>
+</body>
+
+</html>

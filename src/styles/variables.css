@@ -1,0 +1,74 @@
+/* ============================================
+   NanoNovel - RPG Theme CSS Variables
+   ============================================ */
+
+:root {
+  /* ===== Color Palette - Dark Fantasy RPG ===== */
+  
+  /* Primary Colors */
+  --color-primary: #c9a227;           /* Gold accent */
+  --color-primary-light: #e6c84a;
+  --color-primary-dark: #9a7b1c;
+  
+  /* Background Colors */
+  --color-bg-dark: #0d0d12;           /* Deep dark blue-black */
+  --color-bg-medium: #1a1a24;         /* Medium dark */
+  --color-bg-light: #252532;          /* Lighter panels */
+  --color-bg-overlay: rgba(0, 0, 0, 0.85);
+  
+  /* Text Colors */
+  --color-text-primary: #f0e6d3;      /* Parchment white */
+  --color-text-secondary: #a89f8c;    /* Muted cream */
+  --color-text-muted: #6b6458;        /* Darker muted */
+  --color-text-gold: #c9a227;         /* Gold highlights */
+  
+  /* UI Colors */
+  --color-border: #3d3d4a;            /* Subtle borders */
+  --color-border-gold: #c9a227;       /* Gold borders */
+  --color-shadow: rgba(0, 0, 0, 0.5);
+  
+  /* Status Colors */
+  --color-hp: #c44536;                /* Red for HP */
+  --color-mp: #4a90c4;                /* Blue for MP */
+  --color-success: #4a9c5d;           /* Green */
+  --color-warning: #c9a227;           /* Gold/Yellow */
+  --color-danger: #c44536;            /* Red */
+  
+  /* ===== Typography ===== */
+  --font-primary: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+  
+  /* ===== Spacing ===== */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* ===== Border Radius ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  
+  /* ===== Transitions ===== */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* ===== Z-Index Layers ===== */
+  --z-background: 0;
+  --z-character: 10;
+  --z-ui: 20;
+  --z-dialog: 30;
+  --z-modal: 100;
+  --z-overlay: 200;
+}

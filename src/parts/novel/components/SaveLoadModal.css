@@ -1,0 +1,282 @@
+/* SaveLoadModal.css - Various Daylife Inspired Style */
+
+/* General Styles replacement */
+.slm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Times New Roman', serif;
+    /* Serif font for RPG feel */
+}
+
+.slm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    /* Slightly darker tint */
+    backdrop-filter: blur(2px);
+}
+
+.slm-container {
+    position: relative;
+    width: 95%;
+    height: 90%;
+    max-width: 1200px;
+    background: rgba(16, 20, 28, 0.95);
+    /* Deep dark blue-gray */
+    border: 1px solid #483d28;
+    /* Dark gold border */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Header */
+.slm-header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 2px solid #c9a227;
+    /* Gold accent */
+    background: linear-gradient(90deg, rgba(201, 162, 39, 0.1), transparent);
+}
+
+.slm-title {
+    font-size: 1.8rem;
+    color: #e5e7eb;
+    letter-spacing: 0.1em;
+    margin-right: auto;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.slm-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-right: 2rem;
+}
+
+.slm-tab {
+    background: transparent;
+    border: 1px solid #4b5563;
+    color: #9ca3af;
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.slm-tab.active {
+    background: #c9a227;
+    color: #111827;
+    border-color: #c9a227;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(201, 162, 39, 0.4);
+}
+
+.slm-close {
+    background: transparent;
+    border: 1px solid #9ca3af;
+    color: #e5e7eb;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.slm-close:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+/* Content Layout (Split View) */
+.slm-content {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.slm-slot-list {
+    width: 35%;
+    border-right: 1px solid #374151;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.slm-preview-panel {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, rgba(40, 40, 50, 0.5), transparent);
+}
+
+/* Slot Items */
+.slm-slot-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid #374151;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.slm-slot-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.slm-slot-item.selected {
+    background: linear-gradient(90deg, rgba(201, 162, 39, 0.2), transparent);
+    border-left: 4px solid #c9a227;
+}
+
+.slm-slot-number {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    letter-spacing: 0.1em;
+}
+
+.slm-data-title {
+    font-size: 1.2rem;
+    color: #f3f4f6;
+    font-weight: bold;
+}
+
+.slm-data-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* Preview Content */
+.slm-preview-content {
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #4b5563;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.slm-preview-header {
+    font-size: 2rem;
+    color: #c9a227;
+    border-bottom: 1px solid #4b5563;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.slm-detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    border-bottom: 1px solid #374151;
+}
+
+.slm-detail-row .label {
+    color: #9ca3af;
+    letter-spacing: 0.05em;
+}
+
+.slm-detail-row .value {
+    color: #e5e7eb;
+    font-size: 1.2rem;
+}
+
+.slm-action-area {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.slm-action-btn {
+    padding: 1rem 3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.slm-action-btn:active {
+    transform: scale(0.98);
+}
+
+.slm-action-btn.primary {
+    background: #c9a227;
+    color: #111827;
+    border: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(201, 162, 39, 0.3);
+}
+
+.slm-action-btn.danger {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+/* Empty State */
+.slm-empty-state {
+    text-align: center;
+    padding: 4rem 0;
+    color: #6b7280;
+}
+
+/* Confirm Dialog */
+.slm-confirm-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.slm-confirm-box {
+    background: #1f2937;
+    padding: 3rem;
+    border: 1px solid #c9a227;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+.slm-confirm-text {
+    font-size: 1.4rem;
+    color: #e5e7eb;
+    margin-bottom: 2rem;
+}
+
+.slm-confirm-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.slm-confirm-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.slm-confirm-btn.confirm {
+    background: #c9a227;
+    color: #000;
+    border: none;
+}
+
+.slm-confirm-btn.cancel {
+    background: transparent;
+    border: 1px solid #9ca3af;
+    color: #fff;
+}

@@ -1,0 +1,24 @@
+{
+    "//": "🎨 背景画像 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "BACKGROUND"
+    },
+    "BG_ASSETS": [
+        {
+            "ID": "bg_example_01",
+            "NAME": "場所名（例：古代の遺跡）",
+            "DESCRIPTION": "苔むした石造りの遺跡。神秘的な光が差し込んでいる。",
+            "VISUAL_REFERENCE": {
+                "SETTING": "Ancient Ruins, Forest, overgrown",
+                "TIME_OF_DAY": "Daytime, Light rays",
+                "MOOD": "Mysterious, Quiet"
+            },
+            "OUTPUT_FILENAME": "src/assets/bg/ruins_day.jpg"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "1920x1080",
+        "FORMAT": "JPG (High Quality) or PNG"
+    }
+}

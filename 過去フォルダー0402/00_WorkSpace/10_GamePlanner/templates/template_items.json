@@ -1,0 +1,19 @@
+{
+    "items": [
+        {
+            "id": "item_xxx_001",
+            "name": "アイテム名",
+            "category": "consumable",
+            "icon": "item/xxx.png",
+            "tags": [
+                "TAG1",
+                "TAG2"
+            ],
+            "rarity": 1,
+            "price": 100,
+            "sellPrice": 50,
+            "effect": "効果説明",
+            "description": "フレーバーテキスト"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+    "schema": "collection.gallery.v1",
+    "categories": [
+        {
+            "id": "cg",
+            "label": "イベントCG",
+            "color": "#f472b6"
+        },
+        {
+            "id": "background",
+            "label": "背景美術",
+            "color": "#60a5fa"
+        }
+    ],
+    "images": [
+        {
+            "id": "cg_event_01",
+            "title": "出会い",
+            "filename": "chara/remi_unant/cg_event_01.png",
+            "category": "cg",
+            "tags": [
+                "REMI",
+                "EVENT"
+            ],
+            "description": "運命的な出会いのシーン。",
+            "episode": "01",
+            "chapter": "01"
+        },
+        {
+            "id": "bg_attic_art",
+            "title": "屋根裏部屋の設定画",
+            "filename": "bg/attic1.jpg",
+            "category": "background",
+            "tags": [
+                "ART",
+                "LOCATION"
+            ],
+            "description": "物語の始まりとなる場所の設定画。"
+        }
+    ],
+    "availableTags": [
+        "REMI",
+        "EVENT",
+        "ART",
+        "LOCATION"
+    ]
+}

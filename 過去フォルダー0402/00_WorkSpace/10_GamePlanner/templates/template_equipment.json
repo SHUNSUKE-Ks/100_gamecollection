@@ -1,0 +1,36 @@
+{
+    "weapons": [
+        {
+            "id": "weapon_xxx_001",
+            "name": "武器名",
+            "type": "sword",
+            "icon": "weapon/xxx.png",
+            "rarity": 1,
+            "price": 500,
+            "atk": 10,
+            "matk": 0,
+            "critRate": 5,
+            "element": "none",
+            "skills": [],
+            "requiredLevel": 1,
+            "requiredClass": [
+                "warrior"
+            ],
+            "description": "武器の説明"
+        }
+    ],
+    "armors": [
+        {
+            "id": "armor_xxx_001",
+            "name": "防具名",
+            "slot": "body",
+            "icon": "armor/xxx.png",
+            "rarity": 1,
+            "price": 300,
+            "def": 10,
+            "mdef": 5,
+            "requiredLevel": 1,
+            "description": "防具の説明"
+        }
+    ]
+}

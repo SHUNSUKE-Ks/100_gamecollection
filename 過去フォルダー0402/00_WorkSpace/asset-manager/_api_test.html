@@ -1,0 +1,11 @@
+<button onclick="load()">API取得</button>
+<pre id="out"></pre>
+
+<script>
+    async function load() {
+        const r = await fetch("http://localhost:3000/api/delivery")
+        const j = await r.json()
+        document.getElementById("out").textContent =
+            JSON.stringify(j, null, 2)
+    }
+</script>

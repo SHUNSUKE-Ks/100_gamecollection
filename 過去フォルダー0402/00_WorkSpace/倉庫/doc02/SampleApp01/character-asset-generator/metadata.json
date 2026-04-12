@@ -1,0 +1,7 @@
+{
+  "name": "Character Asset Generator",
+  "description": "A high-performance AI-driven character design tool that generates consistent game assets (standing art, expressions, and event CGs) based on a reference image and a JSON order list.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

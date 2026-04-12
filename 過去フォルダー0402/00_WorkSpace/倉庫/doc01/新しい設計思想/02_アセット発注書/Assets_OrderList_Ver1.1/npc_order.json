@@ -1,0 +1,45 @@
+{
+    "//": "🎨 NPC 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "NPC",
+        "STATUS": "PENDING"
+    },
+    "NPCS": [
+        {
+            "ID": "npc_01",
+            "NAME": "NPC Name",
+            "ROLE": "Merchant",
+            "LOCATION": "Town",
+            "DESCRIPTION": "Brief description.",
+            "VISUAL_REFERENCE": {
+                "AGE": "40s",
+                "HAIR": "Brown, Bald",
+                "BUILD": "Chubby",
+                "OUTFIT": "Apron",
+                "PERSONALITY": "Friendly"
+            },
+            "ASSETS": {
+                "STANDING": [
+                    {
+                        "ID": "std_01",
+                        "POSE": "Welcoming",
+                        "FILENAME": "src/assets/chara/npc/standing_01.png"
+                    }
+                ],
+                "FACES": [
+                    {
+                        "ID": "face_01",
+                        "EXPRESSION": "Smile",
+                        "FILENAME": "src/assets/chara/npc/faces/smile.png"
+                    }
+                ]
+            }
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "STANDING_SIZE": "1024x1536",
+        "FACE_SIZE": "256x256",
+        "FORMAT": "PNG"
+    }
+}

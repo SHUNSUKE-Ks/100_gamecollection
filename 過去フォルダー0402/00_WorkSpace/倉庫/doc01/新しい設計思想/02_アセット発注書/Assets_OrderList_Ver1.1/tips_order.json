@@ -1,0 +1,24 @@
+{
+    "//": "🎨 Tips画像 (Loading Screen) 発注書",
+    "ORDER_INFO": {
+        "ORDER_DATE": "2026-XX-XX",
+        "TYPE": "TIPS_IMAGE",
+        "STATUS": "PENDING"
+    },
+    "TIPS": [
+        {
+            "ID": "tip_01",
+            "TITLE": "Magic",
+            "DESCRIPTION": "Concept art of magic energy.",
+            "VISUAL_REFERENCE": {
+                "STYLE": "Abstract, Magical",
+                "COLORS": "Blue, White"
+            },
+            "OUTPUT_FILENAME": "src/assets/tips/magic.png"
+        }
+    ],
+    "TECHNICAL_SPECS": {
+        "SIZE": "1920x1080",
+        "FORMAT": "JPG"
+    }
+}

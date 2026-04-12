@@ -1,0 +1,102 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+        "gameId",
+        "title",
+        "version",
+        "author",
+        "entryPoint",
+        "assets"
+    ],
+    "properties": {
+        "gameId": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique identifier for the game (e.g., 'G001_MyFirstNovel')"
+        },
+        "title": {
+            "type": "string",
+            "description": "Display title of the game"
+        },
+        "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "description": "Semantic versioning (e.g., '1.0.0')"
+        },
+        "author": {
+            "type": "string",
+            "description": "Name of the creator/developer"
+        },
+        "description": {
+            "type": "string",
+            "description": "Short description of the game"
+        },
+        "entryPoint": {
+            "type": "string",
+            "description": "Main scenario file to start execution (e.g., 'chapter1.json')",
+            "default": "chapter1.json"
+        },
+        "settings": {
+            "type": "object",
+            "properties": {
+                "resolution": {
+                    "type": "object",
+                    "properties": {
+                        "width": {
+                            "type": "number",
+                            "default": 1280
+                        },
+                        "height": {
+                            "type": "number",
+                            "default": 720
+                        }
+                    }
+                },
+                "orientation": {
+                    "type": "string",
+                    "enum": [
+                        "landscape",
+                        "portrait"
+                    ],
+                    "default": "landscape"
+                }
+            }
+        },
+        "assets": {
+            "type": "object",
+            "required": [
+                "backgrounds",
+                "characters",
+                "bgm",
+                "se"
+            ],
+            "properties": {
+                "backgrounds": {
+                    "type": "string",
+                    "description": "Relative path to backgrounds directory (e.g., 'assets/backgrounds')"
+                },
+                "characters": {
+                    "type": "string",
+                    "description": "Relative path to characters directory"
+                },
+                "bgm": {
+                    "type": "string",
+                    "description": "Relative path to BGM directory"
+                },
+                "se": {
+                    "type": "string",
+                    "description": "Relative path to SE directory"
+                },
+                "voice": {
+                    "type": "string",
+                    "description": "Relative path to Voice directory"
+                },
+                "movies": {
+                    "type": "string",
+                    "description": "Relative path to Movie directory"
+                }
+            }
+        }
+    }
+}

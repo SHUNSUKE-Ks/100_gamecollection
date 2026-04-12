@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoNovel Asset Manager</title>
+    <style>
+        :root {
+            --bg-dark: #1e1e1e;
+            --bg-sidebar: #252526;
+            --bg-header: #333333;
+            --text-main: #cccccc;
+            --accent: #007acc;
+            --accent-translucent: rgba(0, 122, 204, 0.3);
+            --border: #3e3e42;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-header);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .actions button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .actions button.secondary {
+            background-color: #555;
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 10px;
+            font-size: 0.9em;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .file-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .file-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+
+        .file-item:hover {
+            background-color: #2a2d2e;
+        }
+
+        .file-item.active {
+            background-color: #37373d;
+            border-left-color: var(--accent);
+            color: white;
+        }
+
+        .file-icon {
+            margin-right: 8px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #1e1e1e;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .tab-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .data-table th {
+            color: #888;
+        }
+
+        /* Row Hover & Drag Styles */
+        .data-table tr {
+            transition: background-color 0.1s;
+        }
+
+        .data-table tr:hover {
+            background-color: #2a2d2e;
+        }
+
+        .data-table tr.drag-over {
+            background-color: var(--accent-translucent) !important;
+            outline: 2px dashed var(--accent);
+            outline-offset: -2px;
+        }
+
+        input[type="text"] {
+            background-color: #3c3c3c;
+            border: 1px solid #555;
+            color: white;
+            padding: 5px;
+            width: 90%;
+            border-radius: 3px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-ordered {
+            background-color: #a16207;
+            color: #fef08a;
+        }
+
+        /* Orange */
+        .status-delivered {
+            background-color: #1d4ed8;
+            color: #dbeafe;
+        }
+
+        /* Blue */
+        .status-checked {
+            background-color: #15803d;
+            color: #dcfce7;
+        }
+
+        /* Green */
+
+        /* SVG Placeholder */
+        .img-placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="/dashboard" class="title"
+            style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:10px; cursor:pointer;"
+            title="Delivery Dashboard を開く">
+            <span
+                style="background:linear-gradient(135deg,#6c5ce7,#a855f7); padding:4px 8px; border-radius:6px; font-size:16px;">📦</span>
+            NanoNovel Asset Manager
+        </a>
+        <div id="projectPathDisplay"
+            style="font-size: 0.8em; color: #888; margin-left: 20px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;"
+            title="Target Project Path"></div>
+        <div class="actions">
+            <a href="/dashboard"
+                style="background-color:#6c5ce7; color:white; border:none; padding:5px 15px; margin-left:10px; cursor:pointer; border-radius:3px; text-decoration:none; font-size:14px;">📊
+                Dashboard</a>
+            <button onclick="saveCurrentJson()">💾 Save Changes</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">JSON Files</div>
+            <ul class="file-list" id="fileList">
+                <!-- Javascript will populate this -->
+                <li class="file-item" style="color: #666; padding: 10px;">Loading...</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="content-header">
+                <div class="tab-title" id="currentFileName">Select a file...</div>
+                <div>
+                    <!-- <button style="background:none; border:none; color:#007acc; cursor:pointer;">+ Add New Entry</button> -->
+                </div>
+            </div>
+
+            <div id="tableContainer"></div>
+        </div>
+    </div>
+
+    <!-- Delivery Box -->
+    <div class="delivery-box" id="deliveryBox">
+        <div class="delivery-header">📦 Delivery Box</div>
+        <div class="delivery-content" id="deliveryContent">
+            Loading delivery files...
+        </div>
+    </div>
+
+    <script>
+        // State
+        let currentFile = null;
+        let jsonData = null; // { rootKey: "characters", data: [...] }
+        let deliveryFiles = [];
+        let config = {};
+
+        // DOM Elements
+        const fileListEl = document.getElementById('fileList');
+        const tableContainer = document.getElementById('tableContainer');
+        const currentFileNameEl = document.getElementById('currentFileName');
+        const deliveryContentEl = document.getElementById('deliveryContent');
+        const projectPathDisplayEl = document.getElementById('projectPathDisplay');
+
+        // --- Initialization ---
+        async function init() {
+            await fetchConfig();
+            await fetchFileList();
+            await fetchDeliveryFiles();
+            // Auto-load first file if available
+            // if (fileListEl.firstChild) fileListEl.firstChild.click();
+        }
+
+        // --- API Calls ---
+        async function fetchConfig() {
+            try {
+                const res = await fetch('/api/config');
+                config = await res.json();
+                projectPathDisplayEl.innerText = `📁 Project: ${config.projectRoot}`;
+            } catch (e) {
+                projectPathDisplayEl.innerText = '⚠️ Error loading config';
+            }
+        }
+        async function fetchFileList() {
+            try {
+                const res = await fetch('/api/files');
+                const files = await res.json();
+                renderSidebar(files);
+            } catch (e) {
+                fileListEl.innerHTML = '<li style="color:red; padding:10px;">Error connecting to server</li>';
+            }
+        }
+
+        async function fetchDeliveryFiles() {
+            try {
+                const res = await fetch('/api/delivery');
+                const files = await res.json();
+                deliveryFiles = files;
+                renderDeliveryBox();
+            } catch (e) {
+                deliveryContentEl.innerText = 'Error loading delivery files';
+            }
+        }
+
+        async function loadJson(filename) {
+            currentFile = filename;
+            currentFileNameEl.innerText = filename;
+
+            // Highlight sidebar
+            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(`file-${filename}`)?.classList.add('active');
+
+            try {
+                const res = await fetch(`/api/json/${filename}`);
+                const rawData = await res.json();
+
+                // Determine Root Key (e.g. "characters", "enemies")
+                const rootKey = Object.keys(rawData).find(k => Array.isArray(rawData[k]));
+                if (!rootKey) {
+                    tableContainer.innerHTML = '<div style="padding:20px; color:orange;">No array data found in JSON</div>';
+                    return;
+                }
+
+                jsonData = {
+                    rootKey: rootKey,
+                    data: rawData[rootKey]
+                };
+
+                renderTable();
+            } catch (e) {
+                tableContainer.innerHTML = `<div style="padding:20px; color:red;">Error loading ${filename}</div>`;
+            }
+        }
+
+        async function saveCurrentJson() {
+            if (!currentFile || !jsonData) return;
+
+            // Reconstruct full JSON structure (simplified, assumes simple structure)
+            const payload = { [jsonData.rootKey]: jsonData.data };
+
+            try {
+                await fetch(`/api/json/${currentFile}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                alert('Saved successfully!');
+            } catch (e) {
+                alert('Error saving file');
+            }
+        }
+
+        async function executeRename(index) {
+            const row = jsonData.data[index];
+            const resultImgPath = row.image || ""; // e.g. "chara/hero/stand.png"
+
+            // Check if we have a pending delivery file attached (stored in row._pendingFile)
+            if (!row._pendingFile) {
+                alert('No file dropped on this row yet.');
+                return;
+            }
+
+            // Construct operation
+            // Target path comes from the inputs
+            const saveFolder = document.getElementById(`folder-${index}`).value; // e.g. "chara/hero"
+            const id = row.id;
+
+            // Auto-generate filename suggestion? Or use existing logic?
+            // For now, let's use: {saveFolder}/{id}_{suffix}.png
+            // But strict requirement was: "remi_unant_standing_01.png" -> "src/assets/chara"
+            // Let's assume we map the dropped file to the "image" path field.
+
+            // Simplified Logic:
+            // 1. Move _pendingFile to src/assets/{saveFolder}/{_pendingFile} (or rename)
+            // 2. Update row.image to {saveFolder}/{_pendingFile}
+
+            const newFilename = row._pendingFile; // Keep name for now, or rename?
+            // User wanted "remi_unant_standing_01.png" style renaming.
+            // Let's Ask user or just do move.
+
+            const operation = {
+                from: row._pendingFile,
+                toDir: saveFolder,
+                newName: newFilename
+            };
+
+            try {
+                const res = await fetch('/api/execute', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ operations: [operation] })
+                });
+                const result = await res.json();
+
+                if (result.results[0].status === 'success') {
+                    // Update JSON data
+                    row.image = `${saveFolder}/${newFilename}`;
+                    delete row._pendingFile; // clear pending
+
+                    // Re-render
+                    renderTable();
+                    alert('File imported!');
+                    fetchDeliveryFiles(); // Refresh delivery box
+                    saveCurrentJson(); // Auto-save JSON
+                } else {
+                    alert('Error moving file: ' + result.results[0].error);
+                }
+            } catch (e) {
+                alert('Error executing operation');
+            }
+        }
+
+
+        // --- Rendering ---
+        function renderSidebar(files) {
+            fileListEl.innerHTML = files.map(f => `
+                <li class="file-item" id="file-${f}" onclick="loadJson('${f}')">
+                    <span class="file-icon">📄</span> ${f}
+                </li>
+            `).join('');
+        }
+
+        function renderDeliveryBox() {
+            if (deliveryFiles.length === 0) {
+                deliveryContentEl.innerHTML = 'No files in _delivery';
+                return;
+            }
+            deliveryContentEl.innerHTML = deliveryFiles.map(f => `
+                <div class="delivery-item" draggable="true" ondragstart="handleGlobalDragStart(event, '${f}')">
+                    📄 ${f}
+                </div>
+            `).join('');
+        }
+
+        function handleGlobalDragStart(e, filename) {
+            e.dataTransfer.setData('text/plain', filename);
+        }
+
+        function renderTable() {
+            if (!jsonData) return;
+
+            const rows = jsonData.data.map((row, index) => {
+                const imgPath = row.image || '';
+                const hasPending = !!row._pendingFile;
+
+                return `
+                <tr ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, ${index})">
+                    <td>
+                        <div class="img-placeholder" style="${hasPending ? 'border: 2px solid cyan;' : ''}">
+                            ${hasPending
+                        ? '🆕'
+                        : (imgPath ? '🖼️' : '<span style="color:#444">No</span>')}
+                        </div>
+                    </td>
+                    <td>${row.id || ''}</td>
+                    <td><input type="text" value="${row.name || ''}" onchange="updateData(${index}, 'name', this.value)"></td>
+                    <td>
+                        <select class="folder-select" id="folder-${index}">
+                            <option value="chara">chara</option>
+                            <option value="chara/hero">&nbsp;&nbsp;↳ hero</option>
+                            <option value="chara/villain">&nbsp;&nbsp;↳ villain</option>
+                            <option value="bg">bg</option>
+                            <option value="item">item</option>
+                        </select>
+                    </td>
+                    <td style="position: relative;">
+                         <div style="font-size:0.8em; color:#888;">
+                            ${imgPath}
+                         </div>
+                         ${hasPending ? `<div style="color:cyan; font-weight:bold;">⮕ ${row._pendingFile}</div>` : ''}
+                         
+                         <!-- Open Folder Button -->
+                         <button onclick="openFolder(${index})" title="Open Folder" style="
+                            position: absolute;
+                            bottom: 5px;
+                            right: 5px;
+                            background: none;
+                            border: none;
+                            cursor: pointer;
+                            color: #666;
+                            padding: 2px;
+                         " onmouseover="this.style.color='#ccc'" onmouseout="this.style.color='#666'">
+                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                             </svg>
+                         </button>
+                    </td>
+                    <td>
+                        <span class="status-badge ${hasPending ? 'status-delivered' : (imgPath ? 'status-checked' : 'status-ordered')}">
+                            ${hasPending ? 'Ready' : (imgPath ? 'Checked' : 'Ordered')}
+                        </span>
+                    </td>
+                    <td>
+                        ${hasPending
+                        ? `<button onclick="executeRename(${index})">⚠️ Import</button>`
+                        : `<button class="secondary" disabled>Rename...</button>`
+                    }
+                    </td>
+                </tr>
+                `;
+            }).join('');
+
+            tableContainer.innerHTML = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">Img</th>
+                            <th style="width: 80px;">ID</th>
+                            <th>Name</th>
+                            <th style="width: 150px;">Save Folder</th>
+                            <th>Path Status</th>
+                            <th style="width: 80px;">Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        function updateData(index, key, value) {
+            if (jsonData && jsonData.data[index]) {
+                jsonData.data[index][key] = value;
+            }
+        }
+
+        async function openFolder(index) {
+            const saveFolder = document.getElementById(`folder-${index}`).value;
+            try {
+                await fetch('/api/open-folder', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path: saveFolder })
+                });
+            } catch (e) {
+                alert('Error opening folder');
+            }
+        }
+
+        // --- Drag & Drop Handlers ---
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+        }
+
+        function handleDrop(e, index) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+
+            const filename = e.dataTransfer.getData('text/plain');
+            if (filename) {
+                // Assign dropped file to this row as pending
+                jsonData.data[index]._pendingFile = filename;
+                renderTable();
+            }
+        }
+
+        // Init
+        init();
+    </script>
+</body>
+
+</html>
