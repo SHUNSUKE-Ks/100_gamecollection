@@ -68,4 +68,4 @@ export interface Story {
 /**
  * ゲーム画面の種類
  */
-export type ScreenType = 'TITLE' | 'CHAPTER' | 'NOVEL' | 'BATTLE' | 'API_BATTLE' | 'RESULT' | 'GALLERY' | 'COLLECTION' | 'HOME' | 'MENU';
+export type ScreenType = 'TITLE' | 'CHAPTER' | 'NOVEL' | 'BATTLE' | 'API_BATTLE' | 'RESULT' | 'GALLERY' | 'COLLECTION' | 'HOME' | 'MENU' | 'HONO_API_TEST';

@@ -19,6 +19,7 @@ export interface PlotLine {
   id: string;
   speaker: string;
   text: string;
+  isComment?: boolean; // 会話ログに非表示のコメント行
 }
 
 export type PlotStatus = 'idea' | 'draft' | 'fixed';

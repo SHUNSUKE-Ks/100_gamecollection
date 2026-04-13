@@ -1,15 +1,13 @@
 // ============================================
-// PlotNotebook - プロット手帳 v3 (Firestore + AI生成)
+// PlotNotebook - プロット手帳 v4
 // ============================================
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, Fragment } from 'react';
 import episodesData from '@/data/collection/episodes.json';
 import characterData from '@/data/collection/characters.json';
 import type { PlotCard, PlotLine, PlotStatus } from '@/core/services/PlotService';
 import { loadPlots, savePlot, deletePlot } from '@/core/services/PlotService';
 import { GeminiService } from '@/core/services/GeminiService';
-
-// ── 型は PlotService から import ──────────────────────────────────────
 
 type ScreenState = 'default' | 'typing';
 
@@ -19,11 +17,9 @@ interface SlotPopup {
     textInput: string;
 }
 
-// ── Constants ────────────────────────────────
+type DropPosition = 'before' | 'after';
 
 const TEXT_MAX_CHARS = 60;
-
-// ── Status Config ────────────────────────────
 
 const STATUS_CONFIG: Record<PlotStatus, { label: string; bg: string; text: string; border: string }> = {
     idea:  { label: 'アイディア', bg: 'bg-purple-500/20', text: 'text-purple-300', border: 'border-purple-500/40' },
@@ -31,11 +27,7 @@ const STATUS_CONFIG: Record<PlotStatus, { label: string; bg: string; text: strin
     fixed: { label: '確定',       bg: 'bg-green-500/20',  text: 'text-green-300',  border: 'border-green-500/40' },
 };
 
-// ── Helpers ──────────────────────────────────
-
 const genId = () => `id-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-
-// ── Component ────────────────────────────────
 
 export function PlotNotebook() {
     const [cards, setCards] = useState<PlotCard[]>([]);
@@ -47,6 +39,34 @@ export function PlotNotebook() {
 
     const [slotPopup, setSlotPopup] = useState<SlotPopup | null>(null);
     const popupRef = useRef<HTMLDivElement>(null);
+
+    // サイドバー開閉
+    // デスクトップ(>768px): CSS で常時表示（hidden クラスは無効）
+    // モバイル(≤768px): 初期非表示、タップで開くオーバーレイ
+    const [sidebarOpen, setSidebarOpen] = useState(() =>
+        typeof window !== 'undefined' ? window.innerWidth > 768 : true
+    );
+
+    // ドラッグ状態
+    const [dragLineId, setDragLineId] = useState<string | null>(null);
+    const [dropTargetIdx, setDropTargetIdx] = useState<number | null>(null);
+    const [dropPosition, setDropPosition] = useState<DropPosition>('after');
+
+    // DOM refs
+    const textareaRefs = useRef<Record<string, HTMLTextAreaElement | null>>({});
+
+    // Ctrl+Enter 後にフォーカスすべき行ID（レンダリング後に適用）
+    const pendingFocusRef = useRef<string | null>(null);
+
+    // レンダリング後に pendingFocusRef があればフォーカスを当てる
+    useEffect(() => {
+        if (!pendingFocusRef.current) return;
+        const el = textareaRefs.current[pendingFocusRef.current];
+        if (el) {
+            el.focus();
+            pendingFocusRef.current = null;
+        }
+    }); // 依存配列なし = 毎レンダー後に実行
 
     // AI生成UI
     const [showAIPanel, setShowAIPanel] = useState(false);
@@ -81,31 +101,72 @@ export function PlotNotebook() {
         }, 800);
     }, []);
 
-    // ── キャストスロット: Alt+1〜4 ──────────────────────────
+    // ── キーボードショートカット ─────────────────────────────
 
-    const handleAltShortcut = useCallback((slotIdx: number) => {
+    // Alt+1〜4: キャスト名を話者に挿入 / Alt+0: ナレーション（空白）
+    const handleAltShortcut = useCallback((slotIdx: number | 'narration') => {
         if (!selectedCard || !focusedLineId) return;
-        const name = selectedCard.castSlots[slotIdx];
-        if (!name) return;
+        const name = slotIdx === 'narration' ? '' : selectedCard.castSlots[slotIdx];
+        if (slotIdx !== 'narration' && !name) return;
         setCards(prev => prev.map(c => {
             if (c.id !== selectedCard.id) return c;
-            return { ...c, lines: c.lines.map(l => l.id === focusedLineId ? { ...l, speaker: name } : l) };
+            return { ...c, lines: c.lines.map(l => l.id === focusedLineId ? { ...l, speaker: name ?? '' } : l) };
         }));
     }, [selectedCard, focusedLineId]);
 
     useEffect(() => {
         const handler = (e: KeyboardEvent) => {
-            if (screenState !== 'typing') return;
             if (!e.altKey) return;
-            const idx = ['1','2','3','4'].indexOf(e.key);
-            if (idx === -1) return;
-            e.preventDefault();
-            handleAltShortcut(idx);
+
+            // Alt+A: 左サイドバー開閉
+            if (e.key === 'a' || e.key === 'A') {
+                e.preventDefault();
+                setSidebarOpen(prev => !prev);
+                return;
+            }
+
+            // 以下は入力中のみ有効
+            if (screenState !== 'typing') return;
+
+            if (e.key === '0') {
+                e.preventDefault();
+                handleAltShortcut('narration');
+                return;
+            }
+            const idx = ['1', '2', '3', '4'].indexOf(e.key);
+            if (idx !== -1) {
+                e.preventDefault();
+                handleAltShortcut(idx);
+                return;
+            }
+            // Alt+^: コメント行を挿入
+            if (e.key === '^') {
+                e.preventDefault();
+                if (selectedCard && focusedLineId) {
+                    const lineIdx = selectedCard.lines.findIndex(l => l.id === focusedLineId);
+                    insertCommentAfter(selectedCard.id, lineIdx >= 0 ? lineIdx : selectedCard.lines.length - 1);
+                }
+                return;
+            }
         };
         window.addEventListener('keydown', handler);
         return () => window.removeEventListener('keydown', handler);
-    }, [screenState, handleAltShortcut]);
+    }, [screenState, handleAltShortcut, selectedCard, focusedLineId]);
 
+    // ESC: 現在の input/textarea からフォーカスを外す
+    useEffect(() => {
+        const handler = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                (document.activeElement as HTMLElement)?.blur();
+                setScreenState('default');
+                setFocusedLineId(null);
+            }
+        };
+        window.addEventListener('keydown', handler);
+        return () => window.removeEventListener('keydown', handler);
+    }, []);
+
+    // スロットpopup外クリックで閉じる
     useEffect(() => {
         if (!slotPopup) return;
         const handler = (e: MouseEvent) => {
@@ -178,10 +239,28 @@ export function PlotNotebook() {
             scheduleSave(updated);
             return updated;
         }));
-        setTimeout(() => setFocusedLineId(newLine.id), 30);
+        // レンダリング後に pendingFocusRef が適用される
+        pendingFocusRef.current = newLine.id;
+        setFocusedLineId(newLine.id);
+        setScreenState('typing');
     };
 
-    const updateLine = (cardId: string, lineId: string, field: keyof PlotLine, value: string) => {
+    const insertCommentAfter = (cardId: string, afterIdx: number) => {
+        const newLine: PlotLine = { id: genId(), speaker: '', text: '', isComment: true };
+        setCards(prev => prev.map(c => {
+            if (c.id !== cardId) return c;
+            const lines = [...c.lines];
+            lines.splice(afterIdx + 1, 0, newLine);
+            const updated = { ...c, lines };
+            scheduleSave(updated);
+            return updated;
+        }));
+        pendingFocusRef.current = newLine.id;
+        setFocusedLineId(newLine.id);
+        setScreenState('typing');
+    };
+
+    const updateLine = (cardId: string, lineId: string, field: keyof PlotLine, value: string | boolean) => {
         setCards(prev => prev.map(c => {
             if (c.id !== cardId) return c;
             const updated = { ...c, lines: c.lines.map(l => l.id === lineId ? { ...l, [field]: value } : l) };
@@ -200,18 +279,48 @@ export function PlotNotebook() {
         }));
     };
 
-    const moveLine = (cardId: string, lineId: string, direction: 'up' | 'down') => {
-        setCards(prev => prev.map(c => {
-            if (c.id !== cardId) return c;
-            const lines = [...c.lines];
-            const idx = lines.findIndex(l => l.id === lineId);
-            const target = direction === 'up' ? idx - 1 : idx + 1;
-            if (target < 0 || target >= lines.length) return c;
-            [lines[idx], lines[target]] = [lines[target], lines[idx]];
-            const updated = { ...c, lines };
-            scheduleSave(updated);
-            return updated;
-        }));
+    // ── ドラッグ＆ドロップ並び替え ─────────────────────────
+
+    const handleDragStart = (e: React.DragEvent, lineId: string) => {
+        setDragLineId(lineId);
+        e.dataTransfer.effectAllowed = 'move';
+    };
+
+    const handleDragOver = (e: React.DragEvent, idx: number) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        const pos: DropPosition = e.clientY < rect.top + rect.height / 2 ? 'before' : 'after';
+        setDropTargetIdx(idx);
+        setDropPosition(pos);
+    };
+
+    const handleDrop = (e: React.DragEvent, dropIdx: number) => {
+        e.preventDefault();
+        if (!dragLineId || !selectedCard) {
+            setDragLineId(null);
+            setDropTargetIdx(null);
+            return;
+        }
+        const lines = [...selectedCard.lines];
+        const dragIdx = lines.findIndex(l => l.id === dragLineId);
+        if (dragIdx === -1) {
+            setDragLineId(null);
+            setDropTargetIdx(null);
+            return;
+        }
+        let insertAt = dropPosition === 'before' ? dropIdx : dropIdx + 1;
+        const [dragged] = lines.splice(dragIdx, 1);
+        if (dragIdx < insertAt) insertAt--;
+        lines.splice(Math.max(0, insertAt), 0, dragged);
+        updateCard(selectedCard.id, 'lines', lines);
+        setDragLineId(null);
+        setDropTargetIdx(null);
+    };
+
+    const handleDragEnd = () => {
+        setDragLineId(null);
+        setDropTargetIdx(null);
     };
 
     const handleEpisodeChange = (episodeId: string) => {
@@ -226,11 +335,32 @@ export function PlotNotebook() {
         setSlotPopup({ slotIdx, mode: 'menu', textInput: '' });
     };
 
-    const confirmTextInput = () => {
+    // Enter: 確定して最初のtextareaへ / TAB: 確定して次の空スロットへ
+    const confirmAndAdvance = (direction: 'enter' | 'tab') => {
         if (!slotPopup || !selectedCard) return;
         const name = slotPopup.textInput.trim();
-        if (name) setCastSlot(selectedCard.id, slotPopup.slotIdx, name);
+        const currentSlotIdx = slotPopup.slotIdx;
+        if (name) setCastSlot(selectedCard.id, currentSlotIdx, name);
         setSlotPopup(null);
+
+        if (direction === 'tab') {
+            // 次の空スロットを探す
+            for (let i = currentSlotIdx + 1; i < 4; i++) {
+                if (!selectedCard.castSlots[i]) {
+                    setTimeout(() => setSlotPopup({ slotIdx: i, mode: 'text', textInput: '' }), 30);
+                    return;
+                }
+            }
+        }
+        // Enter、または空スロットなし → 最初のtextareaへ
+        setTimeout(() => {
+            const firstLineId = selectedCard.lines[0]?.id;
+            if (firstLineId) {
+                textareaRefs.current[firstLineId]?.focus();
+                setFocusedLineId(firstLineId);
+                setScreenState('typing');
+            }
+        }, 30);
     };
 
     // ── AI生成 ─────────────────────────────────────────────
@@ -243,7 +373,6 @@ export function PlotNotebook() {
             const generated = await GeminiService.generatePlotCards(aiInput.trim());
             setCards(prev => [...generated, ...prev]);
             if (generated.length > 0) setSelectedId(generated[0].id);
-            // Firestoreに保存
             await Promise.all(generated.map(c => savePlot(c)));
             setShowAIPanel(false);
             setAiInput('');
@@ -266,8 +395,15 @@ export function PlotNotebook() {
 
     // ── Render ───────────────────────────────────────────────
 
+    const comments = selectedCard?.lines.filter(l => l.isComment) ?? [];
+
     return (
         <div className="plot-notebook">
+
+            {/* ── モバイル: 開いたサイドバーの外側をタップで閉じる ── */}
+            {sidebarOpen && (
+                <div className="plot-sidebar-backdrop" onClick={() => setSidebarOpen(false)} />
+            )}
 
             {/* ── AI生成パネル ── */}
             {showAIPanel && (
@@ -323,10 +459,10 @@ export function PlotNotebook() {
             )}
 
             {/* ── 左: カードリスト ── */}
-            <aside className="plot-sidebar">
+            <aside className={`plot-sidebar ${sidebarOpen ? '' : 'hidden'}`}>
                 <div className="plot-sidebar-header">
                     <span className="plot-sidebar-title">プロット手帳</span>
-                    <div style={{ display: 'flex', gap: '0.4rem' }}>
+                    <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                         <button
                             className="plot-add-btn"
                             style={{ background: '#1d4ed8', borderColor: '#3b82f6', fontSize: '0.75rem' }}
@@ -334,6 +470,12 @@ export function PlotNotebook() {
                             title="AIでプロットを2枚生成"
                         >✨ AI</button>
                         <button className="plot-add-btn" onClick={addCard}>＋ 新規</button>
+                        {/* モバイル専用閉じるボタン */}
+                        <button
+                            className="plot-sidebar-close-btn"
+                            onClick={() => setSidebarOpen(false)}
+                            title="閉じる"
+                        >✕</button>
                     </div>
                 </div>
 
@@ -361,22 +503,66 @@ export function PlotNotebook() {
                 </div>
             </aside>
 
+            {/* サイドバー開閉ボタン */}
+            <button
+                className="plot-sidebar-toggle-btn"
+                onClick={() => setSidebarOpen(prev => !prev)}
+                title={`サイドバーを${sidebarOpen ? '閉じる' : '開く'} (Alt+A)`}
+            >
+                {sidebarOpen ? '◀' : '▶'}
+            </button>
+
             {/* ── 右: カードエディター ── */}
             <main className="plot-editor">
                 {!selectedCard ? (
                     <div className="plot-no-selection">
+                        {/* モバイル: サイドバーを開くボタン */}
+                        <button className="plot-mobile-menu-btn" onClick={() => setSidebarOpen(true)}>☰</button>
                         <p>← カードを選択するか、「＋ 新規」または「✨ AI」で追加してください</p>
                     </div>
                 ) : (
                     <>
+                        {/* ScreenState インジケーター（モバイルのメニューボタンを内包） */}
                         <div className={`plot-screen-state ${screenState}`}>
+                            {/* モバイル専用メニューボタン */}
+                            <button
+                                className="plot-mobile-menu-btn"
+                                onClick={() => setSidebarOpen(true)}
+                                title="カードリストを開く"
+                            >☰</button>
                             {screenState === 'typing' ? (
-                                <span>✏ 入力中 — Alt+1〜4 でキャスト名を挿入</span>
+                                <span>✏ 入力中 — Alt+1〜4: キャスト挿入 | Alt+0: ナレーション | Alt+^: コメント | ESC: 抜ける</span>
                             ) : (
-                                <span>◎ 待機中 — 変更は自動保存されます</span>
+                                <span>◎ 待機中 — 変更は自動保存されます | Alt+A: サイドバー開閉</span>
                             )}
                         </div>
 
+                        {/* コメント一覧バー */}
+                        {comments.length > 0 && (
+                            <div className="plot-comments-bar">
+                                <span className="plot-comments-bar-label">// コメント</span>
+                                {comments.map(c => (
+                                    <button
+                                        key={c.id}
+                                        className="plot-comment-jump-btn"
+                                        title={c.text || '(空)'}
+                                        onClick={() => {
+                                            const el = textareaRefs.current[c.id];
+                                            if (el) {
+                                                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                el.focus();
+                                                setFocusedLineId(c.id);
+                                                setScreenState('typing');
+                                            }
+                                        }}
+                                    >
+                                        {c.text ? c.text.slice(0, 18) : '(空)'}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* エディターヘッダー */}
                         <div className="plot-editor-header">
                             <input
                                 className="plot-title-input"
@@ -395,7 +581,7 @@ export function PlotNotebook() {
                         <div className="plot-cast-section">
                             <div className="plot-cast-label">
                                 CAST
-                                <span className="plot-cast-hint">Alt+1〜4 で話者に挿入</span>
+                                <span className="plot-cast-hint">Alt+1〜4: 話者に挿入 | Alt+0: ナレーション</span>
                             </div>
                             <div className="plot-cast-slots">
                                 {selectedCard.castSlots.map((name, slotIdx) => (
@@ -438,17 +624,30 @@ export function PlotNotebook() {
                                                 )}
                                                 {slotPopup.mode === 'text' && (
                                                     <>
-                                                        <p className="plot-slot-popup-title">名前を入力</p>
+                                                        <p className="plot-slot-popup-title">
+                                                            名前を入力
+                                                            <span style={{ fontSize: '10px', color: '#64748b', marginLeft: 6, fontFamily: 'monospace' }}>
+                                                                Enter: 会話欄へ | Tab: 次のスロット
+                                                            </span>
+                                                        </p>
                                                         <input
                                                             className="plot-slot-text-input"
                                                             autoFocus
                                                             value={slotPopup.textInput}
                                                             onChange={e => setSlotPopup({ ...slotPopup, textInput: e.target.value })}
-                                                            onKeyDown={e => { if (e.key === 'Enter') confirmTextInput(); }}
+                                                            onKeyDown={e => {
+                                                                if (e.key === 'Enter') {
+                                                                    e.preventDefault();
+                                                                    confirmAndAdvance('enter');
+                                                                } else if (e.key === 'Tab') {
+                                                                    e.preventDefault();
+                                                                    confirmAndAdvance('tab');
+                                                                }
+                                                            }}
                                                             placeholder="キャラクター名..."
                                                         />
                                                         <div className="plot-slot-popup-actions">
-                                                            <button className="plot-slot-confirm-btn" onClick={confirmTextInput}>決定</button>
+                                                            <button className="plot-slot-confirm-btn" onClick={() => confirmAndAdvance('enter')}>決定</button>
                                                             <button className="plot-slot-cancel-btn" onClick={() => setSlotPopup(null)}>キャンセル</button>
                                                         </div>
                                                     </>
@@ -530,52 +729,105 @@ export function PlotNotebook() {
                         </div>
 
                         {/* 会話ラインリスト */}
-                        <div className="plot-lines-container">
+                        <div
+                            className="plot-lines-container"
+                            onDragLeave={e => {
+                                if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                                    setDropTargetIdx(null);
+                                }
+                            }}
+                        >
                             {selectedCard.lines.map((line, idx) => {
                                 const charLeft = TEXT_MAX_CHARS - line.text.length;
                                 const isFocused = focusedLineId === line.id;
+                                const isDragging = dragLineId === line.id;
                                 return (
-                                    <div key={line.id} className={`plot-line ${isFocused ? 'focused' : ''}`}>
-                                        <input
-                                            className="plot-line-speaker"
-                                            value={line.speaker}
-                                            onChange={e => updateLine(selectedCard.id, line.id, 'speaker', e.target.value)}
-                                            onFocus={() => { setScreenState('typing'); setFocusedLineId(line.id); }}
-                                            onBlur={() => { setScreenState('default'); setFocusedLineId(null); }}
-                                            placeholder="キャラ名"
-                                        />
-                                        <div className="plot-line-text-wrap">
-                                            <textarea
-                                                className="plot-line-text"
-                                                value={line.text}
-                                                onChange={e => {
-                                                    if (e.target.value.length <= TEXT_MAX_CHARS) {
-                                                        updateLine(selectedCard.id, line.id, 'text', e.target.value);
-                                                    }
-                                                }}
-                                                onFocus={() => { setScreenState('typing'); setFocusedLineId(line.id); }}
-                                                onBlur={() => { setScreenState('default'); setFocusedLineId(null); }}
-                                                placeholder="台詞・ト書き... (60文字以内)"
-                                                rows={3}
-                                                maxLength={TEXT_MAX_CHARS}
-                                                onKeyDown={e => {
-                                                    if (e.ctrlKey && e.key === 'Enter') {
-                                                        e.preventDefault();
-                                                        insertLineAfter(selectedCard.id, idx);
-                                                    }
-                                                }}
-                                            />
-                                            <span className={`plot-line-charcount ${charLeft <= 10 ? 'warn' : ''}`}>
-                                                {charLeft}
-                                            </span>
+                                    <Fragment key={line.id}>
+                                        {/* ドロップインジケーター（前） */}
+                                        {dropTargetIdx === idx && dropPosition === 'before' && !isDragging && (
+                                            <div className="plot-drop-indicator" />
+                                        )}
+
+                                        <div
+                                            className={`plot-line ${isFocused ? 'focused' : ''} ${line.isComment ? 'is-comment' : ''} ${isDragging ? 'dragging' : ''}`}
+                                            onDragOver={e => handleDragOver(e, idx)}
+                                            onDrop={e => handleDrop(e, idx)}
+                                        >
+                                            {/* ── 上段: ヘッダー（話者 + ドラッグ + アクション） ── */}
+                                            <div className="plot-line-header">
+                                                <div
+                                                    className="plot-line-drag-handle"
+                                                    draggable
+                                                    onDragStart={e => handleDragStart(e, line.id)}
+                                                    onDragEnd={handleDragEnd}
+                                                    title="ドラッグして並び替え"
+                                                >
+                                                    ⠿
+                                                </div>
+
+                                                {line.isComment ? (
+                                                    <div className="plot-line-comment-label">// NOTE</div>
+                                                ) : (
+                                                    <input
+                                                        className="plot-line-speaker"
+                                                        value={line.speaker}
+                                                        onChange={e => updateLine(selectedCard.id, line.id, 'speaker', e.target.value)}
+                                                        onFocus={() => { setScreenState('typing'); setFocusedLineId(line.id); }}
+                                                        onBlur={() => { setScreenState('default'); setFocusedLineId(null); }}
+                                                        onKeyDown={e => {
+                                                            if (e.key === 'Enter') {
+                                                                e.preventDefault();
+                                                                textareaRefs.current[line.id]?.focus();
+                                                            }
+                                                        }}
+                                                        placeholder="キャラ名"
+                                                    />
+                                                )}
+
+                                                <div className="plot-line-actions">
+                                                    <button className="plot-line-btn insert" onClick={() => insertLineAfter(selectedCard.id, idx)} title="この行の下に追加 (Ctrl+Enter)">＋</button>
+                                                    <button className="plot-line-btn delete" onClick={() => deleteLine(selectedCard.id, line.id)} title="この行を削除">×</button>
+                                                </div>
+                                            </div>
+
+                                            {/* ── 下段: ボディ（テキストエリア） ── */}
+                                            <div className="plot-line-body">
+                                                <div className="plot-line-text-wrap">
+                                                    <textarea
+                                                        ref={el => { textareaRefs.current[line.id] = el; }}
+                                                        className={`plot-line-text ${line.isComment ? 'comment-text' : ''}`}
+                                                        value={line.text}
+                                                        onChange={e => {
+                                                            if (e.target.value.length <= TEXT_MAX_CHARS) {
+                                                                updateLine(selectedCard.id, line.id, 'text', e.target.value);
+                                                            }
+                                                        }}
+                                                        onFocus={() => { setScreenState('typing'); setFocusedLineId(line.id); }}
+                                                        onBlur={() => { setScreenState('default'); setFocusedLineId(null); }}
+                                                        placeholder={line.isComment ? '// コメントを入力（会話ログには表示されません）' : '台詞・ト書き...'}
+                                                        rows={line.isComment ? 2 : 3}
+                                                        maxLength={TEXT_MAX_CHARS}
+                                                        onKeyDown={e => {
+                                                            if (e.ctrlKey && e.key === 'Enter') {
+                                                                e.preventDefault();
+                                                                insertLineAfter(selectedCard.id, idx);
+                                                            }
+                                                        }}
+                                                    />
+                                                    {!line.isComment && (
+                                                        <span className={`plot-line-charcount ${charLeft <= 10 ? 'warn' : ''}`}>
+                                                            {charLeft}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="plot-line-actions">
-                                            <button className="plot-line-btn" onClick={() => moveLine(selectedCard.id, line.id, 'up')} disabled={idx === 0} title="上へ">▲</button>
-                                            <button className="plot-line-btn" onClick={() => moveLine(selectedCard.id, line.id, 'down')} disabled={idx === selectedCard.lines.length - 1} title="下へ">▼</button>
-                                            <button className="plot-line-btn insert" onClick={() => insertLineAfter(selectedCard.id, idx)} title="この行の下に追加">＋</button>
-                                            <button className="plot-line-btn delete" onClick={() => deleteLine(selectedCard.id, line.id)} title="この行を削除">×</button>
-                                        </div>
-                                    </div>
+
+                                        {/* ドロップインジケーター（後） */}
+                                        {dropTargetIdx === idx && dropPosition === 'after' && !isDragging && (
+                                            <div className="plot-drop-indicator" />
+                                        )}
+                                    </Fragment>
                                 );
                             })}
                         </div>

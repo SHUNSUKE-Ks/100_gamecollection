@@ -12,6 +12,7 @@ import { NPCDetailView } from '@/parts/collection/specific/NPCDetailView';
 import { EnemyDetailView } from '@/parts/collection/specific/EnemyDetailView';
 import { BackgroundDetailView } from '@/parts/collection/specific/BackgroundDetailView';
 import { BGMPlayerView } from '@/parts/collection/specific/BGMPlayerView';
+import { TagsView } from '@/parts/collection/specific/TagsView';
 import { StoryView } from '@/parts/collection/story/StoryView'; // [NEW] Import Story
 import { StudioScreen } from '@/screens/12_Studio/StudioScreen'; // [NEW] Import Studio
 import characterData from '@/data/collection/characters.json';
@@ -224,14 +225,17 @@ const ITEM_COLUMNS: TableColumn[] = [
 
 // Tab Types
 type PrimaryTab = 'item' | 'equipment' | 'skill' | 'ability' | 'story' | 'library' | 'sound' | 'keymap' | 'studio' | 'settings' | 'report' | 'document';
-type SecondaryTab = 'place' | 'character' | 'npc' | 'enemy' | 'item_dict' | 'event' | 'cg' | 'sound_db';
+type SecondaryTab = 'place' | 'character' | 'npc' | 'enemy' | 'item_dict' | 'event' | 'cg' | 'sound_db' | 'tag_db';
 type SettingsTab = 'sound_settings' | 'screen_settings' | 'key_settings';
 
 export function CollectionScreen() {
     const setScreen = useGameStore((state) => state.setScreen);
+    const collectionDeepLink = useGameStore((state) => state.collectionDeepLink);
+    const setCollectionDeepLink = useGameStore((state) => state.setCollectionDeepLink);
     const [primaryTab, setPrimaryTab] = useState<PrimaryTab>('library');
     const [secondaryTab, setSecondaryTab] = useState<SecondaryTab>('character');
     const [settingsTab, setSettingsTab] = useState<SettingsTab>('sound_settings');
+    const [storyDeepLink, setStoryDeepLink] = useState<string | null>(null);
     const { viewMode, setViewMode } = useViewMode('list');
 
     // Firestore から読み込んだライブラリデータ
@@ -242,6 +246,16 @@ export function CollectionScreen() {
     const [isSeedRunning, setIsSeedRunning] = useState(false);
     const [seedLog, setSeedLog] = useState<string[]>([]);
     const [showSeedPanel, setShowSeedPanel] = useState(false);
+
+    // Deep link navigation (e.g. タイトル画面の「プロット手帳」ボタンから)
+    useEffect(() => {
+        if (!collectionDeepLink) return;
+        if (collectionDeepLink.startsWith('story:')) {
+            setPrimaryTab('story');
+            setStoryDeepLink(collectionDeepLink);
+        }
+        setCollectionDeepLink(null);
+    }, []);
 
     // Auto-switch to 'custom' view for Character tab
     useEffect(() => {
@@ -363,7 +377,8 @@ export function CollectionScreen() {
         { id: 'item_dict', label: 'アイテム図鑑' },
         { id: 'event', label: 'イベントDB' },
         { id: 'cg', label: 'CG・ギャラリー' },
-        { id: 'sound_db', label: 'サウンド図鑑' }
+        { id: 'sound_db', label: 'サウンド図鑑' },
+        { id: 'tag_db', label: 'タグDB' },
     ];
 
     return (
@@ -490,13 +505,13 @@ export function CollectionScreen() {
                                     ? secondaryTabs.find(t => t.id === secondaryTab)?.label
                                     : primaryTabs.find(t => t.id === primaryTab)?.label}
                             </h2>
-                            {primaryTab === 'library' && (
+                            {primaryTab === 'library' && secondaryTab !== 'tag_db' && (
                                 <ViewSwitcher currentView={viewMode} onViewChange={setViewMode as any} />
                             )}
                         </div>
 
                         {/* Content switching logic */}
-                        {primaryTab === 'library' ? (
+                        {primaryTab === 'library' && secondaryTab !== 'tag_db' ? (
                             <div className="collection-view-container">
                                 {viewMode === 'list' && <TableView data={currentData} columns={currentColumns} />}
                                 {viewMode === 'gallery' && <GalleryView data={currentData} />}
@@ -523,7 +538,8 @@ export function CollectionScreen() {
                                     })()
                                 )}
                             </div>
-                        ) : primaryTab !== 'sound' ? (
+                        ) : primaryTab === 'library' && secondaryTab === 'tag_db' ? null
+                        : primaryTab !== 'sound' ? (
                             <div className="p-8 text-center text-gray-500">
                                 <p>準備中...</p>
                             </div>
@@ -536,9 +552,14 @@ export function CollectionScreen() {
                     <BGMPlayerView />
                 )}
 
+                {/* Render Tags DB */}
+                {primaryTab === 'library' && secondaryTab === 'tag_db' && (
+                    <TagsView />
+                )}
+
                 {/* Render Story Screen */}
                 {primaryTab === 'story' && (
-                    <StoryView />
+                    <StoryView deepLink={storyDeepLink} onDeepLinkConsumed={() => setStoryDeepLink(null)} />
                 )}
 
                 {/* Render Settings Screen */}

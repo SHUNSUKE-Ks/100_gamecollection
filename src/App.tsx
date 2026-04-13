@@ -9,6 +9,7 @@ import { ChapterScreen } from '@/screens/02_Novel/ChapterScreen';
 import { NovelScreen } from '@/screens/02_Novel/NovelScreen';
 import { BattleScreen } from '@/screens/03_Battle/BattleScreen';
 import { ApiBattleScreen } from '@/screens/04_ApiBattle/ApiBattleScreen';
+import { HonoApiTestScreen } from '@/screens/05_HonoApiTest/HonoApiTestScreen';
 import '@/styles/global.css';
 import { CollectionScreen } from '@/screens/11_Collection/CollectionScreen';
 import { HomeScreen } from '@/screens/00_Home/HomeScreen';
@@ -40,6 +41,8 @@ function App() {
         return <CollectionScreen />;
       case 'MENU':
         return <MenuScreen />;
+      case 'HONO_API_TEST':
+        return <HonoApiTestScreen />;
       default:
         return <TitleScreen />;
     }

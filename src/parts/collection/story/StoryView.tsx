@@ -1,14 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StoryStepper } from './StoryStepper';
 import { StoryListView } from './StoryListView';
 import { StoryEventCard } from './StoryEventCard';
 import { PlotNotebook } from './PlotNotebook';
+import { SchemaShortView } from './SchemaShortView';
+import { NovelLibraryView } from './NovelLibraryView';
+import { NovelDetailView } from './NovelDetailView';
+import type { NovelEntry } from './NovelLibraryView';
 import episodesData from '@/data/collection/episodes.json';
 import eventsData from '@/data/collection/events.json';
 import './StoryView.css';
 
 // Types
-type StorySubTab = 'main' | 'event' | 'plot';
+type StorySubTab = 'main' | 'event' | 'plot' | 'schema' | 'library';
+type SchemaVersionId = 'v11' | 'v12' | 'v21' | 'v31';
+
+interface StoryViewProps {
+    deepLink?: string | null;
+    onDeepLinkConsumed?: () => void;
+}
 type StoryViewMode = 'stepper' | 'list';
 
 interface Episode {
@@ -57,11 +67,28 @@ interface EventType {
     color: string;
 }
 
-export function StoryView() {
+export function StoryView({ deepLink, onDeepLinkConsumed }: StoryViewProps = {}) {
     const [subTab, setSubTab] = useState<StorySubTab>('main');
+    const [schemaInitialVersion, setSchemaInitialVersion] = useState<SchemaVersionId | undefined>(undefined);
+    const [detailEntry, setDetailEntry] = useState<NovelEntry | null>(null);
     const [viewMode, setViewMode] = useState<StoryViewMode>('stepper');
     const [selectedChapterId, setSelectedChapterId] = useState<string | null>(null);
     const [isPanelOpen, setIsPanelOpen] = useState(true);
+
+    // DeepLink 処理
+    useEffect(() => {
+        if (!deepLink) return;
+        if (deepLink === 'story:plot') {
+            setSubTab('plot');
+        } else if (deepLink.startsWith('story:schema')) {
+            setSubTab('schema');
+            const versionMatch = deepLink.match(/story:schema:(\w+)/);
+            if (versionMatch) {
+                setSchemaInitialVersion(versionMatch[1] as SchemaVersionId);
+            }
+        }
+        onDeepLinkConsumed?.();
+    }, [deepLink]);
 
     const episodes: Episode[] = episodesData.episodes;
     const locations: Location[] = episodesData.locations;
@@ -117,9 +144,21 @@ export function StoryView() {
                     >
                         ✏ プロット手帳
                     </button>
+                    <button
+                        className={`story-sub-tab ${subTab === 'schema' ? 'active' : ''}`}
+                        onClick={() => setSubTab('schema')}
+                    >
+                        📄 スキーマーショート
+                    </button>
+                    <button
+                        className={`story-sub-tab ${subTab === 'library' ? 'active' : ''}`}
+                        onClick={() => { setSubTab('library'); setDetailEntry(null); }}
+                    >
+                        📚 ノベルライブラリ
+                    </button>
                 </div>
-                {/* ビュー切替はプロット手帳では非表示 */}
-                {subTab !== 'plot' && (
+                {/* ビュー切替はプロット手帳・スキーマーショート・ライブラリでは非表示 */}
+                {subTab !== 'plot' && subTab !== 'schema' && subTab !== 'library' && (
                     <div className="story-view-toggle">
                         <button
                             className={`view-toggle-btn ${viewMode === 'stepper' ? 'active' : ''}`}
@@ -144,7 +183,18 @@ export function StoryView() {
                 {/* プロット手帳 */}
                 {subTab === 'plot' && <PlotNotebook />}
 
-                {subTab !== 'plot' && (subTab === 'main' ? (
+                {/* スキーマーショート */}
+                {subTab === 'schema' && <SchemaShortView initialVersion={schemaInitialVersion} />}
+
+                {/* ノベルライブラリ */}
+                {subTab === 'library' && !detailEntry && (
+                    <NovelLibraryView onOpenDetail={(entry) => setDetailEntry(entry)} />
+                )}
+                {subTab === 'library' && detailEntry && (
+                    <NovelDetailView entry={detailEntry} onBack={() => setDetailEntry(null)} />
+                )}
+
+                {subTab !== 'plot' && subTab !== 'schema' && subTab !== 'library' && (subTab === 'main' ? (
                     // Main Story View
                     <div className="story-main-layout">
                         {viewMode === 'stepper' && (

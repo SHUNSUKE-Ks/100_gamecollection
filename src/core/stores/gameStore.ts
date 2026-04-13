@@ -35,6 +35,9 @@ interface GameState {
     // Current screen
     currentScreen: ScreenType;
 
+    // Collection deep link (e.g. 'story:plot' でプロット手帳へ直接遷移)
+    collectionDeepLink: string | null;
+
     // Story progress
     currentStoryID: string;
 
@@ -54,6 +57,7 @@ interface GameState {
 
     // Actions - Screen
     setScreen: (screen: ScreenType) => void;
+    setCollectionDeepLink: (link: string | null) => void;
 
     // Actions - Story
     setStoryID: (storyID: string) => void;
@@ -84,6 +88,7 @@ interface GameState {
 
 const initialState = {
     currentScreen: 'TITLE' as ScreenType,
+    collectionDeepLink: null as string | null,
     currentStoryID: '01_01_01',
     flags: {},
     inventory: [],
@@ -104,6 +109,7 @@ export const useGameStore = create<GameState>()(
 
             // Screen
             setScreen: (screen) => set({ currentScreen: screen }),
+            setCollectionDeepLink: (link) => set({ collectionDeepLink: link }),
 
             // Story
             setStoryID: (storyID) => set({ currentStoryID: storyID }),

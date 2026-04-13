@@ -656,17 +656,18 @@
     padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
+
+/* ── 会話ブロック: 2段レイアウト ── */
 
 .plot-line {
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    flex-direction: column;   /* 上段ヘッダー + 下段ボディ */
     background: #0f172a;
     border: 1px solid #1e293b;
     border-radius: 8px;
-    padding: 10px 12px;
+    overflow: hidden;
     transition: border-color 0.15s;
 }
 
@@ -674,22 +675,41 @@
     border-color: #334155;
 }
 
+/* 上段: 話者名エリア（ブロックのヘッダー） */
+.plot-line-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px 5px 4px;
+    background: #1a2744;
+    border-bottom: 1px solid #0d1b2e;
+    min-height: 34px;
+}
+
+/* 下段: テキストエリア */
+.plot-line-body {
+    padding: 8px 12px 6px 12px;
+    background: #0f172a;
+}
+
+/* 話者input: ヘッダー内で横いっぱいに */
 .plot-line-speaker {
-    flex-shrink: 0;
-    width: 110px;
-    background: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 5px;
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #334155;
+    border-radius: 0;
     color: #fbbf24;
     font-size: 12px;
     font-weight: 600;
-    padding: 6px 8px;
+    padding: 2px 4px;
     outline: none;
     transition: border-color 0.2s;
 }
 
 .plot-line-speaker:focus {
-    border-color: #fbbf24;
+    border-bottom-color: #fbbf24;
 }
 
 .plot-line-speaker::placeholder {
@@ -697,28 +717,30 @@
     font-weight: 400;
 }
 
+/* テキストエリア */
 .plot-line-text {
-    flex: 1;
+    width: 100%;
     background: transparent;
     border: none;
     color: #e2e8f0;
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.7;
     resize: none;
     outline: none;
-    padding: 4px 0;
-    min-height: 44px;
+    padding: 2px 0;
 }
 
 .plot-line-text::placeholder {
     color: #475569;
 }
 
+/* アクションボタン: ヘッダー右端で横並び */
 .plot-line-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 3px;
     flex-shrink: 0;
+    margin-left: auto;
 }
 
 .plot-line-btn {
@@ -1038,32 +1060,19 @@
     color: #fbbf24;
 }
 
-/* ── ライン: フォーカス・文字数・＋ボタン ── */
+/* ── ライン: フォーカス・文字数 ── */
 
 .plot-line.focused {
-    border-color: #3b82f655;
-    background: #0d1b2a;
+    border-color: #3b82f688;
+}
+
+.plot-line.focused .plot-line-header {
+    background: #1e3a5f;
+    border-bottom-color: #1e3a5f;
 }
 
 .plot-line-text-wrap {
-    flex: 1;
     position: relative;
-}
-
-.plot-line-text {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: #e2e8f0;
-    font-size: 13px;
-    line-height: 1.6;
-    resize: none;
-    outline: none;
-    padding: 4px 0;
-}
-
-.plot-line-text::placeholder {
-    color: #475569;
 }
 
 .plot-line-charcount {
@@ -1090,4 +1099,284 @@
     background: #3b82f622;
     color: #60a5fa;
     border-color: #3b82f6;
+}
+
+/* ── デスクトップ: サイドバーは常時表示 → トグル非表示 ── */
+
+/* デスクトップでは hidden クラスが付いても幅は維持（常に表示） */
+/* .plot-sidebar.hidden は モバイルのみ有効にする */
+
+.plot-sidebar-toggle-btn {
+    display: none; /* デスクトップでは不要 */
+}
+
+/* モバイル専用: サイドバー内クローズボタン（デスクトップでは非表示） */
+.plot-sidebar-close-btn {
+    display: none;
+    background: transparent;
+    border: 1px solid #334155;
+    color: #64748b;
+    font-size: 13px;
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+}
+
+.plot-sidebar-close-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+}
+
+/* モバイル専用: エディター内ハンバーガーボタン（デスクトップでは非表示） */
+.plot-mobile-menu-btn {
+    display: none;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    margin-right: 6px;
+}
+
+.plot-mobile-menu-btn:hover {
+    background: #334155;
+    color: #fbbf24;
+}
+
+/* モバイル: バックドロップ（デスクトップでは非表示） */
+.plot-sidebar-backdrop {
+    display: none;
+}
+
+/* ── ドラッグハンドル ── */
+
+.plot-line-drag-handle {
+    flex-shrink: 0;
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #334155;
+    font-size: 14px;
+    cursor: grab;
+    padding: 2px;
+    border-radius: 3px;
+    transition: color 0.15s, background 0.15s;
+    user-select: none;
+    align-self: stretch;
+}
+
+.plot-line-drag-handle:hover {
+    color: #94a3b8;
+    background: #1e293b;
+}
+
+.plot-line-drag-handle:active {
+    cursor: grabbing;
+    color: #fbbf24;
+}
+
+/* ドラッグ中の行を半透明に */
+.plot-line.dragging {
+    opacity: 0.35;
+}
+
+/* ドロップインジケーター（青いライン） */
+.plot-drop-indicator {
+    height: 2px;
+    background: #3b82f6;
+    border-radius: 2px;
+    margin: 2px 0;
+    box-shadow: 0 0 6px #3b82f688;
+    pointer-events: none;
+}
+
+/* ── コメント行 ── */
+
+.plot-line.is-comment {
+    border-left: 3px solid #475569;
+}
+
+.plot-line.is-comment .plot-line-header {
+    background: #0d1b2e;
+}
+
+.plot-line.is-comment .plot-line-body {
+    background: #0a1628;
+}
+
+.plot-line.is-comment .plot-line-text.comment-text {
+    color: #64748b;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.plot-line.is-comment .plot-line-text.comment-text::placeholder {
+    color: #334155;
+}
+
+.plot-line-comment-label {
+    flex: 1;
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+}
+
+/* ── コメント一覧バー ── */
+
+.plot-comments-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 20px;
+    background: #0a1628;
+    border-bottom: 1px solid #1e293b;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+
+.plot-comments-bar-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.plot-comment-jump-btn {
+    padding: 3px 10px;
+    background: #0f172a;
+    border: 1px solid #1e3a5f;
+    border-radius: 4px;
+    color: #64748b;
+    font-size: 11px;
+    font-family: monospace;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+
+.plot-comment-jump-btn:hover {
+    background: #1e293b;
+    border-color: #3b82f6;
+    color: #93c5fd;
+}
+
+/* ── Android / モバイル 対応 ── */
+
+/* ====================================================
+   モバイル / Android 専用レイアウト (≤768px)
+   デスクトップはサイドパネル常時表示のまま
+   ==================================================== */
+
+@media (max-width: 768px) {
+
+    /* ノートブック全体: オーバーレイの基準点に */
+    .plot-notebook {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* ===== エディターは常に全幅（サイドバーはオーバーレイ） ===== */
+    .plot-editor {
+        flex: 1 1 100%;
+        min-width: 0;
+        width: 100%;
+    }
+
+    /* ===== サイドバー: 絶対配置でオーバーレイ ===== */
+    .plot-sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 280px;
+        min-width: 280px;
+        box-shadow: 6px 0 32px rgba(0, 0, 0, 0.8);
+        transition: transform 0.3s ease;
+        transform: translateX(0);
+    }
+
+    /* モバイルでのみ hidden = スライドアウト */
+    .plot-sidebar.hidden {
+        transform: translateX(-100%);
+        width: 280px;
+        min-width: 280px;
+        pointer-events: none;
+    }
+
+    /* バックドロップ表示 */
+    .plot-sidebar-backdrop {
+        display: block;
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 45;
+    }
+
+    /* サイドバー内 ✕ ボタンを表示 */
+    .plot-sidebar-close-btn {
+        display: flex;
+    }
+
+    /* ☰ ハンバーガーボタンを表示 */
+    .plot-mobile-menu-btn {
+        display: flex;
+    }
+
+    /* 会話ブロックはすでに2段構造のためモバイル調整のみ */
+    .plot-line-header {
+        padding: 4px 8px 4px 4px;
+    }
+
+    .plot-line-body {
+        padding: 6px 10px 5px 10px;
+    }
+
+    .plot-meta-bar {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .plot-cast-slots {
+        flex-wrap: wrap;
+    }
+
+    .plot-cast-slot-wrap {
+        flex: 0 0 calc(50% - 5px);
+    }
+
+    .plot-editor-header {
+        padding: 10px 12px;
+    }
+
+    .plot-title-input {
+        font-size: 16px;
+    }
+
+    .plot-add-line-bar {
+        padding: 8px 12px;
+    }
+
+    .plot-lines-container {
+        padding: 10px 12px;
+    }
 }
