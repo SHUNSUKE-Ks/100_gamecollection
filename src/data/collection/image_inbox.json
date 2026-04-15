@@ -1,0 +1,252 @@
+{
+  "_version": "1.0",
+  "_concept": "JSON Card — 全画像の一元管理InBox。各図鑑はここから画像を参照する。",
+  "_schema_rules": {
+    "standing":     { "label": "立ち絵",         "size": "800×1200",   "format": "PNG透過",  "ar": "2:3"  },
+    "expression":   { "label": "表情差分",        "size": "256×256",    "format": "PNG透過",  "ar": "1:1"  },
+    "background_h": { "label": "横背景",          "size": "1920×1080",  "format": "JPG/PNG",  "ar": "16:9" },
+    "background_v": { "label": "縦背景",          "size": "1080×1920",  "format": "JPG/PNG",  "ar": "9:16" },
+    "cg":           { "label": "CGシーン",        "size": "1280×720",   "format": "JPG/PNG",  "ar": "16:9" },
+    "item_icon":    { "label": "アイテムアイコン", "size": "128×128",    "format": "PNG透過",  "ar": "1:1"  },
+    "album_thumb":  { "label": "アルバムサムネ",   "size": "400×400",    "format": "JPG/PNG",  "ar": "1:1"  },
+    "title_thumb":  { "label": "タイトルサムネ",   "size": "480×270",    "format": "JPG/PNG",  "ar": "16:9" },
+    "npc_stand":    { "label": "NPC立ち絵",       "size": "512×768",    "format": "PNG透過",  "ar": "2:3"  },
+    "enemy":        { "label": "エネミー",         "size": "512×512",    "format": "PNG透過",  "ar": "1:1"  },
+    "other":        { "label": "その他",          "size": "—",          "format": "—",        "ar": "—"    }
+  },
+  "images": [
+    {
+      "id": "img_remi_stand_01",
+      "filename": "standing_01.png",
+      "localPath": "/src/assets/chara/remi_unant/standing_01.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": ["remi_unant"],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["立ち絵", "通常", "レミ"],
+        "category": "standing"
+      },
+      "meta": {
+        "width": 800,
+        "height": 1200,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "2:3",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": [
+        { "dbType": "character", "entityId": "remi_unant", "fieldType": "standing", "assignedAt": "2026-04-01T00:00:00Z" }
+      ]
+    },
+    {
+      "id": "img_remi_face_smile",
+      "filename": "face_smile.png",
+      "localPath": "/src/assets/chara/remi_unant/face_smile.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": ["remi_unant"],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["表情", "笑顔", "喜", "レミ"],
+        "category": "expression"
+      },
+      "meta": {
+        "width": 256,
+        "height": 256,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "1:1",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": [
+        { "dbType": "character", "entityId": "remi_unant", "fieldType": "expression.joy", "assignedAt": "2026-04-01T00:00:00Z" }
+      ]
+    },
+    {
+      "id": "img_remi_face_angry",
+      "filename": "face_angry.png",
+      "localPath": "/src/assets/chara/remi_unant/face_angry.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": ["remi_unant"],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["表情", "怒り", "怒", "レミ"],
+        "category": "expression"
+      },
+      "meta": {
+        "width": 256,
+        "height": 256,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "1:1",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": [
+        { "dbType": "character", "entityId": "remi_unant", "fieldType": "expression.anger", "assignedAt": "2026-04-01T00:00:00Z" }
+      ]
+    },
+    {
+      "id": "img_remi_cg_01",
+      "filename": "cg_event_01.png",
+      "localPath": "/src/assets/chara/remi_unant/cg_event_01.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": ["remi_unant"],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["CG", "イベント", "レミ"],
+        "category": "cg"
+      },
+      "meta": {
+        "width": 1280,
+        "height": 720,
+        "format": "png",
+        "hasTransparency": false,
+        "aspectRatio": "16:9",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": [
+        { "dbType": "character", "entityId": "remi_unant", "fieldType": "cg", "assignedAt": "2026-04-01T00:00:00Z" }
+      ]
+    },
+    {
+      "id": "img_bg_attic",
+      "filename": "attic1.jpg",
+      "localPath": "/src/assets/bg/attic1.jpg",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": [],
+        "locations": ["loc_attic"],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["背景", "屋根裏", "室内"],
+        "category": "background_h"
+      },
+      "meta": {
+        "width": 1920,
+        "height": 1080,
+        "format": "jpg",
+        "hasTransparency": false,
+        "aspectRatio": "16:9",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": []
+    },
+    {
+      "id": "img_bg_campfire",
+      "filename": "campfire1.jpg",
+      "localPath": "/src/assets/bg/campfire1.jpg",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": [],
+        "locations": ["loc_field"],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["背景", "焚き火", "野外", "夜"],
+        "category": "background_h"
+      },
+      "meta": {
+        "width": 1920,
+        "height": 1080,
+        "format": "jpg",
+        "hasTransparency": false,
+        "aspectRatio": "16:9",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": []
+    },
+    {
+      "id": "img_enemy_boss1",
+      "filename": "BOSS1.png",
+      "localPath": "/src/assets/enemy/BOSS1.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": [],
+        "locations": [],
+        "enemies": ["boss_001"],
+        "albums": [],
+        "keywords": ["ボス", "エネミー"],
+        "category": "enemy"
+      },
+      "meta": {
+        "width": 512,
+        "height": 512,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "1:1",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": []
+    },
+    {
+      "id": "img_enemy_m1",
+      "filename": "Monster1.png",
+      "localPath": "/src/assets/enemy/Monster1.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": [],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["モンスター", "エネミー"],
+        "category": "enemy"
+      },
+      "meta": {
+        "width": 512,
+        "height": 512,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "1:1",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": []
+    },
+    {
+      "id": "img_enemy_m2",
+      "filename": "Monster2.png",
+      "localPath": "/src/assets/enemy/Monster2.png",
+      "storageUrl": "",
+      "createdAt": "2026-04-01T00:00:00Z",
+      "tags": {
+        "titleIds": ["proj_nannovel"],
+        "characters": [],
+        "locations": [],
+        "enemies": [],
+        "albums": [],
+        "keywords": ["モンスター", "エネミー"],
+        "category": "enemy"
+      },
+      "meta": {
+        "width": 512,
+        "height": 512,
+        "format": "png",
+        "hasTransparency": true,
+        "aspectRatio": "1:1",
+        "fileSizeKb": null
+      },
+      "schemaAssignments": []
+    }
+  ]
+}

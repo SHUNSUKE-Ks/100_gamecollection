@@ -12,8 +12,14 @@ import { ApiBattleScreen } from '@/screens/04_ApiBattle/ApiBattleScreen';
 import { HonoApiTestScreen } from '@/screens/05_HonoApiTest/HonoApiTestScreen';
 import '@/styles/global.css';
 import { CollectionScreen } from '@/screens/11_Collection/CollectionScreen';
+import { AndroidLayout } from '@/screens/android/AndroidLayout';
 import { HomeScreen } from '@/screens/00_Home/HomeScreen';
 import { MenuScreen } from '@/screens/13_Menu/MenuScreen';
+
+// Android / モバイル端末の自動判定（モジュール読み込み時に1回だけ評価）
+const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  navigator.userAgent
+);
 
 function App() {
   const currentScreen = useGameStore((state) => state.currentScreen);
@@ -38,7 +44,10 @@ function App() {
       case 'GALLERY':
         return <div className="screen-center"><h2>Gallery Screen</h2><p>（実装予定）</p></div>;
       case 'COLLECTION':
-        return <CollectionScreen />;
+        // モバイル端末では自動的に Android レイアウトへ切り替え
+        return IS_MOBILE ? <AndroidLayout /> : <CollectionScreen />;
+      case 'ANDROID_COLLECTION':
+        return <AndroidLayout />;
       case 'MENU':
         return <MenuScreen />;
       case 'HONO_API_TEST':

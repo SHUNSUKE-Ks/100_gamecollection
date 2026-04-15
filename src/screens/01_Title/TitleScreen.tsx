@@ -76,6 +76,23 @@ export function TitleScreen() {
                         📄 スキーマ ver2
                     </button>
                 </div>
+                {/* レイアウト切り替え（開発用） */}
+                <div className="title-quick-schema-row">
+                    <button
+                        className="title-quick-btn"
+                        onClick={() => setScreen('COLLECTION')}
+                        style={{ borderColor: '#60a5fa', color: '#60a5fa' }}
+                    >
+                        🖥 PC Collection
+                    </button>
+                    <button
+                        className="title-quick-btn"
+                        onClick={() => setScreen('ANDROID_COLLECTION')}
+                        style={{ borderColor: '#34d399', color: '#34d399' }}
+                    >
+                        📱 Android View
+                    </button>
+                </div>
             </div>
 
             <div className="title-content">

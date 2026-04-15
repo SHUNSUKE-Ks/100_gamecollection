@@ -1,0 +1,16 @@
+{
+  "titles": [
+    {
+      "id": "proj_nannovel",
+      "name": "NanoNovel Demo",
+      "subtitle": "運命の羅針盤",
+      "description": "レミ・ウナントが運命に抗う短編ノベル。このプロジェクトのメインデモ作品。",
+      "thumbnail": "chara/remi_unant/standing_01.png",
+      "genre": ["ファンタジー", "ドラマ"],
+      "status": "dev",
+      "hasPlayableNovel": true,
+      "tags": ["theme_fate", "theme_freedom"],
+      "createdAt": "2026-04-01"
+    }
+  ]
+}

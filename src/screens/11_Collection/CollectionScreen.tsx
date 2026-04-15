@@ -30,6 +30,8 @@ import { KeyConfigView } from '@/parts/collection/settings/KeyConfigView';
 import { ReportView } from '@/parts/collection/report/ReportView';
 // Document Inbox
 import { DocumentInboxView } from '@/parts/collection/document/DocumentInboxView';
+// Record Card
+import { RecordCardModal, type DbKey } from '@/parts/collection/specific/RecordCardModal';
 import './CollectionScreen.css';
 
 // Column Definitions - Styled Renderers
@@ -243,6 +245,7 @@ export function CollectionScreen() {
     const [, setIsDbLoading] = useState(false);
 
     // シードUI
+    const [recordCardDbKey, setRecordCardDbKey] = useState<DbKey | null>(null);
     const [isSeedRunning, setIsSeedRunning] = useState(false);
     const [seedLog, setSeedLog] = useState<string[]>([]);
     const [showSeedPanel, setShowSeedPanel] = useState(false);
@@ -343,6 +346,18 @@ export function CollectionScreen() {
             case 'sound_db': return SOUND_COLUMNS;
             default: return [];
         }
+    };
+
+    // secondaryTab → RecordCard の DbKey マッピング
+    const SECONDARY_TO_DBKEY: Partial<Record<SecondaryTab, DbKey>> = {
+        character: 'characters',
+        npc:       'npcs',
+        enemy:     'enemies',
+        place:     'locations',
+        item_dict: 'items',
+        event:     'events',
+        sound_db:  'sounds',
+        tag_db:    'tags',
     };
 
     const currentData = getData();
@@ -505,9 +520,45 @@ export function CollectionScreen() {
                                     ? secondaryTabs.find(t => t.id === secondaryTab)?.label
                                     : primaryTabs.find(t => t.id === primaryTab)?.label}
                             </h2>
-                            {primaryTab === 'library' && secondaryTab !== 'tag_db' && (
-                                <ViewSwitcher currentView={viewMode} onViewChange={setViewMode as any} />
-                            )}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
+                                {primaryTab === 'library' && secondaryTab !== 'tag_db' && (
+                                    <ViewSwitcher currentView={viewMode} onViewChange={setViewMode as any} />
+                                )}
+                                {/* [+] 新規追加ボタン */}
+                                {primaryTab === 'library' && SECONDARY_TO_DBKEY[secondaryTab] && (
+                                    <button
+                                        onClick={() => setRecordCardDbKey(SECONDARY_TO_DBKEY[secondaryTab]!)}
+                                        title={`${secondaryTabs.find(t => t.id === secondaryTab)?.label} に追加`}
+                                        style={{
+                                            display: 'flex', alignItems: 'center', gap: 4,
+                                            padding: '0.35rem 0.7rem',
+                                            background: 'rgba(201,162,39,0.12)',
+                                            border: '1px solid rgba(201,162,39,0.4)',
+                                            color: '#c9a227', borderRadius: 6,
+                                            cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600,
+                                        }}
+                                    >
+                                        + 追加
+                                    </button>
+                                )}
+                                {/* TitleDB 追加 */}
+                                {primaryTab === 'story' && (
+                                    <button
+                                        onClick={() => setRecordCardDbKey('titles')}
+                                        title="TitleDB に追加"
+                                        style={{
+                                            display: 'flex', alignItems: 'center', gap: 4,
+                                            padding: '0.35rem 0.7rem',
+                                            background: 'rgba(201,162,39,0.12)',
+                                            border: '1px solid rgba(201,162,39,0.4)',
+                                            color: '#c9a227', borderRadius: 6,
+                                            cursor: 'pointer', fontSize: '0.78rem', fontWeight: 600,
+                                        }}
+                                    >
+                                        + タイトル追加
+                                    </button>
+                                )}
+                            </div>
                         </div>
 
                         {/* Content switching logic */}
@@ -581,6 +632,15 @@ export function CollectionScreen() {
                     <DocumentInboxView />
                 )}
             </main>
+
+            {/* Record Card Modal */}
+            {recordCardDbKey && (
+                <RecordCardModal
+                    dbKey={recordCardDbKey}
+                    onClose={() => setRecordCardDbKey(null)}
+                    onSaved={() => setRecordCardDbKey(null)}
+                />
+            )}
         </div>
     );
 }
