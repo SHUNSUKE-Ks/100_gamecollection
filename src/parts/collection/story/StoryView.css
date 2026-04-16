@@ -730,7 +730,7 @@
     font-weight: 400;
 }
 
-/* テキストエリア */
+/* テキストエリア: 3行固定・スクロールなし */
 .plot-line-text {
     width: 100%;
     background: transparent;
@@ -741,6 +741,8 @@
     resize: none;
     outline: none;
     padding: 2px 0;
+    height: calc(1.7em * 3 + 4px); /* 3行分 + padding */
+    overflow: hidden;
 }
 
 .plot-line-text::placeholder {
