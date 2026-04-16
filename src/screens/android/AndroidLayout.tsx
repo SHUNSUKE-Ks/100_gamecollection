@@ -202,7 +202,7 @@ export function AndroidLayout() {
       dict: qnBody.trim(),
       genre: qnGenre,
       createdAt: new Date().toISOString(),
-      schema: { episodes: [] } as any,
+      schema: { version: '1.0', gameTitle: title, episodes: [] },
     };
     try {
       const raw      = localStorage.getItem(LS_KEY);
@@ -280,6 +280,14 @@ export function AndroidLayout() {
         style={{ ...btnReset, fontSize: '0.6rem', color: '#4b5563', padding: '4px 5px' }}
       >
         PC
+      </button>
+
+      {/* WorkSpace フルページ */}
+      <button
+        onClick={() => setScreen('WORKSPACE')} title="WorkSpace フルページ"
+        style={{ ...btnReset, fontSize: '0.6rem', color: '#a78bfa', padding: '4px 5px' }}
+      >
+        📂
       </button>
     </header>
   );

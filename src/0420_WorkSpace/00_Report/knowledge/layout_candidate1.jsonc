@@ -1,0 +1,99 @@
+/**
+ * layout_candidate1.jsonc
+ * GameCollection — WorkSpace パネル レイアウト定義
+ * フォーマット候補1: screen / layout / component ツリー構造
+ * 特徴: UIコンポーネント中心。各Componentの状態・役割をツリーで記述
+ * 候補2（layout_v1.jsonc）と並行運用して仕様を決定する
+ * 作成: 2026-04-16
+ */
+{
+  "screen": "WorkspacePanel",
+  "version": "v1.0",
+  "note": "フォーマット候補1。候補2(layout_v1.jsonc)と比較して良い方を採用予定",
+  "layout": {
+    "header": {
+      "id": "WorkspacePanelHeader",
+      "visible": true,
+      "components": [
+        {
+          "type": "Icon",
+          "id": "WorkspaceIcon",
+          "icon": "🗂"
+        },
+        {
+          "type": "Title",
+          "id": "WorkspaceTitle",
+          "text": "WorkSpace",
+          "style": "bold, tracking-wide"
+        },
+        {
+          "type": "Button",
+          "id": "CloseButton",
+          "icon": "X",
+          "position": "right",
+          "state": "onClick: onClose()"
+        }
+      ]
+    },
+    "tabBar": {
+      "id": "WorkspaceTabs",
+      "visible": true,
+      "components": [
+        { "type": "Tab", "id": "ReportsTab",  "label": "REPORTS",   "icon": "FileText",   "state": "active: wsTab === 'REPORTS'" },
+        { "type": "Tab", "id": "KnowledgeTab","label": "KNOWLEDGE", "icon": "BookOpen",   "state": "active: wsTab === 'KNOWLEDGE'" },
+        { "type": "Tab", "id": "LogsTab",     "label": "LOGS",      "icon": "ScrollText", "state": "active: wsTab === 'LOGS'" },
+        { "type": "Tab", "id": "VersionsTab", "label": "VERSIONS",  "icon": "GitBranch",  "state": "active: wsTab === 'VERSIONS'" }
+      ]
+    },
+    "knowledgeControls": {
+      "id": "KnowledgeViewToggle",
+      "visible": "wsTab === 'KNOWLEDGE'",
+      "components": [
+        {
+          "type": "RadioGroup",
+          "id": "ViewModeRadio",
+          "state": "kView: 'pretty' | 'raw'",
+          "options": [
+            { "value": "pretty", "label": "見やすいUI", "icon": "Eye" },
+            { "value": "raw",    "label": "素のJSONC",  "icon": "Code2" }
+          ]
+        }
+      ]
+    },
+    "main": {
+      "id": "WorkspaceBody",
+      "visible": true,
+      "sections": [
+        {
+          "id": "FileListSidebar",
+          "type": "Sidebar",
+          "width": 128,
+          "role": "タブに対応するファイル一覧（日付降順）。クリックで選択",
+          "state": "selectedKey[wsTab]: string | null"
+        },
+        {
+          "id": "ContentArea",
+          "type": "DynamicView",
+          "role": "選択ファイルの内容表示エリア",
+          "views": [
+            {
+              "id": "MdViewer",
+              "condition": "file.ext === 'md'",
+              "role": "Markdown を HTML にレンダーして表示"
+            },
+            {
+              "id": "JsonPrettyView",
+              "condition": "file.ext === 'jsonc' && kView === 'pretty'",
+              "role": "JSONC をパースしてセクション別ツリー表示"
+            },
+            {
+              "id": "RawTextView",
+              "condition": "file.ext === 'jsonc' && kView === 'raw'",
+              "role": "JSONC の素のテキストを monospace 表示"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

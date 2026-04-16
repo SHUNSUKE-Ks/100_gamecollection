@@ -18,18 +18,6 @@
             "cgs": [
                 "chara/remi_unant/cg_event_01.png"
             ]
-        },
-        {
-            "id": "dummy_chara_02",
-            "name": "ダミー・キャラ02",
-            "description": "テスト用のダミーキャラクター。",
-            "tags": [
-                "SUB",
-                "UNKNOWN"
-            ],
-            "image": "chara/remi_unant/standing_01.png",
-            "standing": [],
-            "cgs": []
         }
     ]
 }

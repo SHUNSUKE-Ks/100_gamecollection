@@ -30,6 +30,8 @@ import { KeyConfigView } from '@/parts/collection/settings/KeyConfigView';
 import { ReportView } from '@/parts/collection/report/ReportView';
 // Document Inbox
 import { DocumentInboxView } from '@/parts/collection/document/DocumentInboxView';
+// WorkSpace Panel
+import { WorkspacePanel } from '@/parts/collection/workspace/WorkspacePanel';
 // Record Card
 import { RecordCardModal, type DbKey } from '@/parts/collection/specific/RecordCardModal';
 import './CollectionScreen.css';
@@ -238,6 +240,7 @@ export function CollectionScreen() {
     const [secondaryTab, setSecondaryTab] = useState<SecondaryTab>('character');
     const [settingsTab, setSettingsTab] = useState<SettingsTab>('sound_settings');
     const [storyDeepLink, setStoryDeepLink] = useState<string | null>(null);
+    const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
     const { viewMode, setViewMode } = useViewMode('list');
 
     // Firestore から読み込んだライブラリデータ
@@ -469,6 +472,18 @@ export function CollectionScreen() {
                         >
                             🌱 DB初期化
                         </button>
+                        <button
+                            onClick={() => setIsWorkspaceOpen(v => !v)}
+                            className="back-button"
+                            title="WorkSpace パネルを開く"
+                            style={{
+                                borderColor: isWorkspaceOpen ? '#c9a227' : undefined,
+                                color:       isWorkspaceOpen ? '#c9a227' : undefined,
+                                background:  isWorkspaceOpen ? 'rgba(201,162,39,0.1)' : undefined,
+                            }}
+                        >
+                            🗂 WorkSpace
+                        </button>
                         <button onClick={() => setScreen('TITLE')} className="back-button">
                             Titleへ戻る
                         </button>
@@ -632,6 +647,11 @@ export function CollectionScreen() {
                     <DocumentInboxView />
                 )}
             </main>
+
+            {/* WorkSpace Panel */}
+            {isWorkspaceOpen && (
+                <WorkspacePanel onClose={() => setIsWorkspaceOpen(false)} />
+            )}
 
             {/* Record Card Modal */}
             {recordCardDbKey && (

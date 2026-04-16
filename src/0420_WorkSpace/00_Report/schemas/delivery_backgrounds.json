@@ -1,0 +1,81 @@
+{
+  "_readme": "背景・ロケーションデータの納品スキーマ。",
+  "_rules": {
+    "locations[].id": "英数字とアンダースコアのみ。例: loc_starting_village",
+    "locations[].category": "下記 categories の id を指定",
+    "locations[].images": "背景画像のパス配列。bg/ フォルダ以下に画像を配置",
+    "locations[].region": "地域グループ名（任意）。例: west_area, north_dungeon"
+  },
+
+  "schema": "collection.location.v1",
+
+  "categories": [
+    { "id": "village", "label": "村・町",       "color": "#10b981" },
+    { "id": "dungeon", "label": "ダンジョン",   "color": "#ef4444" },
+    { "id": "room",    "label": "屋内",          "color": "#f59e0b" },
+    { "id": "field",   "label": "フィールド",   "color": "#3b82f6" }
+  ],
+
+  "locations": [
+    {
+      "id": "loc_title",
+      "name": "タイトル画面",
+      "category": "field",
+      "description": "ゲームのタイトル画面で使用される背景。",
+      "images": ["bg/bg_title.png"],
+      "tags": ["TITLE"],
+      "region": "title",
+      "status": "未納品（優先度A）"
+    },
+    {
+      "id": "loc_starting_village",
+      "name": "始まりの村",
+      "category": "village",
+      "description": "主人公たちが最初に訪れる小さな村。",
+      "images": ["bg/village_start.png"],
+      "tags": ["VILLAGE", "START"],
+      "region": "west_area",
+      "status": "未納品（優先度A）"
+    },
+    {
+      "id": "loc_attic",
+      "name": "屋根裏部屋",
+      "category": "room",
+      "description": "物語の始まりとなる場所。薄暗く古びた雰囲気。",
+      "images": ["bg/attic1.jpg"],
+      "tags": ["INDOOR", "START"],
+      "region": "west_area",
+      "status": "納品済み（bg/attic1.jpg）"
+    },
+    {
+      "id": "loc_dungeon_entrance",
+      "name": "ダンジョン入口",
+      "category": "dungeon",
+      "description": "古代遺跡への入口。不気味な空気が漂う。",
+      "images": ["bg/dungeon_entrance.png"],
+      "tags": ["DUNGEON", "DANGER"],
+      "region": "north_dungeon",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "loc_plains",
+      "name": "広大な平野",
+      "category": "field",
+      "description": "見晴らしの良い平野。バトル背景としても使用される。",
+      "images": ["bg/plains_day.png"],
+      "tags": ["FIELD", "BATTLE_BG"],
+      "region": "west_area",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "loc_tower",
+      "name": "謎の塔",
+      "category": "field",
+      "description": "シナリオ内で登場する謎の塔。",
+      "images": ["bg/tower_entrance.png"],
+      "tags": ["TOWER", "MYSTERY"],
+      "region": "east_area",
+      "status": "未納品（優先度C）"
+    }
+  ]
+}

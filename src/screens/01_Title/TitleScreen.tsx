@@ -93,6 +93,13 @@ export function TitleScreen() {
                         📱 Android View
                     </button>
                 </div>
+                <button
+                    className="title-quick-btn"
+                    onClick={() => setScreen('WORKSPACE')}
+                    style={{ borderColor: '#a78bfa', color: '#a78bfa', width: '100%' }}
+                >
+                    📂 WorkSpace
+                </button>
             </div>
 
             <div className="title-content">

@@ -1,0 +1,43 @@
+{
+  "_readme": "アイテムデータの納品スキーマ。",
+  "_rules": {
+    "id": "英数字とアンダースコアのみ。例: potion_hp_001",
+    "category": "categories配列のidを指定",
+    "icon": "item/ フォルダ以下にアイコン画像を配置（推奨サイズ: 64x64 または 128x128）",
+    "rarity": "1〜5の整数。1=コモン, 2=アンコモン, 3=レア, 4=エピック, 5=レジェンド",
+    "price": "ショップでの販売価格（整数）",
+    "effect": "ゲーム内での効果の説明（短め）",
+    "description": "アイテムの詳細説明（世界観に合わせた文章）"
+  },
+
+  "categories": [
+    { "id": "consumable", "label": "消費アイテム" },
+    { "id": "equipment",  "label": "装備品" },
+    { "id": "key",        "label": "貴重品" }
+  ],
+
+  "items": [
+    {
+      "id": "potion_hp_001",
+      "name": "ポーション",
+      "category": "consumable",
+      "icon": "item/potion.png",
+      "tags": ["HEAL"],
+      "rarity": 1,
+      "price": 50,
+      "effect": "HPを50回復する。",
+      "description": "薬草を煮詰めて作った基本的な回復薬。旅人の必需品。"
+    },
+    {
+      "id": "sword_iron_001",
+      "name": "鉄の剣",
+      "category": "equipment",
+      "icon": "item/sword.png",
+      "tags": ["WEAPON", "SWORD"],
+      "rarity": 1,
+      "price": 200,
+      "effect": "攻撃力+10",
+      "description": "量産品の鉄剣。扱いやすく初心者向けの武器。"
+    }
+  ]
+}

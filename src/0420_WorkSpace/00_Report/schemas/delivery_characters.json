@@ -1,0 +1,36 @@
+{
+  "_readme": "キャラクターデータの納品スキーマ。記入して delivery_characters.json として提出してください。",
+  "_rules": {
+    "id": "英数字とアンダースコアのみ。例: remi_unant",
+    "image": "画像ファイルのパス。chara/キャラID/ 以下に配置",
+    "standing": "立ち絵は複数登録可能（配列形式）",
+    "cgs": "イベントCGは複数登録可能（配列形式）",
+    "tags": "使用可能なタグ: MAIN, SUB, HEROINE, HERO, MAGIC, PHYSICAL, BOSS, SUPPORT"
+  },
+
+  "characters": [
+    {
+      "id": "remi_unant",
+      "name": "レミ・ウナント",
+      "description": "本作のヒロイン。明るく元気な性格だが、どこか影がある。",
+      "tags": ["MAIN", "HEROINE", "MAGIC"],
+      "image": "chara/remi_unant/standing_01.png",
+      "standing": [
+        "chara/remi_unant/standing_01.png",
+        "chara/remi_unant/face_smile.png",
+        "chara/remi_unant/face_angry.png"
+      ],
+      "cgs": [
+        "chara/remi_unant/cg_event_01.png"
+      ],
+      "status": {
+        "hp": 100,
+        "mp": 80,
+        "str": 8,
+        "dex": 12,
+        "int": 20
+      },
+      "skills": ["skill_fireball"]
+    }
+  ]
+}

@@ -144,7 +144,8 @@ function ProgressBar({ percent }: { percent: number }) {
   );
 }
 
-function VersionBadge({ version }: { version: string }) {
+function VersionBadge({ version }: { version?: string }) {
+  if (!version) return null;
   const color =
     version.startsWith('3') ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40' :
     version.startsWith('2') ? 'bg-pink-500/20 text-pink-300 border-pink-500/40' :

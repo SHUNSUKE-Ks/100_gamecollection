@@ -1,0 +1,260 @@
+/**
+ * layout_v1.jsonc
+ * GameCollection — AI × 人間 共通ナレッジ
+ * 役割: 画面構成・Component名・機能名・Phaseステート名の共通言語
+ * 更新タイミング: 機能の節目ごと (versions/ と同期)
+ * 作成: 2026-04-16
+ */
+{
+  "meta": {
+    "project": "GameCollection",
+    "version": "v1.0",
+    "updated": "2026-04-16",
+    "description": "AI と 俊輔さんの共通認識ドキュメント。各画面・Component・機能・Phase の命名基準。",
+    "note": "実装状況は reports/ を参照。命名はここを正とする。"
+  },
+
+  // ============================================================
+  // SCREENS — 画面一覧
+  // ============================================================
+  "screens": {
+    "SC00": {
+      "name": "HOME",
+      "path": "AppScreens/00_Home",
+      "role": "全ゲームのランチャー。サイドバーからCollection/Playへ",
+      "entryFrom": ["起動時", "各画面のHOMEボタン"],
+      "exitTo": ["SC01_COLLECTION", "SC03_PLAY"]
+    },
+    "SC01": {
+      "name": "COLLECTION",
+      "path": "AppScreens/10_Collection",
+      "role": "マスターDB閲覧・デッキ管理。WorkSpace統合ヘッダー付き",
+      "subTabs": ["CARDS", "DECK", "CHARACTER", "ASSET"],
+      "entryFrom": ["SC00_HOME サイドバー"],
+      "exitTo": ["SC02_DECK_BUILDER", "SC00_HOME"],
+      "note": "[v1.0追加] メインHeaderにWorkSpaceボタンを追加"
+    },
+    "SC02": {
+      "name": "DECK_BUILDER",
+      "path": "AppScreens/20_DeckBuilder",
+      "role": "デッキ編集・カード追加/削除",
+      "entryFrom": ["SC01_COLLECTION DECKタブ 編集ボタン"],
+      "exitTo": ["SC01_COLLECTION 完了ボタン"]
+    },
+    "SC03": {
+      "name": "PLAY",
+      "path": "AppScreens/30_Play",
+      "role": "プレイモード選択・デッキ選択",
+      "entryFrom": ["SC00_HOME"],
+      "exitTo": ["SC04_MATCHING"]
+    },
+    "SC04": {
+      "name": "MATCHING",
+      "path": "AppScreens/40_Matching",
+      "role": "マッチング待機",
+      "entryFrom": ["SC03_PLAY"],
+      "exitTo": ["SC05_BATTLE"]
+    },
+    "SC05": {
+      "name": "BATTLE",
+      "path": "AppScreens/50_Battle",
+      "role": "ゲーム本体",
+      "entryFrom": ["SC04_MATCHING"],
+      "exitTo": ["SC06_RESULT"]
+    },
+    "SC06": {
+      "name": "RESULT",
+      "path": "AppScreens/60_Result",
+      "role": "対戦結果・報酬表示",
+      "entryFrom": ["SC05_BATTLE"],
+      "exitTo": ["SC00_HOME", "SC03_PLAY"]
+    },
+    "SC_WS": {
+      "name": "WORKSPACE",
+      "path": "AppScreens/10_Collection/WorkspacePanel",
+      "role": "開発WorkSpace。Collectionヘッダーからオーバーレイ表示。Report・Knowledge閲覧",
+      "trigger": "CollectionHeaderの WorkspaceButton クリック",
+      "tabs": ["REPORTS", "KNOWLEDGE", "LOGS", "VERSIONS"],
+      "note": "[v1.0 NEW] 開発管理用パネル。本番ビルドでは非表示切替可能"
+    }
+  },
+
+  // ============================================================
+  // COMPONENTS — Collection + WorkSpace
+  // ============================================================
+  "components": {
+
+    // ── SC01 COLLECTION HEADER ──
+    "C01_01": {
+      "badge": "①",
+      "name": "CollectionHeader",
+      "zone": "Header",
+      "role": "Collectionのメインヘッダー。タブ + WorkSpaceボタンを含む",
+      "children": ["C01_01A", "C01_01B", "C01_01C", "C01_01D"]
+    },
+    "C01_01A": {
+      "name": "AppTitle",
+      "role": "アプリ名/ロゴ表示",
+      "parent": "C01_01"
+    },
+    "C01_01B": {
+      "name": "CollectionSubTabs",
+      "role": "CARDS / DECK / CHARACTER / ASSET タブ切替",
+      "state": "activeTab: 'CARDS' | 'DECK' | 'CHARACTER' | 'ASSET'",
+      "parent": "C01_01"
+    },
+    "C01_01C": {
+      "name": "WorkspaceButton",  // [NEW v1.0]
+      "role": "WorkSpaceパネルを開閉するトグルボタン。ヘッダー右端に配置",
+      "icon": "⚙ or 🗂",
+      "state": "isWorkspaceOpen: boolean",
+      "parent": "C01_01"
+    },
+    "C01_01D": {
+      "name": "SearchBar",
+      "role": "カード名・キーワード検索",
+      "parent": "C01_01"
+    },
+
+    // ── SC_WS WORKSPACE PANEL ──
+    "C_WS_01": {
+      "badge": "②",
+      "name": "WorkspacePanel",
+      "zone": "Overlay / Right Drawer",
+      "role": "CollectionHeaderのWorkspaceBtnから開くオーバーレイパネル",
+      "children": ["C_WS_01A", "C_WS_01B", "C_WS_01C"]
+    },
+    "C_WS_01A": {
+      "name": "WorkspacePanelHeader",
+      "role": "タイトル + 閉じるボタン",
+      "parent": "C_WS_01"
+    },
+    "C_WS_01B": {
+      "name": "WorkspaceTabs",
+      "role": "REPORTS / KNOWLEDGE / LOGS / VERSIONS タブ",
+      "state": "activeWsTab: 'REPORTS' | 'KNOWLEDGE' | 'LOGS' | 'VERSIONS'",
+      "parent": "C_WS_01"
+    },
+    "C_WS_01C": {
+      "name": "WorkspaceContent",
+      "role": "選択タブに応じたコンテンツ表示エリア",
+      "children": ["ReportList", "ReportViewer", "KnowledgeViewer", "LogList"],
+      "parent": "C_WS_01"
+    },
+
+    "C_WS_02": {
+      "badge": "③",
+      "name": "ReportList",
+      "zone": "List",
+      "role": "reportsフォルダのMDファイル一覧。日付降順",
+      "parent": "C_WS_01C"
+    },
+    "C_WS_03": {
+      "badge": "④",
+      "name": "ReportViewer",
+      "zone": "Content",
+      "role": "選択したレポートのMarkdown表示エリア",
+      "parent": "C_WS_01C"
+    },
+    "C_WS_04": {
+      "badge": "⑤",
+      "name": "KnowledgeViewer",
+      "zone": "Content",
+      "role": "layout_v1.jsonc をツリー表示 / テキスト表示切替",
+      "parent": "C_WS_01C"
+    }
+  },
+
+  // ============================================================
+  // FUNCTIONS — 主要関数名
+  // ============================================================
+  "functions": {
+    "toggleWorkspace": "WorkSpaceパネルの開閉。isWorkspaceOpenをtoggle",
+    "selectWsTab": "(tab: WsTab) => activeWsTabをセット",
+    "selectReport": "(reportId: string) => 選択レポートをセット",
+    "loadReports": "() => reports配列をストアへロード",
+    "loadKnowledge": "() => layout_v1.jsoncをストアへロード",
+    "parseMarkdown": "(md: string) => HTMLに変換して表示"
+  },
+
+  // ============================================================
+  // PHASE MAP — WorkspacePanel のステート遷移
+  // ============================================================
+  "phases": {
+    "WS_PHASE_00": {
+      "name": "CLOSED",
+      "description": "WorkspacePanel非表示。CollectionデフォルトUI",
+      "trigger": "WorkspaceButtonクリック → WS_PHASE_01"
+    },
+    "WS_PHASE_01": {
+      "name": "OPEN_REPORTS",
+      "description": "パネルが開き、REPORTSタブが表示される",
+      "trigger": "レポート行クリック → WS_PHASE_02 / タブ切替 → WS_PHASE_03/04"
+    },
+    "WS_PHASE_02": {
+      "name": "REPORT_VIEWING",
+      "description": "特定のレポートMDを表示中",
+      "trigger": "← 戻る → WS_PHASE_01 / 閉じる → WS_PHASE_00"
+    },
+    "WS_PHASE_03": {
+      "name": "KNOWLEDGE_VIEWING",
+      "description": "layout_v1.jsoncをビューア表示",
+      "trigger": "閉じる → WS_PHASE_00"
+    },
+    "WS_PHASE_04": {
+      "name": "LOGS_VIEWING",
+      "description": "開発ログ一覧表示",
+      "trigger": "閉じる → WS_PHASE_00"
+    }
+  },
+
+  // ============================================================
+  // STORE — Zustand store設計
+  // ============================================================
+  "stores": {
+    "workspaceStore": {
+      "file": "stores/workspaceStore.js",
+      "state": {
+        "isOpen": "boolean — WorkspacePanelの開閉",
+        "activeTab": "'REPORTS' | 'KNOWLEDGE' | 'LOGS' | 'VERSIONS'",
+        "selectedReportId": "string | null",
+        "reports": "Report[] — { id, date, title, content }",
+        "knowledge": "object | null — layout_v1.jsoncの内容"
+      },
+      "actions": ["toggleWorkspace", "setActiveTab", "selectReport", "loadReports", "loadKnowledge"]
+    }
+  },
+
+  // ============================================================
+  // FOLDER STRUCTURE — プロジェクト構造
+  // ============================================================
+  "folderStructure": {
+    "src": {
+      "AppScreens": {
+        "10_Collection": {
+          "index.jsx": "CollectionScreen メインコンポーネント",
+          "CollectionHeader.jsx": "① ヘッダー。WorkspaceBtnを含む",
+          "CollectionSubTabs.jsx": "サブタブ切替",
+          "WorkspacePanel": {
+            "index.jsx": "② WorkspacePanelメイン",
+            "WorkspaceTabs.jsx": "タブバー",
+            "ReportList.jsx": "③ レポート一覧",
+            "ReportViewer.jsx": "④ MDビューア",
+            "KnowledgeViewer.jsx": "⑤ JSONCビューア"
+          }
+        }
+      },
+      "stores": {
+        "workspaceStore.js": "WorkSpace状態管理"
+      }
+    },
+    "src/0420_WorkSpace/00_Report": {
+      "ナレッジ/layout_v1.jsonc": "このファイル。AI×人間共通言語",
+      "reports/YYYY-MM-DD.md": "作業完了レポート",
+      "documents/": "仕様書・要件定義書(.md)",
+      "schemas/": "JSONスキーマ定義",
+      "logs/": "開発ログ(.md)",
+      "versions/": "大機能実装節目ドキュメント"
+    }
+  }
+}

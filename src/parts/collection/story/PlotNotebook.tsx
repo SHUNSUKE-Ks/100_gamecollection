@@ -802,7 +802,7 @@ export function PlotNotebook() {
                                                         onFocus={() => { setScreenState('typing'); setFocusedLineId(line.id); }}
                                                         onBlur={() => { setScreenState('default'); setFocusedLineId(null); }}
                                                         placeholder={line.isComment ? '// コメントを入力（会話ログには表示されません）' : '台詞・ト書き...'}
-                                                        rows={line.isComment ? 2 : 3}
+                                                        rows={1}
                                                         maxLength={TEXT_MAX_CHARS}
                                                         onKeyDown={e => {
                                                             if (e.ctrlKey && e.key === 'Enter') {

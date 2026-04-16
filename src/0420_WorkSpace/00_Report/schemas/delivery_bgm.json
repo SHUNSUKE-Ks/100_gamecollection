@@ -1,0 +1,141 @@
+{
+  "_readme": "BGM・SE（効果音）データの納品スキーマ。",
+  "_rules": {
+    "id": "英数字とアンダースコアのみ。例: bgm_title_01",
+    "filename": "音楽ファイル名（拡張子含む）。推奨形式: mp3 / wav",
+    "category_bgm": "theme / battle / field / event / ambient",
+    "duration": "曲の長さ（秒数）。わからなければ null",
+    "artist": "アーティスト名または制作者名。不明なら 'Unknown'"
+  },
+
+  "bgm": [
+    {
+      "id": "op",
+      "title": "OP",
+      "filename": "_OP_.mp3",
+      "description": "ゲームのオープニングテーマ",
+      "tags": ["OPENING", "MAIN"],
+      "category": "theme",
+      "duration": null,
+      "artist": "Unknown",
+      "status": "納品済み"
+    },
+    {
+      "id": "battle_igiigi",
+      "title": "Battle Theme (igiigi)",
+      "filename": "Battle_igiigi.mp3",
+      "description": "緊迫した戦闘シーン用BGM",
+      "tags": ["BATTLE", "INTENSE"],
+      "category": "battle",
+      "duration": null,
+      "artist": "igiigi",
+      "status": "納品済み"
+    },
+    {
+      "id": "bgm_heiya1",
+      "title": "平野",
+      "filename": "bgm_heiya1.wav",
+      "description": "フィールド探索用BGM",
+      "tags": ["FIELD", "PEACEFUL"],
+      "category": "field",
+      "duration": null,
+      "artist": "Unknown",
+      "status": "納品済み"
+    },
+    {
+      "id": "bgm_title",
+      "title": "タイトルテーマ",
+      "filename": "bgm_title.mp3",
+      "description": "タイトル画面で流れるテーマ曲。印象的なメロディが望ましい。",
+      "tags": ["TITLE", "THEME"],
+      "category": "theme",
+      "duration": null,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "bgm_village",
+      "title": "始まりの村",
+      "filename": "bgm_village.mp3",
+      "description": "村の日常シーンで流れる穏やかなBGM。",
+      "tags": ["FIELD", "PEACEFUL", "VILLAGE"],
+      "category": "field",
+      "duration": null,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    }
+  ],
+
+  "se": [
+    {
+      "id": "se_cursor",
+      "title": "カーソル",
+      "filename": "se/cursor.wav",
+      "description": "メニューのカーソル移動時に鳴る音",
+      "tags": ["UI", "SYSTEM"],
+      "category": "system",
+      "duration": 0.1,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "se_decide",
+      "title": "決定",
+      "filename": "se/decide.wav",
+      "description": "ボタン押下・決定時に鳴る音",
+      "tags": ["UI", "SYSTEM"],
+      "category": "system",
+      "duration": 0.3,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "se_cancel",
+      "title": "キャンセル",
+      "filename": "se/cancel.wav",
+      "description": "戻るボタン・キャンセル時に鳴る音",
+      "tags": ["UI", "SYSTEM"],
+      "category": "system",
+      "duration": 0.2,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "se_attack",
+      "title": "攻撃",
+      "filename": "se/attack.wav",
+      "description": "通常攻撃時の効果音",
+      "tags": ["BATTLE"],
+      "category": "battle",
+      "duration": 0.4,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    },
+    {
+      "id": "se_magic",
+      "title": "魔法発動",
+      "filename": "se/magic.wav",
+      "description": "魔法スキル使用時のエフェクト音",
+      "tags": ["BATTLE", "MAGIC"],
+      "category": "battle",
+      "duration": 0.6,
+      "artist": "未定",
+      "status": "未納品（優先度B）"
+    }
+  ],
+
+  "bgm_categories": [
+    { "id": "theme",   "name": "テーマ曲",   "icon": "🎵" },
+    { "id": "battle",  "name": "バトル",      "icon": "⚔️" },
+    { "id": "field",   "name": "フィールド", "icon": "🌿" },
+    { "id": "event",   "name": "イベント",   "icon": "🎭" },
+    { "id": "ambient", "name": "環境音",      "icon": "🌊" }
+  ],
+
+  "se_categories": [
+    { "id": "system", "name": "システム", "icon": "🔔" },
+    { "id": "battle", "name": "バトル",   "icon": "⚔️" },
+    { "id": "magic",  "name": "魔法",     "icon": "✨" },
+    { "id": "ui",     "name": "UI操作",   "icon": "🖱️" }
+  ]
+}

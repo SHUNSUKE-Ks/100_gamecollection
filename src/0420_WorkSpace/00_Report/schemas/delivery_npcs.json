@@ -1,0 +1,51 @@
+{
+  "_readme": "NPC（ノンプレイヤーキャラクター）データの納品スキーマ。",
+  "_rules": {
+    "id": "英数字とアンダースコアのみ。例: npc_merchant_001",
+    "role": "roles配列のidを指定。例: MERCHANT, GUARD",
+    "location": "locations（背景JSON）のidを指定。例: loc_starting_village",
+    "image": "npc/ フォルダ以下にサムネイル画像を配置",
+    "standing": "立ち絵がある場合は配列で指定（なければ空配列 []）"
+  },
+
+  "npcs": [
+    {
+      "id": "npc_merchant_001",
+      "name": "行商人",
+      "role": "MERCHANT",
+      "dict": "村々を渡り歩く陽気な商人。珍しい品物を持っている。",
+      "tags": ["HUMAN", "FRIENDLY"],
+      "location": "loc_starting_village",
+      "relatedEvents": [],
+      "image": "npc/merchant.png",
+      "standing": [],
+      "icons": []
+    },
+    {
+      "id": "npc_guard_001",
+      "name": "門番",
+      "role": "GUARD",
+      "dict": "村の入り口を守る真面目な兵士。融通がきかない性格。",
+      "tags": ["HUMAN", "SERIOUS"],
+      "location": "loc_starting_village",
+      "relatedEvents": [],
+      "image": "npc/guard.png",
+      "standing": [],
+      "icons": []
+    }
+  ],
+
+  "roles": [
+    { "id": "MERCHANT",   "label": "商人" },
+    { "id": "GUARD",      "label": "衛兵" },
+    { "id": "QUEST_GIVER","label": "依頼人" },
+    { "id": "INNKEEPER",  "label": "宿屋主人" },
+    { "id": "SAGE",       "label": "賢者" }
+  ],
+
+  "locations": [
+    { "id": "loc_starting_village", "label": "始まりの村" },
+    { "id": "loc_dungeon_entrance", "label": "ダンジョン入口" },
+    { "id": "loc_tower",            "label": "謎の塔" }
+  ]
+}

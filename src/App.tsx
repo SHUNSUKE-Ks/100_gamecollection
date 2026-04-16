@@ -15,6 +15,7 @@ import { CollectionScreen } from '@/screens/11_Collection/CollectionScreen';
 import { AndroidLayout } from '@/screens/android/AndroidLayout';
 import { HomeScreen } from '@/screens/00_Home/HomeScreen';
 import { MenuScreen } from '@/screens/13_Menu/MenuScreen';
+import { WorkSpaceScreen } from '@/screens/workspace/WorkSpaceScreen';
 
 // Android / モバイル端末の自動判定（モジュール読み込み時に1回だけ評価）
 const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
@@ -52,6 +53,8 @@ function App() {
         return <MenuScreen />;
       case 'HONO_API_TEST':
         return <HonoApiTestScreen />;
+      case 'WORKSPACE':
+        return <WorkSpaceScreen />;
       default:
         return <TitleScreen />;
     }

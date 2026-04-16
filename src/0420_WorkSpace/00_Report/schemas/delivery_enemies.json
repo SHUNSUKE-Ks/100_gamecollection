@@ -1,0 +1,45 @@
+{
+  "_readme": "敵キャラクターデータの納品スキーマ。記入して提出してください。",
+  "_rules": {
+    "id": "英数字とアンダースコアのみ。例: monster_01",
+    "label": "種別コード（大文字英字）。例: SLIME, BEAST, BOSS",
+    "image": "enemy/ フォルダ以下に画像を配置",
+    "rarity": "レア度は 1〜5 の整数。1=コモン, 5=レジェンド",
+    "ai.pattern": "aggressive（積極的）/ defensive（防御的）/ random（ランダム）"
+  },
+
+  "enemies": [
+    {
+      "id": "monster_01",
+      "name": "スライム",
+      "label": "SLIME",
+      "tags": ["WEAK", "WATER"],
+      "image": "enemy/Monster_01.png",
+      "rarity": 1,
+      "stats": { "hp": 50, "mp": 0, "atk": 10, "def": 5 },
+      "skills": ["溶解液"],
+      "description": "初心者向けのモンスター。ぷるぷるしている。",
+      "drop": { "items": ["potion_hp_001"], "exp": 10, "gold": 20 },
+      "ai": { "pattern": "random", "thinkDelay": 0.5 }
+    },
+    {
+      "id": "monster_02",
+      "name": "ウルフ",
+      "label": "BEAST",
+      "tags": ["FAST", "PHYSICAL"],
+      "image": "enemy/Monster_02.png",
+      "rarity": 2,
+      "stats": { "hp": 120, "mp": 20, "atk": 25, "def": 10 },
+      "skills": ["噛みつき", "遠吠え"],
+      "description": "森に生息する凶暴な狼。",
+      "drop": { "items": [], "exp": 30, "gold": 50 },
+      "ai": { "pattern": "aggressive", "thinkDelay": 0.3 }
+    }
+  ],
+
+  "categories": [
+    { "id": "SLIME", "label": "粘体" },
+    { "id": "BEAST", "label": "魔獣" },
+    { "id": "BOSS",  "label": "ボス" }
+  ]
+}

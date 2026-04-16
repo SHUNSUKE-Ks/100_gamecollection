@@ -654,7 +654,7 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
               <SectionTitle icon={<FileJson size={14} />} title="スキーマサンプル" />
               <CopyButton text={schemaStr} keyId={`sample_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50" />
             </div>
-            <pre className="bg-slate-900 border border-slate-700/50 rounded-xl p-4 text-xs text-green-300 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono max-h-96 overflow-y-auto">
+            <pre className="bg-slate-900 border border-slate-700/50 rounded-xl p-4 text-xs text-green-300 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
               {schemaStr}
             </pre>
           </div>
@@ -694,37 +694,50 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
 // ─────────────────────────────────────────────────────────
 // SpecTable
 // ─────────────────────────────────────────────────────────
-const SpecTable: React.FC<{ rows: FieldRow[]; title: string; accent?: boolean }> = ({ rows, title, accent }) => (
-  <div>
-    <SectionTitle icon={<Info size={14} />} title={title} />
-    <div className="overflow-x-auto rounded-xl border border-slate-700/50">
-      <table className="w-full text-xs border-collapse">
-        <thead>
-          <tr className="bg-slate-800/80">
-            <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50">フィールド</th>
-            <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50 w-28">型</th>
-            <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50 w-16">必須</th>
-            <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50">説明</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((f, i) => (
-            <tr key={i} className="border-b border-slate-700/30 hover:bg-slate-800/30">
-              <td className={`px-3 py-2 font-mono whitespace-nowrap ${accent ? 'text-pink-300' : 'text-yellow-300'}`}>{f.key}</td>
-              <td className="px-3 py-2 text-cyan-400 whitespace-nowrap">{f.type}</td>
-              <td className="px-3 py-2">
-                {f.required
-                  ? <span className="text-red-400 font-bold">必須</span>
-                  : <span className="text-slate-600">任意</span>}
-              </td>
-              <td className="px-3 py-2 text-slate-300">{f.desc}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+const SpecTable: React.FC<{ rows: FieldRow[]; title: string; accent?: boolean }> = ({ rows, title, accent }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen(v => !v)}
+        className="flex items-center gap-2 mb-2 w-full text-left group"
+      >
+        <span className="w-1 h-4 bg-yellow-500 rounded-full" />
+        <span className="text-slate-400"><Info size={14} /></span>
+        <span className="text-xs font-bold text-slate-300 uppercase tracking-wide flex-1">{title}</span>
+        <ChevronDown size={13} className={`text-slate-500 transition-transform group-hover:text-slate-300 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="overflow-x-auto rounded-xl border border-slate-700/50">
+          <table className="w-full text-xs border-collapse">
+            <thead>
+              <tr className="bg-slate-800/80">
+                <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50">フィールド</th>
+                <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50 w-28">型</th>
+                <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50 w-16">必須</th>
+                <th className="text-left px-3 py-2 text-slate-400 font-medium border-b border-slate-700/50">説明</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((f, i) => (
+                <tr key={i} className="border-b border-slate-700/30 hover:bg-slate-800/30">
+                  <td className={`px-3 py-2 font-mono whitespace-nowrap ${accent ? 'text-pink-300' : 'text-yellow-300'}`}>{f.key}</td>
+                  <td className="px-3 py-2 text-cyan-400 whitespace-nowrap">{f.type}</td>
+                  <td className="px-3 py-2">
+                    {f.required
+                      ? <span className="text-red-400 font-bold">必須</span>
+                      : <span className="text-slate-600">任意</span>}
+                  </td>
+                  <td className="px-3 py-2 text-slate-300">{f.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 // ─────────────────────────────────────────────────────────
 // SectionTitle
@@ -796,7 +809,7 @@ const AiPromptBlock: React.FC<{ version: VersionId; schemaStr: string }> = ({ ve
         <CopyButton text={prompt} keyId={`prompt_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50" />
       </div>
       <p className="text-xs text-slate-500 mb-2">末尾の「変換する文章」部分に自分の文章を貼ってAIに渡してください。</p>
-      <pre className="bg-slate-900/80 border border-yellow-500/20 rounded-xl p-4 text-xs text-yellow-100/80 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono max-h-52 overflow-y-auto">
+      <pre className="bg-slate-900/80 border border-yellow-500/20 rounded-xl p-4 text-xs text-yellow-100/80 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
         {prompt}
       </pre>
     </div>
