@@ -9,7 +9,7 @@ import {
   Menu, X, Plus, BookOpen, PenSquare, Database,
   FileText, ClipboardList, Code2, Play, Home, ChevronLeft,
   Check, MapPin, Users, User, Swords, Package, Clapperboard,
-  Image, Music, Tag, Inbox,
+  Image, Music, Tag, Inbox, FolderOpen,
 } from 'lucide-react';
 import { useGameStore } from '@/core/stores/gameStore';
 import { NovelLibraryView }   from '@/parts/collection/story/NovelLibraryView';
@@ -28,6 +28,7 @@ import { TagsView }           from '@/parts/collection/specific/TagsView';
 import { ImageInboxView }    from '@/parts/collection/specific/ImageInboxView';
 import { RecordCardModal, type DbKey } from '@/parts/collection/specific/RecordCardModal';
 import { AndroidNovelPlayer } from '@/screens/android/AndroidNovelPlayer';
+import { WorkSpaceView }      from '@/parts/collection/workspace/WorkSpaceView';
 import titlesData     from '@/data/collection/titles.json';
 import characterData  from '@/data/collection/characters.json';
 import npcData        from '@/data/collection/npcs.json';
@@ -37,7 +38,7 @@ import backgroundData from '@/data/collection/backgrounds.json';
 // ─── Types ────────────────────────────────────────────────
 
 type AndroidTab =
-  | 'gallery' | 'library' | 'plot' | 'report' | 'document' | 'schema'
+  | 'gallery' | 'library' | 'plot' | 'report' | 'document' | 'schema' | 'workspace'
   | 'db_titles' | 'db_place' | 'db_character' | 'db_npc' | 'db_enemy'
   | 'db_item'   | 'db_event' | 'db_cg'        | 'db_sound' | 'db_tag'
   | 'db_inbox';
@@ -79,9 +80,10 @@ const NAV_ITEMS: { id: AndroidTab; label: string; icon: ReactNode }[] = [
   { id: 'gallery',  label: 'タイトル一覧',    icon: <Home size={16} /> },
   { id: 'library',  label: 'ノベルライブラリ', icon: <BookOpen size={16} /> },
   { id: 'plot',     label: 'プロット手帳',    icon: <PenSquare size={16} /> },
-  { id: 'report',   label: 'レポート',        icon: <FileText size={16} /> },
-  { id: 'document', label: '発注書',          icon: <ClipboardList size={16} /> },
-  { id: 'schema',   label: 'スキーマー確認',  icon: <Code2 size={16} /> },
+  { id: 'report',    label: 'レポート',          icon: <FileText size={16} /> },
+  { id: 'workspace', label: 'ワークスペース',    icon: <FolderOpen size={16} /> },
+  { id: 'document',  label: '発注書',            icon: <ClipboardList size={16} /> },
+  { id: 'schema',    label: 'スキーマー確認',    icon: <Code2 size={16} /> },
 ];
 
 const LIB_ITEMS: { id: AndroidTab; label: string; icon: ReactNode }[] = [
@@ -286,10 +288,10 @@ export function AndroidLayout() {
   const Drawer = drawerOpen && (
     <>
       <div onClick={() => setDrawerOpen(false)} style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 200,
+        position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.65)', zIndex: 200,
       }} />
       <div style={{
-        position: 'fixed', top: 0, left: 0, bottom: 0, width: 264,
+        position: 'absolute', top: 0, left: 0, bottom: 0, width: 264,
         background: 'var(--color-bg-medium)',
         borderRight: '1px solid var(--color-border)',
         zIndex: 201, display: 'flex', flexDirection: 'column',
@@ -373,7 +375,7 @@ export function AndroidLayout() {
           <span style={{ fontSize: '0.72rem' }}>titles.json にエントリを追加してください</span>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', alignItems: 'start' }}>
           {titles.map(title => {
             const meta = STATUS_META[title.status] ?? STATUS_META.dev;
             return (
@@ -461,8 +463,9 @@ export function AndroidLayout() {
         ? <NovelDetailView entry={selectedNovel} onBack={() => setSelectedNovel(null)} />
         : <NovelLibraryView onOpenDetail={setSelectedNovel} />;
       case 'plot':     return <PlotNotebook />;
-      case 'report':   return <ReportView />;
-      case 'document': return <DocumentInboxView />;
+      case 'report':     return <ReportView />;
+      case 'workspace':  return <WorkSpaceView />;
+      case 'document':   return <DocumentInboxView />;
       case 'schema':   return <SchemaShortView />;
       // ライブラリ系
       case 'db_titles':    return GalleryView;
@@ -487,7 +490,7 @@ export function AndroidLayout() {
     <div
       onClick={() => { if (!qnSaved) setShowQN(false); }}
       style={{
-        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)',
+        position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.75)',
         zIndex: 150,
         display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
         paddingTop: '12vh', paddingLeft: '1rem', paddingRight: '1rem',
@@ -630,33 +633,44 @@ export function AndroidLayout() {
   );
 
   // ── レンダリング ──────────────────────────────────────────
+  // 外側: PCでも縦長（最大430px）に固定・中央配置
   return (
     <div style={{
-      display: 'flex', flexDirection: 'column',
+      display: 'flex', justifyContent: 'center',
       height: '100dvh', width: '100vw',
-      background: 'var(--color-bg-dark)',
-      color: 'var(--color-text-primary)',
-      fontFamily: 'sans-serif', overflow: 'hidden',
+      background: '#020207',
+      overflow: 'hidden',
     }}>
-      {Header}
-      <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-        {Content}
-      </main>
-      {Drawer}
-      {QuickNoteModal}
-      {recordDbKey && (
-        <RecordCardModal
-          dbKey={recordDbKey}
-          onClose={() => setRecordDbKey(null)}
-          onSaved={() => setRecordDbKey(null)}
-        />
-      )}
-      {playerTitle && (
-        <AndroidNovelPlayer
-          title={playerTitle}
-          onClose={() => setPlayerTitle(null)}
-        />
-      )}
+      {/* 内側: スマホフレーム */}
+      <div style={{
+        display: 'flex', flexDirection: 'column',
+        width: '100%', maxWidth: 430,
+        height: '100%', position: 'relative',
+        background: 'var(--color-bg-dark)',
+        color: 'var(--color-text-primary)',
+        fontFamily: 'sans-serif', overflow: 'hidden',
+        boxShadow: '0 0 80px rgba(0,0,0,0.85)',
+      }}>
+        {Header}
+        <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+          {Content}
+        </main>
+        {Drawer}
+        {QuickNoteModal}
+        {recordDbKey && (
+          <RecordCardModal
+            dbKey={recordDbKey}
+            onClose={() => setRecordDbKey(null)}
+            onSaved={() => setRecordDbKey(null)}
+          />
+        )}
+        {playerTitle && (
+          <AndroidNovelPlayer
+            title={playerTitle}
+            onClose={() => setPlayerTitle(null)}
+          />
+        )}
+      </div>
     </div>
   );
 }
