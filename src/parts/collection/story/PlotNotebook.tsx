@@ -40,12 +40,9 @@ export function PlotNotebook() {
     const [slotPopup, setSlotPopup] = useState<SlotPopup | null>(null);
     const popupRef = useRef<HTMLDivElement>(null);
 
-    // サイドバー開閉
-    // デスクトップ(>768px): CSS で常時表示（hidden クラスは無効）
-    // モバイル(≤768px): 初期非表示、タップで開くオーバーレイ
-    const [sidebarOpen, setSidebarOpen] = useState(() =>
-        typeof window !== 'undefined' ? window.innerWidth > 768 : true
-    );
+    // サイドバー開閉: 常時オーバーレイ方式
+    // 初期表示は閉じておく（エディターを全幅で使えるようにする）
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     // ドラッグ状態
     const [dragLineId, setDragLineId] = useState<string | null>(null);

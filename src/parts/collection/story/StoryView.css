@@ -387,17 +387,30 @@
     height: 100%;
     background: #1e293b;
     overflow: hidden;
+    position: relative; /* オーバーレイサイドバーの基準点 */
 }
 
-/* ── 左サイドバー（カードリスト） ── */
+/* ── 左サイドバー: 常時オーバーレイ（全幅対応） ── */
 
 .plot-sidebar {
-    width: 260px;
-    min-width: 260px;
+    /* オーバーレイ配置 — サイドバーはエディターに重ねる */
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(280px, 85%);
+    z-index: 100;
     display: flex;
     flex-direction: column;
     background: #0f172a;
     border-right: 1px solid #334155;
+    transform: translateX(0);
+    transition: transform 0.22s ease;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.55);
+}
+
+.plot-sidebar.hidden {
+    transform: translateX(-105%);
 }
 
 .plot-sidebar-header {
@@ -1101,18 +1114,16 @@
     border-color: #3b82f6;
 }
 
-/* ── デスクトップ: サイドバーは常時表示 → トグル非表示 ── */
+/* ── サイドバーUI（常時オーバーレイのため全サイズで有効） ── */
 
-/* デスクトップでは hidden クラスが付いても幅は維持（常に表示） */
-/* .plot-sidebar.hidden は モバイルのみ有効にする */
-
+/* ◀/▶ サイドバートグルボタン */
 .plot-sidebar-toggle-btn {
-    display: none; /* デスクトップでは不要 */
+    display: none; /* サイドバー内の ✕ ボタンを使うため非表示 */
 }
 
-/* モバイル専用: サイドバー内クローズボタン（デスクトップでは非表示） */
+/* サイドバー内 ✕ 閉じるボタン（常時表示） */
 .plot-sidebar-close-btn {
-    display: none;
+    display: flex;
     background: transparent;
     border: 1px solid #334155;
     color: #64748b;
@@ -1132,9 +1143,9 @@
     color: #ef4444;
 }
 
-/* モバイル専用: エディター内ハンバーガーボタン（デスクトップでは非表示） */
+/* エディター内ハンバーガーボタン（常時表示） */
 .plot-mobile-menu-btn {
-    display: none;
+    display: flex;
     background: #0f172a;
     border: 1px solid #334155;
     color: #94a3b8;
@@ -1155,9 +1166,12 @@
     color: #fbbf24;
 }
 
-/* モバイル: バックドロップ（デスクトップでは非表示） */
+/* バックドロップ（サイドバー開時に表示） */
 .plot-sidebar-backdrop {
-    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
 }
 
 /* ── ドラッグハンドル ── */
@@ -1279,70 +1293,11 @@
     color: #93c5fd;
 }
 
-/* ── Android / モバイル 対応 ── */
-
-/* ====================================================
-   モバイル / Android 専用レイアウト (≤768px)
-   デスクトップはサイドパネル常時表示のまま
-   ==================================================== */
+/* ── モバイル追加調整（768px 以下）── */
 
 @media (max-width: 768px) {
 
-    /* ノートブック全体: オーバーレイの基準点に */
-    .plot-notebook {
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* ===== エディターは常に全幅（サイドバーはオーバーレイ） ===== */
-    .plot-editor {
-        flex: 1 1 100%;
-        min-width: 0;
-        width: 100%;
-    }
-
-    /* ===== サイドバー: 絶対配置でオーバーレイ ===== */
-    .plot-sidebar {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        z-index: 50;
-        width: 280px;
-        min-width: 280px;
-        box-shadow: 6px 0 32px rgba(0, 0, 0, 0.8);
-        transition: transform 0.3s ease;
-        transform: translateX(0);
-    }
-
-    /* モバイルでのみ hidden = スライドアウト */
-    .plot-sidebar.hidden {
-        transform: translateX(-100%);
-        width: 280px;
-        min-width: 280px;
-        pointer-events: none;
-    }
-
-    /* バックドロップ表示 */
-    .plot-sidebar-backdrop {
-        display: block;
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.55);
-        z-index: 45;
-    }
-
-    /* サイドバー内 ✕ ボタンを表示 */
-    .plot-sidebar-close-btn {
-        display: flex;
-    }
-
-    /* ☰ ハンバーガーボタンを表示 */
-    .plot-mobile-menu-btn {
-        display: flex;
-    }
-
-    /* 会話ブロックはすでに2段構造のためモバイル調整のみ */
+    /* 会話ブロック余白を詰める */
     .plot-line-header {
         padding: 4px 8px 4px 4px;
     }
