@@ -15,7 +15,7 @@ export const SECTIONS: { id: StudioSection; label: string; icon: string }[] = [
   { id: 'TASKS',     label: 'Tasks',     icon: '☑' },
   { id: 'LOGS',      label: 'Logs',      icon: '📋' },
   { id: 'WORKSPACE', label: 'WorkSpace', icon: '🗄' },
-  { id: 'ORCHESTRA', label: 'Orchestra', icon: '🤖' },
+// { id: 'ORCHESTRA', label: 'Orchestra', icon: '🤖' },
   { id: 'SCHEMA',    label: 'Schema',    icon: '📐' },
 ];
 

@@ -20,13 +20,14 @@ import type { StudioSection } from '@/devstudio/core/types';
 // ─── Section labels ────────────────────────────────────────
 
 const SECTION_TITLE: Record<StudioSection, string> = {
-  DASHBOARD:  'Dashboard',
-  EPIC:       'Epic',
-  TASKS:      'Tasks',
-  LOGS:       'Logs',
-  WORKSPACE:  'WorkSpace',
-  ORCHESTRA:  'Orchestra',
-  SCHEMA:     'Schema',
+  DASHBOARD:    'Dashboard',
+  EPIC:         'Epic',
+  TASKS:        'Tasks',
+  LOGS:         'Logs',
+  WORKSPACE:    'WorkSpace',
+  ORCHESTRA:    'Orchestra',
+  SCHEMA:       'Schema',
+  GAME_PACKAGE: 'GamePkg',
 };
 
 // ─── Shell ────────────────────────────────────────────────────

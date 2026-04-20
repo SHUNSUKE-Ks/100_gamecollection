@@ -386,7 +386,11 @@ pre {
 
       <span class="cm">// 効果音</span>
       <span class="key">"SE_DOOR"</span>:     <span class="str">"se_door.mp3"</span>,
-      <span class="key">"SE_BUTTON"</span>:   <span class="str">"se_button.mp3"</span>
+      <span class="key">"SE_BUTTON"</span>:   <span class="str">"se_button.mp3"</span>,
+
+      <span class="cm">// BGM（wav / m4a / mp3 いずれも可）</span>
+      <span class="key">"BGM_MAIN"</span>:    <span class="str">"bgm_main.mp3"</span>,
+      <span class="key">"BGM_BATTLE"</span>:  <span class="str">"bgm_battle.wav"</span>
     <span class="kw">}</span>
   <span class="kw">}</span>
 <span class="kw">}</span></pre>
@@ -397,7 +401,7 @@ pre {
         <div class="rule-item"><span class="badge b-blue">BG_</span><span>背景画像。解像度をファイル名に含める（例: 1280x720）</span></div>
         <div class="rule-item"><span class="badge b-blue">CHAR_</span><span>キャラクター立ち絵（例: 512x1024）</span></div>
         <div class="rule-item"><span class="badge b-blue">SE_</span><span>効果音（.mp3）</span></div>
-        <div class="rule-item"><span class="badge b-blue">BGM_</span><span>BGM（.mp3）</span></div>
+        <div class="rule-item"><span class="badge b-blue">BGM_</span><span>BGM（.wav / .m4a / .mp3 いずれも可）</span></div>
       </div>
     </div>
   </div>
@@ -453,6 +457,20 @@ function copyCode(id, btn) {
 }
 
 const SPEC_TEXT = `# スキーマ Ver5.1 — 設計仕様書
+
+## 成果物の納品
+PWAのImportModalへ貼り付ける際は、5つのJSONファイル（events, chats, choices, state, AssetOrderList）を1つのルートJSONにまとめ、各キーにそれぞれの内容を格納した形式で納品してください。
+\`\`\`json
+{
+  "package_version": "1.0",
+  "gameTitle": "ゲームタイトル",
+  "events": { ... },
+  "chats": { ... },
+  "choices": { ... },
+  "state": { ... },
+  "assets": { ... }
+}
+\`\`\`
 
 ## 概要
 ノベルゲームの進行・表示・分岐・状態管理を分離し、エンジンに渡すシンプルかつ拡張可能なJSON構造。
@@ -551,7 +569,10 @@ const JSON_assets = `// AssetOrderList.jsonc
       "CHAR_REMI":   "char_remi_512x1024.svg",
       "CHAR_ELDER":  "char_elder_512x1024.svg",
       "SE_DOOR":     "se_door.mp3",
-      "SE_BUTTON":   "se_button.mp3"
+      "SE_BUTTON":   "se_button.mp3",
+      // BGM（wav / m4a / mp3 いずれも可）
+      "BGM_MAIN":    "bgm_main.mp3",
+      "BGM_BATTLE":  "bgm_battle.wav"
     }
   }
 }`;
@@ -619,7 +640,7 @@ function showSpecModal() {
       <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:0.5px solid rgba(255,255,255,0.08);flex-shrink:0;">
         <div>
           <div style="font-size:14px;font-weight:700;color:#c4b5fd;">渡しパック — スキーマ Ver5.1</div>
-          <div style="font-size:11px;color:#6b7280;margin-top:2px;">AIエージェント向け全リソース一覧</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:2px;">AIエージェント向け全リソース一覧 — 5ファイルを1つのJSONにまとめて納品してください</div>
         </div>
         <div style="flex:1;"></div>
         <button id="ms-copy-all-top"

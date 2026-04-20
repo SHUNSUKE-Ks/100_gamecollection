@@ -115,7 +115,7 @@ export interface AIOutput {
 // ─── Profile / UI ────────────────────────────────────────────
 
 export type ViewProfile   = 'PM' | 'Planner01' | 'Planner02' | 'Planner03' | 'Programmer' | 'Writer' | 'Designer';
-export type StudioSection = 'DASHBOARD' | 'EPIC' | 'TASKS' | 'LOGS' | 'WORKSPACE' | 'ORCHESTRA' | 'SCHEMA';
+export type StudioSection = 'DASHBOARD' | 'EPIC' | 'TASKS' | 'LOGS' | 'WORKSPACE' | 'ORCHESTRA' | 'SCHEMA' | 'GAME_PACKAGE';
 
 export interface StudioUIState {
   section:        StudioSection;

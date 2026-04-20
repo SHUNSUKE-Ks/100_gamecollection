@@ -11,6 +11,7 @@ import { DevLogViewer } from '@/devstudio/logs/DevLogViewer';
 import { TasksScreen } from '@/devstudio/tasks/TasksScreen';
 import { EpicsScreen } from '@/devstudio/epics/EpicsScreen';
 import { SchemaView } from '@/devstudio/schema/SchemaView';
+import { GamePackageScreen } from '@/devstudio/gamepackage/GamePackageScreen';
 
 // ─── Nav / Profile config ────────────────────────────────────
 
@@ -20,8 +21,9 @@ const SECTIONS: { id: StudioSection; label: string; icon: string }[] = [
   { id: 'TASKS',      label: 'Tasks',      icon: '☑' },
   { id: 'LOGS',       label: 'Logs',       icon: '📋' },
   { id: 'WORKSPACE',  label: 'WorkSpace',  icon: '🗄' },
-  { id: 'ORCHESTRA',  label: 'Orchestra',  icon: '🤖' },
-  { id: 'SCHEMA',     label: 'Schema',     icon: '📐' },
+// { id: 'ORCHESTRA',  label: 'Orchestra',  icon: '🤖' },
+  { id: 'SCHEMA',       label: 'Schema',     icon: '📐' },
+  { id: 'GAME_PACKAGE', label: 'GamePkg',    icon: '📦' },
 ];
 
 const PROFILES: ViewProfile[] = ['PM', 'Planner01', 'Planner02', 'Planner03', 'Programmer', 'Writer', 'Designer'];
@@ -135,8 +137,8 @@ export function DevStudioScreen() {
         {/* Main content */}
         <main style={{
           flex: 1,
-          overflow: (section === 'LOGS' || section === 'EPIC' || section === 'SCHEMA') ? 'hidden' : 'auto',
-          padding: section === 'SCHEMA' ? 0 : 20,
+          overflow: (section === 'LOGS' || section === 'EPIC' || section === 'SCHEMA' || section === 'GAME_PACKAGE') ? 'hidden' : 'auto',
+          padding: (section === 'SCHEMA' || section === 'GAME_PACKAGE') ? 0 : 20,
           display: 'flex', flexDirection: 'column',
         }}>
           <SectionContent section={section} profile={profile} />
@@ -156,8 +158,9 @@ function SectionContent({ section, profile }: { section: StudioSection; profile:
     case 'LOGS':       return <LogsFullView />;
     case 'WORKSPACE':  return <WorkspaceView />;
     case 'ORCHESTRA':  return <OrchestraView />;
-    case 'SCHEMA':     return <SchemaView />;
-    default:           return <DashboardView profile={profile} />;
+    case 'SCHEMA':       return <SchemaView />;
+    case 'GAME_PACKAGE': return <GamePackageScreen />;
+    default:             return <DashboardView profile={profile} />;
   }
 }
 
@@ -583,7 +586,7 @@ function DefaultDashboard() {
       <Panel title="Phase" icon="📍" helpPages={HELP_PHASE}><PhasePanel /></Panel>
       <Panel title="Tasks" icon="☑"><TasksPanel /></Panel>
       <Panel title="Recent Logs" icon="📋"><LogsPanel /></Panel>
-      <Panel title="Orchestra" icon="🤖"><AgentPanel /></Panel>
+      {/* <Panel title="Orchestra" icon="🤖"><AgentPanel /></Panel> */}
     </div>
   );
 }
