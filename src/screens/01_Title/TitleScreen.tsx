@@ -233,12 +233,12 @@ export function TitleScreen() {
             </div>
 
             <div className="title-content">
-                <div className="title-logo">
+                <div className="title-logo" style={{ display: 'none' }}>
                     <img src="/src/assets/ui/logo.svg" alt="NanoNovel Logo" width="80" height="80" />
                 </div>
 
-                <h1 className="title-main">NanoNovel</h1>
-                <p className="title-subtitle">AI駆動ノベルゲーム</p>
+                <h1 className="title-main" style={{ display: 'none' }}>NanoNovel</h1>
+                <p className="title-subtitle" style={{ display: 'none' }}>AI駆動ノベルゲーム</p>
 
                 <div className="title-menu">
                     <button

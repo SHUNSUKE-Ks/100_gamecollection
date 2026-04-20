@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { useDevStudioStore } from '@/devstudio/core/state/useDevStudioStore';
-import type { Epic, EpicReport, Milestone, TaskStatus } from '@/devstudio/core/types';
+import type { Epic, EpicReport, Milestone, Task, TaskStatus } from '@/devstudio/core/types';
 
 // ─── Status helpers ──────────────────────────────────────────
 
@@ -15,7 +15,7 @@ const STATUS_COLOR: Record<TaskStatus, string> = {
   blocked:     '#f87171',
 };
 
-function epicProgress(epic: Epic, tasks: ReturnType<typeof useDevStudioStore>['tasks']) {
+function epicProgress(epic: Epic, tasks: Task[]) {
   const epicTasks = tasks.filter(t => epic.taskIds.includes(t.id));
   const done      = epicTasks.filter(t => t.status === 'done').length;
   const active    = epicTasks.filter(t => t.status === 'in_progress').length;

@@ -16,6 +16,7 @@ import { WorkspacePage }  from '../pages/WorkspacePage';
 import { OrchestraPage }  from '../pages/OrchestraPage';
 import { SchemaPage }     from '../pages/SchemaPage';
 import type { StudioSection } from '@/devstudio/core/types';
+import { GamePackageScreen } from '@/devstudio/gamepackage/GamePackageScreen';
 
 // ─── Section labels ────────────────────────────────────────
 
@@ -40,8 +41,8 @@ export function MobileShell() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [subPage, setSubPage] = useState<string | null>(null);
 
-  // Schema と Tasks は全高を使う（overflow: hidden を保つ）
-  const isFullHeight = currentSection === 'SCHEMA' || currentSection === 'TASKS' || currentSection === 'WORKSPACE';
+  // Schema と Tasks と GAME_PACKAGE は全高を使う（overflow: hidden を保つ）
+  const isFullHeight = currentSection === 'SCHEMA' || currentSection === 'TASKS' || currentSection === 'WORKSPACE' || currentSection === 'GAME_PACKAGE';
 
   const renderPage = () => {
     switch (currentSection) {
@@ -52,6 +53,7 @@ export function MobileShell() {
       case 'WORKSPACE':  return <WorkspacePage />;
       case 'ORCHESTRA':  return <OrchestraPage />;
       case 'SCHEMA':     return <SchemaPage />;
+      case 'GAME_PACKAGE': return <GamePackageScreen />;
       default:           return <DashboardPage />;
     }
   };

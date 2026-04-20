@@ -17,6 +17,7 @@ export const SECTIONS: { id: StudioSection; label: string; icon: string }[] = [
   { id: 'WORKSPACE', label: 'WorkSpace', icon: '🗄' },
 // { id: 'ORCHESTRA', label: 'Orchestra', icon: '🤖' },
   { id: 'SCHEMA',    label: 'Schema',    icon: '📐' },
+  { id: 'GAME_PACKAGE', label: 'ゲームPKG', icon: '📦' },
 ];
 
 export const PROFILES: ViewProfile[] = [

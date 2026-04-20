@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import type { CatalogTheme, CatalogLayout, Item, SkillEntry } from '@/core/types/item';
+import type { CatalogTheme, CatalogLayout, Item, SkillEntry, ItemDB, SkillDB } from '@/core/types/item';
 import type { CatalogFilter } from '@/parts/collection/catalog/CatalogSidebar';
 import { CatalogSidebar } from '@/parts/collection/catalog/CatalogSidebar';
 import { ThemeSwitcher } from '@/parts/collection/catalog/ThemeSwitcher';
@@ -11,8 +11,8 @@ import '@/styles/catalog/catalog.css';
 import itemsRaw  from '@/data/collection/items.json';
 import skillsRaw from '@/data/collection/skills.json';
 
-const itemsData  = itemsRaw  as typeof itemsRaw  & { items: Item[] };
-const skillsData = skillsRaw as typeof skillsRaw & { skills: SkillEntry[] };
+const itemsData  = itemsRaw  as unknown as ItemDB;
+const skillsData = skillsRaw as unknown as SkillDB;
 
 interface Props {
   onClose: () => void;

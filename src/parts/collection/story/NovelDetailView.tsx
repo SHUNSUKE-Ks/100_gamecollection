@@ -330,12 +330,16 @@ interface DetailProps {
 }
 
 export const NovelDetailView: React.FC<DetailProps> = ({ entry, onBack }) => {
-  const [episodes, setEpisodes] = useState<NovelEpisode[]>(entry.schema.episodes);
+  const isV51 = 'schemaVersion' in entry.schema;
+  const initialEpisodes = isV51 ? [] : (entry.schema as any).episodes;
+  const schemaVersion = isV51 ? (entry.schema as any).schemaVersion : (entry.schema as any).version;
+
+  const [episodes, setEpisodes] = useState<NovelEpisode[]>(initialEpisodes);
   const [, setSelectedEpId]    = useState<string | null>(episodes[0]?.id ?? null);
   const [selectedSceneId, setSelectedSceneId] = useState<string | null>(episodes[0]?.scenes[0]?.id ?? null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const { percent } = calcProgress({ ...entry.schema, episodes });
+  const { percent } = calcProgress(isV51 ? entry.schema : { ...entry.schema, episodes } as any);
 
   const handleSelectScene = useCallback((epId: string, sceneId: string) => {
     setSelectedEpId(epId);
@@ -370,7 +374,7 @@ export const NovelDetailView: React.FC<DetailProps> = ({ entry, onBack }) => {
 
         <div className="w-px h-5 bg-slate-700" />
 
-        <VersionBadge version={entry.schema.version} />
+        <VersionBadge version={schemaVersion} />
         <h2 className="text-sm font-bold text-slate-200 truncate">{entry.title}</h2>
 
         {entry.genre && (
@@ -415,7 +419,7 @@ export const NovelDetailView: React.FC<DetailProps> = ({ entry, onBack }) => {
         {/* メインエリア: 会話ログ */}
         <div className="flex-1 overflow-y-auto bg-slate-950/30">
           {selectedScene ? (
-            <ConversationLog scene={selectedScene} schemaVersion={entry.schema.version} />
+            <ConversationLog scene={selectedScene} schemaVersion={schemaVersion} />
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-slate-600 gap-2">
               <MessageSquare size={32} className="opacity-30" />

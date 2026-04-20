@@ -111,7 +111,7 @@ const panelHeader = (label: string, color: string) => (
   </div>
 );
 
-const panel = (header: JSX.Element, border: string, children: React.ReactNode) => (
+const panel = (header: React.ReactElement, border: string, children: React.ReactNode) => (
   <div style={{
     border: `1px solid ${border}`,
     borderRadius: 10, overflow: 'hidden',

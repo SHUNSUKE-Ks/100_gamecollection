@@ -34,7 +34,7 @@ export function DashboardPage() {
 // ─── Phase Panel ──────────────────────────────────────────────
 
 function PhaseMini({ adapter }: { adapter: ReturnType<typeof useDashboardAdapter> }) {
-  const { phase, taskCountByStatus, setPhase } = adapter;
+  const { phase, taskCountByStatus } = adapter;
   const idx = PHASES.findIndex(p => p.id === phase);
 
   return (
@@ -47,7 +47,7 @@ function PhaseMini({ adapter }: { adapter: ReturnType<typeof useDashboardAdapter
           const color  = active ? '#c9a227' : past ? '#34d399' : '#374151';
           return (
             <div key={p.id} style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-              <button onClick={() => setPhase(p.id as any)} style={{
+              <button onClick={() => {}} style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
                 background: 'none', border: 'none', cursor: 'pointer', padding: '2px 4px',
                 flex: 1,
