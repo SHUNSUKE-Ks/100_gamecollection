@@ -1,0 +1,6 @@
+id,scene,variant,positive_extra,negative_extra,seed,filename_prefix,width,height
+001,王都,exterior_day,fantasy royal city exterior daytime blue sky castle towers,,-1,bg_royal_city_day,,
+002,ダンジョン,interior,stone dungeon interior dark torchlight corridors,,-1,bg_dungeon_interior,,
+003,草原,overworld,lush green meadow overworld map sunny day distant mountains,,-1,bg_field_overworld,,
+004,洞窟,interior,dark cave stalactites glowing crystals underground,,-1,bg_cave_interior,,
+005,酒場,interior_night,tavern interior night warm lighting wooden tables,,-1,bg_tavern_interior,,

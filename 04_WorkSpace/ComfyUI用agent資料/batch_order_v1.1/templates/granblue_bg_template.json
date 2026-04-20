@@ -1,0 +1,23 @@
+{
+  "_comment": "背景・風景テンプレート Ver1.1（LoRAなし）",
+  "_model_type": "granblue_background",
+  "VERSION": "1.1",
+
+  "CHECKPOINT": "novaOrangeXL_v140.safetensors",
+  "LORA": [],
+
+  "STYLE_BASE": "granblue fantasy style, anime illustration, official art, detailed background, vivid colors, game cg, environment, no humans",
+  "NEGATIVE_BASE": "lowres, worst quality, blurry, realistic, 3d render, watermark, characters, people",
+
+  "STEPS": 30,
+  "CFG": 7.0,
+  "SAMPLER": "dpmpp_2m",
+  "SCHEDULER": "karras",
+  "DENOISE": 1.0,
+
+  "WIDTH": 1920,
+  "HEIGHT": 1080,
+
+  "OUTPUT_DIR": "D:/ai/ComfyUI/output/batch",
+  "COMFYUI_URL": "http://127.0.0.1:8188"
+}

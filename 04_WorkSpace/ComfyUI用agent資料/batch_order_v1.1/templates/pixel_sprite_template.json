@@ -1,0 +1,23 @@
+{
+  "_comment": "ピクセルアートスプライトテンプレート Ver1.1",
+  "_model_type": "pixel_sprite",
+  "VERSION": "1.1",
+
+  "CHECKPOINT": "pixelArtSpriteDiffusion.safetensors",
+  "LORA": [],
+
+  "STYLE_BASE": "pixel art, pixel sprite, retro game style, 16bit, clean pixels, limited color palette, game asset",
+  "NEGATIVE_BASE": "blurry, smooth, anti-aliasing, realistic, high resolution, detailed texture, 3d, photo, painting, sketch",
+
+  "STEPS": 20,
+  "CFG": 7.0,
+  "SAMPLER": "dpmpp_2m",
+  "SCHEDULER": "karras",
+  "DENOISE": 1.0,
+
+  "WIDTH": 64,
+  "HEIGHT": 64,
+
+  "OUTPUT_DIR": "D:/ai/ComfyUI/output/batch",
+  "COMFYUI_URL": "http://127.0.0.1:8188"
+}

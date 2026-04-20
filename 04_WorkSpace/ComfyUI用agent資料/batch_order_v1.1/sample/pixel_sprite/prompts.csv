@@ -1,0 +1,9 @@
+id,object,variant,positive_extra,negative_extra,seed,filename_prefix,width,height
+001,スライム,idle,slime monster blue idle sprite,,-1,pixel_slime_idle,,
+002,スライム,damage,slime monster blue damage animation frame,,-1,pixel_slime_damage,,
+003,コウモリ,fly,bat enemy flying sprite dark cave,,-1,pixel_bat_fly,,
+004,宝箱,closed,treasure chest closed sprite wood metal clasp,,-1,pixel_chest_closed,,
+005,宝箱,open,treasure chest open sprite gold coins inside,,-1,pixel_chest_open,,
+006,回復薬,icon,red potion health item icon,,-1,pixel_item_potion_hp,32,32
+007,毒薬,icon,purple potion poison item icon,,-1,pixel_item_potion_poison,32,32
+008,炎エフェクト,frame1,fire effect animation frame 1 sprite,,-1,pixel_effect_fire_01,48,48

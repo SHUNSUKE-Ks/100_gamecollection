@@ -20,7 +20,8 @@
       "Bash(cmd /c \"cd /d c:\\\\202604_claude_workspace\\\\100_gamecollection && npx vite build\")",
       "Bash(powershell -Command \"Set-Location 'c:\\\\202604_claude_workspace\\\\100_gamecollection'; npx vite build 2>&1 | Select-Object -Last 20\")",
       "Bash(xargs grep:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(npx vercel:*)"
     ]
   }
 }

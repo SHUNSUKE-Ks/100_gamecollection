@@ -27,7 +27,7 @@ interface FieldDef {
 
 export type DbKey =
   | 'titles' | 'characters' | 'npcs' | 'enemies'
-  | 'locations' | 'items' | 'events' | 'sounds' | 'tags';
+  | 'locations' | 'items' | 'skills' | 'events' | 'sounds' | 'tags';
 
 interface RecordConfig {
   label:          string;   // 「キャラクター追加」
@@ -117,6 +117,24 @@ export const RECORD_CONFIGS: Record<DbKey, RecordConfig> = {
       { key: 'price',       label: '価格 (G)',      type: 'number', placeholder: '100' },
       { key: 'description', label: '説明',           type: 'textarea' },
       { key: 'titleId',     label: 'タイトル',      type: 'title-select' },
+    ],
+  },
+
+  skills: {
+    label: 'スキル・能力追加',
+    collectionName: 'skills',
+    fields: [
+      { key: 'name',           label: 'スキル名 *',  type: 'text',    required: true,  placeholder: '強斬り' },
+      { key: 'category',       label: 'カテゴリ',     type: 'select',  options: ['攻撃','回復','バフ','デバフ','パッシブ'] },
+      { key: 'element',        label: '属性',          type: 'select',  options: ['物理','火','水','風','毒','無'] },
+      { key: 'target',         label: '対象',          type: 'select',  options: ['enemy','all_enemies','ally','all_allies','self'] },
+      { key: 'cost_mp',        label: 'MPコスト',      type: 'number',  placeholder: '5' },
+      { key: 'cost_cooldown',  label: 'クールダウン(T)', type: 'number', placeholder: '0' },
+      { key: 'power_base',     label: '基礎威力',      type: 'number',  placeholder: '100' },
+      { key: 'power_scale',    label: 'スケール',      type: 'select',  options: ['str','int','dex'] },
+      { key: 'learnCondition', label: '習得条件',      type: 'text',    placeholder: '初期習得 / Lv.5 / イベント' },
+      { key: 'description',    label: '説明',           type: 'textarea' },
+      { key: 'tags',           label: 'タグ',           type: 'tags',    tagOptions: ['PHYSICAL','MAGIC','FIRE','WATER','HEAL','BUFF','PASSIVE','DOT','BEAST','SWORD','ENEMY_SKILL'] },
     ],
   },
 

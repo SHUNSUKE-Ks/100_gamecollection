@@ -1,17 +1,8 @@
 {
     "categories": [
-        {
-            "id": "consumable",
-            "label": "消費アイテム"
-        },
-        {
-            "id": "equipment",
-            "label": "装備品"
-        },
-        {
-            "id": "key",
-            "label": "貴重品"
-        }
+        { "id": "consumable", "label": "消費アイテム", "icon": "🧪" },
+        { "id": "equipment",  "label": "装備品",       "icon": "🗡️" },
+        { "id": "key",        "label": "貴重品",       "icon": "🗝️" }
     ],
     "items": [
         {
@@ -19,27 +10,124 @@
             "name": "ポーション",
             "category": "consumable",
             "icon": "item/potion.png",
-            "tags": [
-                "HEAL"
-            ],
+            "iconTag": "🧪",
+            "tags": ["HEAL"],
             "rarity": 1,
             "price": 50,
             "effect": "HPを50回復する。",
             "description": "薬草を煮詰めて作った基本的な回復薬。"
         },
         {
+            "id": "potion_hp_002",
+            "name": "ハイポーション",
+            "category": "consumable",
+            "icon": "item/potion_hi.png",
+            "iconTag": "💊",
+            "tags": ["HEAL"],
+            "rarity": 2,
+            "price": 200,
+            "effect": "HPを200回復する。",
+            "description": "上質な薬草を丁寧に精製した高級回復薬。"
+        },
+        {
+            "id": "ether_mp_001",
+            "name": "エーテル",
+            "category": "consumable",
+            "icon": "item/ether.png",
+            "iconTag": "✨",
+            "tags": ["MP_RESTORE"],
+            "rarity": 2,
+            "price": 150,
+            "effect": "MPを30回復する。",
+            "description": "魔力を帯びた液体。魔法使いに重宝される。"
+        },
+        {
+            "id": "antidote_001",
+            "name": "解毒薬",
+            "category": "consumable",
+            "icon": "item/antidote.png",
+            "iconTag": "🌿",
+            "tags": ["CURE", "POISON"],
+            "rarity": 1,
+            "price": 80,
+            "effect": "毒状態を解除する。",
+            "description": "解毒草を配合した薬。毒を中和する効果がある。"
+        },
+        {
             "id": "sword_iron_001",
             "name": "鉄の剣",
             "category": "equipment",
             "icon": "item/sword.png",
-            "tags": [
-                "WEAPON",
-                "SWORD"
-            ],
+            "iconTag": "🗡️",
+            "tags": ["WEAPON", "SWORD"],
             "rarity": 1,
             "price": 200,
-            "effect": "攻撃力+10",
-            "description": "量産品の鉄剣。扱いやすい。"
+            "effect": "ATK+10",
+            "description": "量産品の鉄剣。扱いやすい。",
+            "equipSlot": "weapon"
+        },
+        {
+            "id": "sword_silver_001",
+            "name": "銀の剣",
+            "category": "equipment",
+            "icon": "item/sword_silver.png",
+            "iconTag": "⚔️",
+            "tags": ["WEAPON", "SWORD"],
+            "rarity": 3,
+            "price": 1200,
+            "effect": "ATK+30、魔物へのダメージ+20%",
+            "description": "銀製の剣。魔物に対して特効がある。",
+            "equipSlot": "weapon"
+        },
+        {
+            "id": "armor_leather_001",
+            "name": "革の鎧",
+            "category": "equipment",
+            "icon": "item/armor_leather.png",
+            "iconTag": "🥋",
+            "tags": ["ARMOR", "LIGHT"],
+            "rarity": 1,
+            "price": 300,
+            "effect": "DEF+8",
+            "description": "柔らかい革で作られた軽い鎧。動きやすい。",
+            "equipSlot": "armor"
+        },
+        {
+            "id": "ring_magic_001",
+            "name": "魔力の指輪",
+            "category": "equipment",
+            "icon": "item/ring_magic.png",
+            "iconTag": "💍",
+            "tags": ["ACCESSORY", "MAGIC"],
+            "rarity": 3,
+            "price": 800,
+            "effect": "INT+15、MP最大値+20",
+            "description": "魔法の紋様が刻まれた指輪。着けるだけで魔力が高まる。",
+            "equipSlot": "accessory"
+        },
+        {
+            "id": "key_old_manor",
+            "name": "古い屋敷の鍵",
+            "category": "key",
+            "icon": "item/key.png",
+            "iconTag": "🗝️",
+            "tags": ["KEY_ITEM", "STORY"],
+            "rarity": 4,
+            "price": 0,
+            "effect": "—",
+            "description": "錆びついた鉄の鍵。古い屋敷の正門を開けると噂される。"
+        },
+        {
+            "id": "letter_secret",
+            "name": "秘密の手紙",
+            "category": "key",
+            "icon": "item/letter.png",
+            "iconTag": "📜",
+            "tags": ["KEY_ITEM", "STORY"],
+            "rarity": 3,
+            "price": 0,
+            "effect": "—",
+            "description": "封蝋で閉じられた手紙。宛先は読めない。"
         }
     ]
 }

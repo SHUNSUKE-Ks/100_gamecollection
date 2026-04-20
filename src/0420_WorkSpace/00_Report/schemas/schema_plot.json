@@ -1,0 +1,136 @@
+{
+  "_readme": "PlotNotebook のデータスキーマ定義。PlotNotebookShell.tsx の Props と Firestore のドキュメント構造を定める。",
+
+  "version": "v2.0",
+  "updated": "2026-04-18",
+
+  "types": {
+
+    "PlotStatus": {
+      "_description": "プロットカードの進捗ステータス",
+      "values": ["idea", "draft", "fixed"],
+      "labels": {
+        "idea":  "アイディア",
+        "draft": "下書き",
+        "fixed": "確定"
+      },
+      "colors": {
+        "idea":  "#a78bfa",
+        "draft": "#fbbf24",
+        "fixed": "#34d399"
+      }
+    },
+
+    "LineType": {
+      "_description": "会話行の種別。speakerの値と isComment フラグで決まる",
+      "dialogue":   "speaker に文字列あり & isComment=false → セリフ行",
+      "narration":  "speaker が空文字列 & isComment=false → ナレーション行",
+      "comment":    "isComment=true → コメント行（ノベルJSONに出力されない）"
+    },
+
+    "PlotLine": {
+      "_description": "1つの会話行・ト書き行",
+      "id":        { "type": "string", "format": "uid", "required": true, "example": "id-1713456789-abc12" },
+      "speaker":   { "type": "string", "required": true, "default": "", "note": "空文字列 = ナレーション" },
+      "text":      { "type": "string", "required": true, "default": "", "maxLength": 60 },
+      "isComment": { "type": "boolean", "required": false, "default": false }
+    },
+
+    "PlotCard": {
+      "_description": "1シーン分のプロットカード。Firestore の plot_cards コレクションの1ドキュメントに対応",
+      "id":          { "type": "string", "format": "uid", "required": true },
+      "title":       { "type": "string", "required": true, "default": "新しいプロット" },
+      "status":      { "type": "PlotStatus", "required": true, "default": "idea" },
+      "episodeId":   { "type": "string", "required": true, "default": "", "note": "episodes.json の id を参照" },
+      "chapterId":   { "type": "string", "required": true, "default": "", "note": "episode.chapters[].id を参照" },
+      "sceneTag":    { "type": "string", "required": true, "default": "", "note": "自由記述。例: 移動シーン、イベントトリガー" },
+      "castSlots":   {
+        "type": "array",
+        "items": "string | null",
+        "length": 4,
+        "required": true,
+        "default": [null, null, null, null],
+        "note": "Alt+1〜4 で話者に挿入するキャラクター名のショートカットスロット"
+      },
+      "lines":       { "type": "PlotLine[]", "required": true, "default": [{ "id": "...", "speaker": "", "text": "" }], "minLength": 1 },
+      "updatedAt":   { "type": "number", "required": false, "note": "UNIX timestamp（ms）。Firestore の orderBy に使用" }
+    },
+
+    "Character": {
+      "_description": "キャストスロット選択で使うキャラクターの最小情報",
+      "id":   { "type": "string", "required": true },
+      "name": { "type": "string", "required": true }
+    },
+
+    "Chapter": {
+      "_description": "Episode に属するチャプター",
+      "id":    { "type": "string", "required": true },
+      "title": { "type": "string", "required": true }
+    },
+
+    "Episode": {
+      "_description": "プロットカードが属するエピソード",
+      "id":       { "type": "string", "required": true },
+      "title":    { "type": "string", "required": true },
+      "chapters": { "type": "Chapter[]", "required": true, "default": [] }
+    }
+  },
+
+  "props": {
+    "_description": "PlotNotebookShell コンポーネントが受け取る Props の定義",
+
+    "data": {
+      "cards":      { "type": "PlotCard[]",   "required": true,  "note": "表示するプロットカードの配列" },
+      "characters": { "type": "Character[]",  "required": true,  "note": "キャストスロット選択で使うキャラ一覧" },
+      "episodes":   { "type": "Episode[]",    "required": true,  "note": "Episode / Chapter 選択に使う" }
+    },
+
+    "status": {
+      "isLoading": { "type": "boolean", "required": true,  "note": "true のときローディング UI を表示" },
+      "error":     { "type": "string | null", "required": true, "note": "エラーメッセージ。null = 正常" }
+    },
+
+    "callbacks": {
+      "onAddCard":      { "type": "() => void",                                        "note": "新規カード追加。Firestore保存は呼び出し側の責務" },
+      "onDeleteCard":   { "type": "(id: string) => void",                              "note": "カード削除" },
+      "onUpdateCard":   { "type": "(id: string, patch: Partial<PlotCard>) => void",    "note": "カードのフィールド更新。patch は変更フィールドのみ" },
+      "onAddLine":      { "type": "(cardId: string, afterIdx: number) => void",        "note": "指定インデックスの後に新しい行を追加" },
+      "onDeleteLine":   { "type": "(cardId: string, lineId: string) => void",          "note": "行を削除。最後の1行は削除不可（実装側で制御）" },
+      "onUpdateLine":   { "type": "(cardId: string, lineId: string, patch: Partial<PlotLine>) => void", "note": "行のフィールド更新" },
+      "onReorderLines": { "type": "(cardId: string, newLines: PlotLine[]) => void",    "note": "D&D による行並び替え後の全行配列を渡す" },
+      "onAIGenerate":   { "type": "((prompt: string) => Promise<PlotCard[]>) | undefined", "note": "省略可。AI生成パネルを表示するかどうかは isAIEnabled で制御" }
+    },
+
+    "options": {
+      "isAIEnabled":    { "type": "boolean", "required": false, "default": false, "note": "true のとき AI生成ボタンを表示" },
+      "initialCardId":  { "type": "string | null", "required": false, "default": null, "note": "初期選択カードID。null なら最初のカードを選択" }
+    }
+  },
+
+  "firestoreCollection": {
+    "name": "plot_cards",
+    "documentId": "PlotCard.id",
+    "orderBy": "updatedAt desc",
+    "schema": "PlotCard"
+  },
+
+  "sampleData": {
+    "card": {
+      "id": "id-1713456789-abc12",
+      "title": "レミとの出会い",
+      "status": "draft",
+      "episodeId": "ep_01",
+      "chapterId": "ch_01_01",
+      "sceneTag": "イベントトリガー",
+      "castSlots": ["レミ・ウナント", "主人公", null, null],
+      "lines": [
+        { "id": "line-001", "speaker": "",              "text": "薄暗い屋根裏部屋。埃の匂いが立ち込めている。" },
+        { "id": "line-002", "speaker": "レミ・ウナント","text": "……こんなところに誰かいるの？" },
+        { "id": "line-003", "speaker": "主人公",         "text": "あ、ごめん。迷い込んでしまって。" },
+        { "id": "line-004", "speaker": "",              "text": "少女はランタンをこちらに向けた。", "isComment": false },
+        { "id": "line-005", "speaker": "any",           "text": "ここで選択肢を入れる予定", "isComment": true }
+      ],
+      "updatedAt": 1713456789000
+    }
+  }
+}

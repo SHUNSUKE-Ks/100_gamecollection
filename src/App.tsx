@@ -16,11 +16,17 @@ import { AndroidLayout } from '@/screens/android/AndroidLayout';
 import { HomeScreen } from '@/screens/00_Home/HomeScreen';
 import { MenuScreen } from '@/screens/13_Menu/MenuScreen';
 import { WorkSpaceScreen } from '@/screens/workspace/WorkSpaceScreen';
+import { DevStudioScreen } from '@/devstudio/DevStudioScreen';
+import { AndroidStudioScreen } from '@/AndoroidView01/AndroidStudioScreen';
 
 // Android / モバイル端末の自動判定（モジュール読み込み時に1回だけ評価）
 const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
   navigator.userAgent
 );
+
+// PWA（スタンドアロン）モードで起動しているか判定
+const IS_PWA = window.matchMedia('(display-mode: standalone)').matches
+  || (window.navigator as any).standalone === true;
 
 function App() {
   const currentScreen = useGameStore((state) => state.currentScreen);
@@ -55,6 +61,11 @@ function App() {
         return <HonoApiTestScreen />;
       case 'WORKSPACE':
         return <WorkSpaceScreen />;
+      case 'DEVSTUDIO':
+        // Android PWA では AndroidStudioScreen を自動表示
+        return (IS_MOBILE && IS_PWA) ? <AndroidStudioScreen /> : <DevStudioScreen />;
+      case 'ANDROID_DEVSTUDIO':
+        return <AndroidStudioScreen />;
       default:
         return <TitleScreen />;
     }

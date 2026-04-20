@@ -5,12 +5,15 @@
 // ============================================================
 
 import { useState } from 'react';
-import { FileText, ArrowLeft, FolderOpen, BarChart2 } from 'lucide-react';
+import { FileText, ArrowLeft, FolderOpen, LayoutDashboard, Hammer, ClipboardList } from 'lucide-react';
 import { useGameStore } from '@/core/stores/gameStore';
+import { WorkSpaceDashboard } from './WorkSpaceDashboard';
+import { ComfyUIStudio } from './ComfyUIStudio';
+import { DevLogViewer } from './DevLogViewer';
 
 // ─── Build-time import ─────────────────────────────────────
 
-const rawModules = import.meta.glob('/04_WorkSpace/*.md', {
+const rawModules = import.meta.glob('/src/0420_WorkSpace/*.md', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -23,7 +26,6 @@ interface MdFile {
   name: string;
   date: string;
   content: string;
-  isPM: boolean;
 }
 
 // ─── Helpers ───────────────────────────────────────────────
@@ -34,19 +36,13 @@ function parseFiles(): MdFile[] {
       const filename  = key.split('/').pop() ?? key;
       const name      = filename.replace(/\.md$/, '');
       const dateMatch = name.match(/(\d{4}-\d{2}-\d{2})/);
-      const isPM      = name.startsWith('PM_');
-      return { key, name, date: dateMatch?.[1] ?? '', content, isPM };
+      return { key, name, date: dateMatch?.[1] ?? '', content };
     })
-    .sort((a, b) => {
-      // PM ファイルを先頭に、その後は日付降順
-      if (a.isPM !== b.isPM) return a.isPM ? -1 : 1;
-      return b.date.localeCompare(a.date);
-    });
+    .sort((a, b) => b.date.localeCompare(a.date));
 }
 
 function prettifyName(name: string): string {
   return name
-    .replace(/^PM_/, '')
     .replace(/_(\d{4}-\d{2}-\d{2})$/, '')
     .replace(/_/g, ' ');
 }
@@ -138,10 +134,29 @@ function renderMd(src: string): string {
 
 // ─── Component ─────────────────────────────────────────────
 
+type ViewMode = 'dashboard' | 'files' | 'studio' | 'devlog';
+
 export function WorkSpaceScreen() {
   const setScreen = useGameStore((s) => s.setScreen);
   const files     = parseFiles();
   const [selected, setSelected] = useState<MdFile | null>(files[0] ?? null);
+  const [view, setView]         = useState<ViewMode>('dashboard');
+
+  const tabBtn = (mode: ViewMode, label: string, icon: React.ReactNode) => (
+    <button
+      onClick={() => setView(mode)}
+      style={{
+        display: 'flex', alignItems: 'center', gap: '0.3rem',
+        background: 'none', border: 'none', cursor: 'pointer',
+        fontSize: '0.78rem', fontWeight: view === mode ? 700 : 400,
+        color: view === mode ? 'var(--color-primary)' : '#6b7280',
+        padding: '4px 10px', borderRadius: 6,
+        borderBottom: view === mode ? '2px solid var(--color-primary)' : '2px solid transparent',
+      }}
+    >
+      {icon}{label}
+    </button>
+  );
 
   return (
     <div style={{
@@ -183,20 +198,16 @@ export function WorkSpaceScreen() {
           WorkSpace
         </span>
 
-        {selected && (
+        <div style={{ width: 1, height: 20, background: 'var(--color-border)', margin: '0 0.25rem' }} />
+
+        {tabBtn('dashboard', 'Dashboard', <LayoutDashboard size={13} />)}
+        {tabBtn('devlog', '開発ログ', <ClipboardList size={13} />)}
+        {tabBtn('files', 'Files', <FileText size={13} />)}
+        {tabBtn('studio', '工房', <Hammer size={13} />)}
+
+        {view === 'files' && selected && (
           <>
             <span style={{ color: '#374151', fontSize: '0.8rem' }}>/</span>
-            {selected.isPM && (
-              <span style={{
-                display: 'inline-flex', alignItems: 'center', gap: 4,
-                background: 'rgba(167,139,250,0.12)',
-                border: '1px solid rgba(167,139,250,0.35)',
-                color: '#a78bfa', fontSize: '0.65rem', fontWeight: 700,
-                padding: '2px 6px', borderRadius: 4,
-              }}>
-                <BarChart2 size={10} /> PM
-              </span>
-            )}
             <span style={{
               fontSize: '0.8rem', color: '#9ca3af',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
@@ -212,7 +223,29 @@ export function WorkSpaceScreen() {
         )}
       </header>
 
-      {/* ── 本体: 2カラム ── */}
+      {/* ── Dashboard ビュー ── */}
+      {view === 'dashboard' && (
+        <div style={{ flex: 1, overflowY: 'auto' }}>
+          <WorkSpaceDashboard />
+        </div>
+      )}
+
+      {/* ── 開発ログ ビュー ── */}
+      {view === 'devlog' && (
+        <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <DevLogViewer />
+        </div>
+      )}
+
+      {/* ── 工房 ビュー ── */}
+      {view === 'studio' && (
+        <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <ComfyUIStudio />
+        </div>
+      )}
+
+      {/* ── Files ビュー: 2カラム ── */}
+      {view === 'files' && (
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
 
         {/* ── 左サイドバー ── */}
@@ -229,7 +262,7 @@ export function WorkSpaceScreen() {
             color: '#4b5563', letterSpacing: '0.08em', textTransform: 'uppercase',
             borderBottom: '1px solid var(--color-border)',
           }}>
-            04_WorkSpace
+            0420_WorkSpace
           </div>
 
           {files.length === 0 ? (
@@ -249,34 +282,20 @@ export function WorkSpaceScreen() {
                   style={{
                     display: 'flex', alignItems: 'flex-start', gap: '0.5rem',
                     width: '100%', padding: '0.6rem 0.875rem',
-                    background: active
-                      ? f.isPM ? 'rgba(167,139,250,0.1)' : 'rgba(201,162,39,0.1)'
-                      : 'none',
+                    background: active ? 'rgba(201,162,39,0.1)' : 'none',
                     border: 'none',
-                    borderLeft: `3px solid ${
-                      active
-                        ? f.isPM ? '#a78bfa' : 'var(--color-primary)'
-                        : 'transparent'
-                    }`,
+                    borderLeft: `3px solid ${active ? 'var(--color-primary)' : 'transparent'}`,
                     cursor: 'pointer', textAlign: 'left',
                   }}
                 >
-                  {f.isPM
-                    ? <BarChart2 size={13} color={active ? '#a78bfa' : '#6b7280'} style={{ marginTop: 2, flexShrink: 0 }} />
-                    : <FileText  size={13} color={active ? '#c9a227' : '#4b5563'} style={{ marginTop: 2, flexShrink: 0 }} />
-                  }
+                  <FileText size={13} color={active ? '#c9a227' : '#4b5563'} style={{ marginTop: 2, flexShrink: 0 }} />
                   <div style={{ minWidth: 0 }}>
                     <div style={{
                       fontSize: '0.78rem',
-                      fontWeight: active ? 600 : f.isPM ? 500 : 400,
-                      color: active
-                        ? f.isPM ? '#a78bfa' : 'var(--color-primary)'
-                        : f.isPM ? '#c4b5fd' : 'var(--color-text-primary)',
+                      fontWeight: active ? 600 : 400,
+                      color: active ? 'var(--color-primary)' : 'var(--color-text-primary)',
                       overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                     }}>
-                      {f.isPM && !active && (
-                        <span style={{ fontSize: '0.6rem', color: '#a78bfa', marginRight: 4 }}>PM</span>
-                      )}
                       {prettifyName(f.name)}
                     </div>
                     {f.date && (
@@ -314,6 +333,7 @@ export function WorkSpaceScreen() {
           )}
         </main>
       </div>
+      )}
     </div>
   );
 }

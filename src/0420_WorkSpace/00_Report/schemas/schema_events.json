@@ -1,0 +1,53 @@
+{
+  "_readme": "ノベルエンジン — events.json スキーマ定義。進行制御専用スロット。テキスト・ロジックは持たない。",
+
+  "version": "v2.1",
+  "updated": "2026-04-20",
+
+  "types": {
+
+    "EventType": {
+      "_description": "イベントの種別",
+      "values": ["CHAT", "CHOICE"],
+      "labels": {
+        "CHAT":   "会話イベント",
+        "CHOICE": "選択肢イベント"
+      }
+    },
+
+    "Event": {
+      "_description": "1スロット分の進行制御エントリ。中身（テキスト等）は持たず ref_id で外部を参照する",
+      "event_id": { "type": "string", "required": true,  "example": "EV_001",      "note": "一意なイベントID" },
+      "type":     { "type": "EventType", "required": true },
+      "ref_id":   { "type": "string", "required": true,  "example": "CHAT_001",    "note": "type=CHAT → chats.json の chat_id / type=CHOICE → choices.json の choice_id" },
+      "next":     { "type": "string", "required": false, "example": "EV_002",      "note": "次のイベントID。省略時はシーン終了" }
+    }
+
+  },
+
+  "rootSchema": {
+    "_description": "events.json のルート構造",
+    "version":        { "type": "string", "required": true,  "example": "2.1" },
+    "start_event_id": { "type": "string", "required": true,  "example": "EV_001", "note": "シーン開始時の最初のイベントID" },
+    "events":         { "type": "Event[]", "required": true, "minLength": 1 }
+  },
+
+  "rules": [
+    "event に text・speaker・effects を直接書いてはいけない",
+    "ref_id は必ず対応する chats / choices の ID を参照する",
+    "next が存在しない場合はシーン終了とみなす"
+  ],
+
+  "sampleData": {
+    "version": "2.1",
+    "start_event_id": "EV_001",
+    "events": [
+      { "event_id": "EV_001", "type": "CHAT",   "ref_id": "CHAT_001",   "next": "EV_002" },
+      { "event_id": "EV_002", "type": "CHAT",   "ref_id": "CHAT_002",   "next": "EV_003" },
+      { "event_id": "EV_003", "type": "CHOICE", "ref_id": "CHOICE_001" },
+      { "event_id": "EV_010", "type": "CHAT",   "ref_id": "CHAT_010",   "next": "EV_030" },
+      { "event_id": "EV_020", "type": "CHAT",   "ref_id": "CHAT_020",   "next": "EV_030" },
+      { "event_id": "EV_030", "type": "CHAT",   "ref_id": "CHAT_030" }
+    ]
+  }
+}

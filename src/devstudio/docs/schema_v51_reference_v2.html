@@ -1,0 +1,700 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { padding: 1rem 0 2rem; }
+.header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.header-left h1 { font-size: 18px; font-weight: 500; color: var(--color-text-primary); }
+.header-left p { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.header-btns { display: flex; gap: 6px; margin-left: auto; }
+.hbtn {
+  font-size: 12px; font-weight: 500; padding: 6px 14px;
+  border-radius: var(--border-radius-md);
+  border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer; transition: all 0.12s; white-space: nowrap;
+}
+.hbtn:hover { background: var(--color-background-secondary); }
+.hbtn.allcopy {
+  background: var(--color-background-secondary);
+  border-color: var(--color-border-primary);
+  color: var(--color-text-primary);
+}
+.hbtn.done { color: #0F6E56; border-color: #5DCAA5; background: #E1F5EE; }
+
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.tab-btn {
+  font-size: 12px; font-weight: 500; padding: 5px 12px;
+  border-radius: 20px; border: 0.5px solid var(--color-border-secondary);
+  background: var(--color-background-primary); color: var(--color-text-secondary);
+  cursor: pointer; transition: all 0.15s;
+}
+.tab-btn:hover { background: var(--color-background-secondary); }
+.tab-btn.active { background: var(--color-background-tertiary); color: var(--color-text-primary); border-color: var(--color-border-primary); }
+.tab-btn.t-events.active   { background: #E1F5EE; color: #0F6E56; border-color: #5DCAA5; }
+.tab-btn.t-chats.active    { background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; }
+.tab-btn.t-choices.active  { background: #FAECE7; color: #993C1D; border-color: #F0997B; }
+.tab-btn.t-state.active    { background: #FAEEDA; color: #854F0B; border-color: #EF9F27; }
+.tab-btn.t-assets.active   { background: #E6F1FB; color: #185FA5; border-color: #85B7EB; }
+.tab-btn.t-flow.active     { background: #EAF3DE; color: #3B6D11; border-color: #97C459; }
+.tab-btn.t-readme.active   { background: #F1EFE8; color: #444441; border-color: #B4B2A9; }
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+.card {
+  background: var(--color-background-primary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: 12px; overflow: hidden;
+}
+.card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px 8px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+.card-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.copy-btn {
+  font-size: 11px; padding: 3px 10px; border-radius: 6px;
+  border: 0.5px solid var(--color-border-secondary);
+  background: transparent; color: var(--color-text-secondary);
+  cursor: pointer; transition: all 0.12s;
+}
+.copy-btn:hover { background: var(--color-background-secondary); }
+.copy-btn.copied { color: #0F6E56; border-color: #5DCAA5; }
+
+pre {
+  font-family: var(--font-mono); font-size: 12px; line-height: 1.65;
+  padding: 14px 16px; overflow-x: auto;
+  background: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+.kw { color: #185FA5; } .str { color: #3B6D11; } .num { color: #854F0B; }
+.bool { color: #993C1D; } .key { color: #534AB7; } .cm { color: var(--color-text-tertiary); font-style: italic; }
+
+.desc-block { padding: 12px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.desc-block p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+
+.badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 10px; margin-right: 4px; }
+.b-teal   { background: #E1F5EE; color: #0F6E56; }
+.b-purple { background: #EEEDFE; color: #534AB7; }
+.b-coral  { background: #FAECE7; color: #993C1D; }
+.b-amber  { background: #FAEEDA; color: #854F0B; }
+.b-blue   { background: #E6F1FB; color: #185FA5; }
+.b-green  { background: #EAF3DE; color: #3B6D11; }
+.b-gray   { background: #F1EFE8; color: #444441; }
+
+.rule-list { padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+.rule-item { font-size: 12px; display: flex; align-items: flex-start; gap: 8px; }
+.rule-item span { color: var(--color-text-secondary); line-height: 1.5; }
+
+.flow-step { display: flex; align-items: flex-start; gap: 12px; padding: 10px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.flow-step:last-child { border-bottom: none; }
+.step-num { min-width: 24px; height: 24px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); flex-shrink: 0; margin-top: 1px; }
+.step-body { flex: 1; }
+.step-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+.step-desc { font-size: 12px; color: var(--color-text-secondary); }
+
+.folder-tree { font-family: var(--font-mono); font-size: 12px; line-height: 2; padding: 14px 16px; background: var(--color-background-secondary); }
+.ft-root { color: var(--color-text-primary); font-weight: 500; }
+.ft-dir { color: #534AB7; } .ft-file { color: var(--color-text-secondary); }
+
+.readme-section { padding: 14px 16px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.readme-section:last-child { border-bottom: none; }
+.readme-h2 { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+.readme-p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.7; }
+.readme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.readme-item { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+.readme-item .ri-label { font-size: 11px; font-weight: 500; margin-bottom: 4px; }
+.readme-item .ri-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+.rule2col { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.rule2col .col { padding: 12px 14px; }
+.rule2col .col:first-child { border-right: 0.5px solid var(--color-border-tertiary); }
+.col-title { font-size: 11px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 8px; }
+</style>
+
+<div class="wrap">
+  <h2 class="sr-only">スキーマ Ver5.1 リファレンス</h2>
+  <div class="header">
+    <div class="header-left">
+      <h1>スキーマ Ver5.1</h1>
+      <p>ノベルエンジン用 JSON 構成リファレンス</p>
+    </div>
+    <div class="header-btns">
+      <button class="hbtn" id="btn-spec" onclick="showSpecModal()">渡しパック</button>
+      <button class="hbtn allcopy" id="btn-all" onclick="copyAll(this)">AllCopy</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn t-readme active" onclick="switchTab('readme',this)">README</button>
+    <button class="tab-btn t-folder" onclick="switchTab('folder',this)">フォルダ構成</button>
+    <button class="tab-btn t-events" onclick="switchTab('events',this)">events.json</button>
+    <button class="tab-btn t-chats" onclick="switchTab('chats',this)">chats.json</button>
+    <button class="tab-btn t-choices" onclick="switchTab('choices',this)">choices.json</button>
+    <button class="tab-btn t-state" onclick="switchTab('state',this)">state.json</button>
+    <button class="tab-btn t-assets" onclick="switchTab('assets',this)">AssetOrderList</button>
+    <button class="tab-btn t-flow" onclick="switchTab('flow',this)">実行フロー</button>
+  </div>
+
+  <div id="panel-readme" class="panel active">
+    <div class="card">
+      <div class="card-head"><span class="card-title">概要</span></div>
+      <div class="readme-section">
+        <p class="readme-p">ノベルゲームの進行・表示・分岐・状態管理を分離し、エンジンに対してシンプルかつ拡張可能なJSON構造を提供する。<br>1フォルダ = 1ゲーム。JSON + assets を渡せば動く。</p>
+      </div>
+      <div class="readme-section">
+        <div class="readme-h2">4ファイルの役割</div>
+        <div class="readme-grid">
+          <div class="readme-item">
+            <div class="ri-label"><span class="badge b-teal">events</span></div>
+            <div class="ri-desc">Eventがゲームを動かす。進行スロット。テキスト・ロジックは持たない</div>
+          </div>
+          <div class="readme-item">
+            <div class="ri-label"><span class="badge b-purple">chats</span></div>
+            <div class="ri-desc">Chatが物語を語る。表示専用。副作用なし</div>
+          </div>
+          <div class="readme-item">
+            <div class="ri-label"><span class="badge b-coral">choices</span></div>
+            <div class="ri-desc">Choiceが未来を分岐させる。状態変更の唯一の責任点</div>
+          </div>
+          <div class="readme-item">
+            <div class="ri-label"><span class="badge b-amber">state</span></div>
+            <div class="ri-desc">Stateが世界を記録する。flags + params の単一ソース</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">設計ルール</span></div>
+      <div class="rule2col">
+        <div class="col">
+          <div class="col-title">禁止</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="rule-item"><span style="color:var(--color-text-tertiary);font-size:13px">✗</span><span>events に text を書く</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary);font-size:13px">✗</span><span>chats に next を書く</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary);font-size:13px">✗</span><span>choices を分割する</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary);font-size:13px">✗</span><span>state を別ファイルに分離する</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-title">必須</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="rule-item"><span style="color:#0F6E56;font-size:13px">✓</span><span>責務を絶対に混ぜない</span></div>
+            <div class="rule-item"><span style="color:#0F6E56;font-size:13px">✓</span><span>ref_id で接続する</span></div>
+            <div class="rule-item"><span style="color:#0F6E56;font-size:13px">✓</span><span>effects でのみ状態変更する</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">バージョン運用</span></div>
+      <div class="readme-section">
+        <p class="readme-p">Ver5.1 はアジャイルDONEの基準。「とりあえず遊べる」ゲームを段階的に作るための最小完結パッケージ。<br>全JSONに <code style="font-family:var(--font-mono);font-size:12px">"version": "5.1"</code> を付与し、エンジン側でバージョン検証できるようにしておく。</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-folder" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">フォルダ構成</span><span style="font-size:12px;color:var(--color-text-tertiary)">1フォルダ = 1ゲーム</span></div>
+      <div class="folder-tree">
+        <div class="ft-root">Title/</div>
+        <div class="ft-file"> ├ events.json <span class="badge b-teal">進行</span></div>
+        <div class="ft-file"> ├ chats.json <span class="badge b-purple">会話</span></div>
+        <div class="ft-file"> ├ choices.json <span class="badge b-coral">分岐</span></div>
+        <div class="ft-file"> ├ state.json <span class="badge b-amber">状態</span></div>
+        <div class="ft-file"> ├ AssetOrderList.jsonc <span class="badge b-blue">アセット辞書</span></div>
+        <div class="ft-dir"> └ assets/</div>
+        <div class="ft-file">     ├ images/</div>
+        <div class="ft-file">     └ audio/</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">責務マップ</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="badge b-teal">events</span><span>ゲームの「流れ」を管理。スロットとして外部JSONを参照するのみ</span></div>
+        <div class="rule-item"><span class="badge b-purple">chats</span><span>セリフ・演出の表示データ。副作用なし</span></div>
+        <div class="rule-item"><span class="badge b-coral">choices</span><span>選択肢・分岐・状態変更を一括処理する唯一の責任点</span></div>
+        <div class="rule-item"><span class="badge b-amber">state</span><span>フラグ（boolean）とパラメータ（number）の単一ソース</span></div>
+        <div class="rule-item"><span class="badge b-blue">assets</span><span>キー参照によるアセット辞書。ファイル名変更もここだけ</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-events" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">events.json — 進行スロット</span><button class="copy-btn" onclick="copyCode('code-events',this)">コピー</button></div>
+      <div class="desc-block"><p>ゲームの「流れ」を管理する。テキスト・ロジックは持たず、<code>ref_id</code> で外部データを参照する。</p></div>
+      <pre id="code-events"><span class="kw">{</span>
+  <span class="key">"version"</span>: <span class="str">"5.1"</span>,
+  <span class="key">"start_event_id"</span>: <span class="str">"EV_001"</span>,
+  <span class="key">"events"</span>: <span class="kw">[</span>
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_001"</span>, <span class="key">"type"</span>: <span class="str">"CHAT"</span>,   <span class="key">"ref_id"</span>: <span class="str">"CHAT_001"</span>,   <span class="key">"next"</span>: <span class="str">"EV_002"</span> <span class="kw">}</span>,
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_002"</span>, <span class="key">"type"</span>: <span class="str">"CHAT"</span>,   <span class="key">"ref_id"</span>: <span class="str">"CHAT_002"</span>,   <span class="key">"next"</span>: <span class="str">"EV_003"</span> <span class="kw">}</span>,
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_003"</span>, <span class="key">"type"</span>: <span class="str">"CHOICE"</span>, <span class="key">"ref_id"</span>: <span class="str">"CHOICE_001"</span> <span class="kw">}</span>,
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_010"</span>, <span class="key">"type"</span>: <span class="str">"CHAT"</span>,   <span class="key">"ref_id"</span>: <span class="str">"CHAT_010"</span>,   <span class="key">"next"</span>: <span class="str">"EV_030"</span> <span class="kw">}</span>,
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_020"</span>, <span class="key">"type"</span>: <span class="str">"CHAT"</span>,   <span class="key">"ref_id"</span>: <span class="str">"CHAT_020"</span>,   <span class="key">"next"</span>: <span class="str">"EV_030"</span> <span class="kw">}</span>,
+    <span class="kw">{</span> <span class="key">"event_id"</span>: <span class="str">"EV_030"</span>, <span class="key">"type"</span>: <span class="str">"CHAT"</span>,   <span class="key">"ref_id"</span>: <span class="str">"CHAT_030"</span> <span class="kw">}</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">フィールド定義</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">event_id</code><span>一意のイベントID（EV_000形式推奨）</span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">type</code><span><code>CHAT</code> または <code>CHOICE</code></span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">ref_id</code><span>参照先ID。テキスト・ロジックはここに書かない</span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">next</code><span>次のevent_id。CHOICEは省略（choices側で定義）</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-chats" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">chats.json — 会話ブロック</span><button class="copy-btn" onclick="copyCode('code-chats',this)">コピー</button></div>
+      <div class="desc-block"><p>UIに直接レンダリングされる表示専用データ。<code>lines</code> を順番に再生する。分岐・状態変更は持たない。</p></div>
+      <pre id="code-chats"><span class="kw">{</span>
+  <span class="key">"version"</span>: <span class="str">"5.1"</span>,
+  <span class="key">"chats"</span>: <span class="kw">[</span>
+    <span class="kw">{</span>
+      <span class="key">"chat_id"</span>: <span class="str">"CHAT_001"</span>,
+      <span class="key">"lines"</span>: <span class="kw">[</span>
+        <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">""</span>, <span class="key">"text"</span>: <span class="str">"古びた塔の扉が開いた。"</span>, <span class="key">"tags"</span>: <span class="kw">[</span><span class="str">"bg:BG_DEFAULT"</span>, <span class="str">"se:SE_DOOR"</span><span class="kw">]</span> <span class="kw">}</span>
+      <span class="kw">]</span>
+    <span class="kw">}</span>,
+    <span class="kw">{</span>
+      <span class="key">"chat_id"</span>: <span class="str">"CHAT_002"</span>,
+      <span class="key">"lines"</span>: <span class="kw">[</span>
+        <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">"レミ"</span>, <span class="key">"text"</span>: <span class="str">"ここが塔…"</span>, <span class="key">"tags"</span>: <span class="kw">[</span><span class="str">"char:CHAR_REMI"</span><span class="kw">]</span> <span class="kw">}</span>,
+        <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">"レミ"</span>, <span class="key">"text"</span>: <span class="str">"どうする？"</span> <span class="kw">}</span>
+      <span class="kw">]</span>
+    <span class="kw">}</span>,
+    <span class="kw">{</span>
+      <span class="key">"chat_id"</span>: <span class="str">"CHAT_010"</span>,
+      <span class="key">"lines"</span>: <span class="kw">[</span> <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">""</span>, <span class="key">"text"</span>: <span class="str">"回廊が続いていた。"</span> <span class="kw">}</span> <span class="kw">]</span>
+    <span class="kw">}</span>,
+    <span class="kw">{</span>
+      <span class="key">"chat_id"</span>: <span class="str">"CHAT_020"</span>,
+      <span class="key">"lines"</span>: <span class="kw">[</span> <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">""</span>, <span class="key">"text"</span>: <span class="str">"慎重に観察した。"</span> <span class="kw">}</span> <span class="kw">]</span>
+    <span class="kw">}</span>,
+    <span class="kw">{</span>
+      <span class="key">"chat_id"</span>: <span class="str">"CHAT_030"</span>,
+      <span class="key">"lines"</span>: <span class="kw">[</span> <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">"長老"</span>, <span class="key">"text"</span>: <span class="str">"よく来た。"</span> <span class="kw">}</span> <span class="kw">]</span>
+    <span class="kw">}</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">tagsフォーマット</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">bg:KEY</code><span>背景切り替え。AssetOrderListのキーを参照</span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">char:KEY</code><span>キャラクター表示</span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">se:KEY</code><span>効果音再生</span></div>
+        <div class="rule-item"><code style="font-size:12px;font-family:var(--font-mono)">bgm:KEY</code><span>BGM切り替え</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-choices" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">choices.json — 選択・分岐</span><button class="copy-btn" onclick="copyCode('code-choices',this)">コピー</button></div>
+      <div class="desc-block"><p>分岐と状態変更を担う唯一の責任ポイント。<code>effects</code> 以外で state を変更してはならない。</p></div>
+      <pre id="code-choices"><span class="kw">{</span>
+  <span class="key">"version"</span>: <span class="str">"5.1"</span>,
+  <span class="key">"choices"</span>: <span class="kw">[</span>
+    <span class="kw">{</span>
+      <span class="key">"choice_id"</span>: <span class="str">"CHOICE_001"</span>,
+      <span class="key">"question"</span>: <span class="kw">{</span>
+        <span class="key">"speaker"</span>: <span class="str">"レミ"</span>, <span class="key">"text"</span>: <span class="str">"この先へ進む？"</span>
+      <span class="kw">}</span>,
+      <span class="key">"options"</span>: <span class="kw">[</span>
+        <span class="kw">{</span>
+          <span class="key">"label"</span>:  <span class="str">"進む"</span>,
+          <span class="key">"next"</span>:   <span class="str">"EV_010"</span>,
+          <span class="key">"effects"</span>: <span class="kw">{</span>
+            <span class="key">"flags"</span>:  <span class="kw">{</span> <span class="key">"brave"</span>: <span class="bool">true</span> <span class="kw">}</span>,
+            <span class="key">"params"</span>: <span class="kw">{</span> <span class="key">"courage"</span>: <span class="num">2</span> <span class="kw">}</span>
+          <span class="kw">}</span>,
+          <span class="key">"result"</span>: <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">""</span>, <span class="key">"text"</span>: <span class="str">"進んだ。"</span> <span class="kw">}</span>
+        <span class="kw">}</span>,
+        <span class="kw">{</span>
+          <span class="key">"label"</span>:  <span class="str">"様子を見る"</span>,
+          <span class="key">"next"</span>:   <span class="str">"EV_020"</span>,
+          <span class="key">"effects"</span>: <span class="kw">{</span>
+            <span class="key">"flags"</span>: <span class="kw">{</span> <span class="key">"careful"</span>: <span class="bool">true</span> <span class="kw">}</span>
+          <span class="kw">}</span>,
+          <span class="key">"result"</span>: <span class="kw">{</span> <span class="key">"speaker"</span>: <span class="str">""</span>, <span class="key">"text"</span>: <span class="str">"様子を見た。"</span> <span class="kw">}</span>
+        <span class="kw">}</span>
+      <span class="kw">]</span>
+    <span class="kw">}</span>
+  <span class="kw">]</span>
+<span class="kw">}</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">処理フロー</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="badge b-coral">1</span><span>question 表示</span></div>
+        <div class="rule-item"><span class="badge b-coral">2</span><span>options からプレイヤーが選択</span></div>
+        <div class="rule-item"><span class="badge b-coral">3</span><span>effects を state に適用（flags上書き / params加算）</span></div>
+        <div class="rule-item"><span class="badge b-coral">4</span><span>result 表示（任意）</span></div>
+        <div class="rule-item"><span class="badge b-coral">5</span><span>next イベントへ遷移</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-state" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">state.json — 状態管理</span><button class="copy-btn" onclick="copyCode('code-state',this)">コピー</button></div>
+      <div class="desc-block"><p>ゲームの状態の単一ソース（Single Source of Truth）。<code>flags</code> は真偽値、<code>params</code> は数値で管理する。</p></div>
+      <pre id="code-state"><span class="kw">{</span>
+  <span class="key">"version"</span>: <span class="str">"5.1"</span>,
+  <span class="key">"flags"</span>: <span class="kw">{</span>
+    <span class="key">"brave"</span>:   <span class="bool">false</span>,
+    <span class="key">"careful"</span>: <span class="bool">false</span>
+  <span class="kw">}</span>,
+  <span class="key">"params"</span>: <span class="kw">{</span>
+    <span class="key">"courage"</span>: <span class="num">0</span>,
+    <span class="key">"money"</span>:   <span class="num">100</span>
+  <span class="kw">}</span>
+<span class="kw">}</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">更新ルール</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="badge b-amber">flags</span><span>boolean で上書き（true / false）</span></div>
+        <div class="rule-item"><span class="badge b-amber">params</span><span>数値で加算（負の値で減算）</span></div>
+        <div class="rule-item"><span style="color:var(--color-text-tertiary);font-size:12px">⚠</span><span>effects 以外からの変更は禁止。ファイルを分割しない</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-assets" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">AssetOrderList.jsonc — アセット辞書</span><button class="copy-btn" onclick="copyCode('code-assets',this)">コピー</button></div>
+      <div class="desc-block"><p>キー名でアセットを参照する辞書。ファイル名変更はここだけ。tags から参照するキーと対応させる。</p></div>
+      <pre id="code-assets"><span class="kw">{</span>
+  <span class="key">"ASSET_ORDER"</span>: <span class="kw">{</span>
+    <span class="key">"NOVEL"</span>: <span class="kw">{</span>
+      <span class="cm">// 背景</span>
+      <span class="key">"BG_DEFAULT"</span>:  <span class="str">"bg_default_1280x720.svg"</span>,
+
+      <span class="cm">// キャラクター</span>
+      <span class="key">"CHAR_REMI"</span>:   <span class="str">"char_remi_512x1024.svg"</span>,
+      <span class="key">"CHAR_ELDER"</span>:  <span class="str">"char_elder_512x1024.svg"</span>,
+
+      <span class="cm">// 効果音</span>
+      <span class="key">"SE_DOOR"</span>:     <span class="str">"se_door.mp3"</span>,
+      <span class="key">"SE_BUTTON"</span>:   <span class="str">"se_button.mp3"</span>
+    <span class="kw">}</span>
+  <span class="kw">}</span>
+<span class="kw">}</span></pre>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">命名規則</span></div>
+      <div class="rule-list">
+        <div class="rule-item"><span class="badge b-blue">BG_</span><span>背景画像。解像度をファイル名に含める（例: 1280x720）</span></div>
+        <div class="rule-item"><span class="badge b-blue">CHAR_</span><span>キャラクター立ち絵（例: 512x1024）</span></div>
+        <div class="rule-item"><span class="badge b-blue">SE_</span><span>効果音（.mp3）</span></div>
+        <div class="rule-item"><span class="badge b-blue">BGM_</span><span>BGM（.mp3）</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-flow" class="panel">
+    <div class="card">
+      <div class="card-head"><span class="card-title">実行フロー</span></div>
+      <div class="flow-step"><div class="step-num">1</div><div class="step-body"><div class="step-title">currentEventId 取得</div><div class="step-desc">start_event_id から開始。セーブデータがあればその値を使用</div></div></div>
+      <div class="flow-step"><div class="step-num">2</div><div class="step-body"><div class="step-title">events.json 参照</div><div class="step-desc">event_id で該当スロットを取得し、type を確認</div></div></div>
+      <div class="flow-step"><div class="step-num">3a</div><div class="step-body"><div class="step-title">CHAT → chats.json</div><div class="step-desc">ref_id で chat ブロックを読み込み lines を順番に再生。tags で演出を適用</div></div></div>
+      <div class="flow-step"><div class="step-num">3b</div><div class="step-body"><div class="step-title">CHOICE → choices.json</div><div class="step-desc">ref_id で choice ブロックを読み込み、question と options を UI に表示</div></div></div>
+      <div class="flow-step"><div class="step-num">4</div><div class="step-body"><div class="step-title">effects 適用（CHOICE のみ）</div><div class="step-desc">選択した option の effects を state.json に反映。flags 上書き / params 加算</div></div></div>
+      <div class="flow-step"><div class="step-num">5</div><div class="step-body"><div class="step-title">next へ遷移</div><div class="step-desc">次の event_id を currentEventId にセットし、①へ戻る</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-head"><span class="card-title">設計ルール</span></div>
+      <div class="rule2col">
+        <div class="col">
+          <div class="col-title">禁止</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="rule-item"><span style="color:var(--color-text-tertiary)">✗</span><span>events に text を書く</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary)">✗</span><span>chats に next を書く</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary)">✗</span><span>choices を分割する</span></div>
+            <div class="rule-item"><span style="color:var(--color-text-tertiary)">✗</span><span>state を別ファイルに分離する</span></div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col-title">必須</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div class="rule-item"><span style="color:#0F6E56">✓</span><span>責務を絶対に混ぜない</span></div>
+            <div class="rule-item"><span style="color:#0F6E56">✓</span><span>ref_id で接続する</span></div>
+            <div class="rule-item"><span style="color:#0F6E56">✓</span><span>effects でのみ状態変更する</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function copyCode(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'コピー完了'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+const SPEC_TEXT = `# スキーマ Ver5.1 — 設計仕様書
+
+## 概要
+ノベルゲームの進行・表示・分岐・状態管理を分離し、エンジンに渡すシンプルかつ拡張可能なJSON構造。
+1フォルダ = 1ゲーム。JSON + assets を渡せば動く。
+
+## フォルダ構成
+Title/
+ ├ events.json       # 進行スロット
+ ├ chats.json        # 会話ブロック
+ ├ choices.json      # 選択・分岐
+ ├ state.json        # 状態管理
+ ├ AssetOrderList.jsonc  # アセット辞書
+ └ assets/
+     ├ images/
+     └ audio/
+
+## 4ファイルの責務
+- events  : Eventがゲームを動かす。テキスト・ロジックは持たない
+- chats   : Chatが物語を語る。表示専用、副作用なし
+- choices : Choiceが未来を分岐させる。状態変更の唯一の責任点
+- state   : Stateが世界を記録する。flags+paramsの単一ソース
+
+## 設計ルール
+禁止: eventsにtextを書く / chatsにnextを書く / choicesを分割する / stateを別ファイルに分離する
+必須: 責務を混ぜない / ref_idで接続する / effectsでのみ状態変更する
+
+## 実行フロー
+currentEventId取得 → events参照 → type判定
+  CHAT   → chats読込 → lines再生 → next遷移
+  CHOICE → choices読込 → UI表示 → 選択 → effects適用 → result表示 → next遷移`;
+
+const JSON_events = `// events.json
+{
+  "version": "5.1",
+  "start_event_id": "EV_001",
+  "events": [
+    { "event_id": "EV_001", "type": "CHAT",   "ref_id": "CHAT_001",   "next": "EV_002" },
+    { "event_id": "EV_002", "type": "CHAT",   "ref_id": "CHAT_002",   "next": "EV_003" },
+    { "event_id": "EV_003", "type": "CHOICE", "ref_id": "CHOICE_001" },
+    { "event_id": "EV_010", "type": "CHAT",   "ref_id": "CHAT_010",   "next": "EV_030" },
+    { "event_id": "EV_020", "type": "CHAT",   "ref_id": "CHAT_020",   "next": "EV_030" },
+    { "event_id": "EV_030", "type": "CHAT",   "ref_id": "CHAT_030" }
+  ]
+}`;
+
+const JSON_chats = `// chats.json
+{
+  "version": "5.1",
+  "chats": [
+    { "chat_id": "CHAT_001", "lines": [{ "speaker": "", "text": "古びた塔の扉が開いた。", "tags": ["bg:BG_DEFAULT", "se:SE_DOOR"] }] },
+    { "chat_id": "CHAT_002", "lines": [
+      { "speaker": "レミ", "text": "ここが塔…", "tags": ["char:CHAR_REMI"] },
+      { "speaker": "レミ", "text": "どうする？" }
+    ]},
+    { "chat_id": "CHAT_010", "lines": [{ "speaker": "", "text": "回廊が続いていた。" }] },
+    { "chat_id": "CHAT_020", "lines": [{ "speaker": "", "text": "慎重に観察した。" }] },
+    { "chat_id": "CHAT_030", "lines": [{ "speaker": "長老", "text": "よく来た。" }] }
+  ]
+}`;
+
+const JSON_choices = `// choices.json
+{
+  "version": "5.1",
+  "choices": [
+    {
+      "choice_id": "CHOICE_001",
+      "question": { "speaker": "レミ", "text": "この先へ進む？" },
+      "options": [
+        {
+          "label": "進む", "next": "EV_010",
+          "effects": { "flags": { "brave": true }, "params": { "courage": 2 } },
+          "result": { "speaker": "", "text": "進んだ。" }
+        },
+        {
+          "label": "様子を見る", "next": "EV_020",
+          "effects": { "flags": { "careful": true } },
+          "result": { "speaker": "", "text": "様子を見た。" }
+        }
+      ]
+    }
+  ]
+}`;
+
+const JSON_state = `// state.json
+{
+  "version": "5.1",
+  "flags": { "brave": false, "careful": false },
+  "params": { "courage": 0, "money": 100 }
+}`;
+
+const JSON_assets = `// AssetOrderList.jsonc
+{
+  "ASSET_ORDER": {
+    "NOVEL": {
+      "BG_DEFAULT":  "bg_default_1280x720.svg",
+      "CHAR_REMI":   "char_remi_512x1024.svg",
+      "CHAR_ELDER":  "char_elder_512x1024.svg",
+      "SE_DOOR":     "se_door.mp3",
+      "SE_BUTTON":   "se_button.mp3"
+    }
+  }
+}`;
+
+function copyAll(btn) {
+  const all = [SPEC_TEXT, JSON_events, JSON_chats, JSON_choices, JSON_state, JSON_assets].join('\n\n' + '='.repeat(60) + '\n\n');
+  navigator.clipboard.writeText(all).then(() => {
+    btn.textContent = 'コピー完了！'; btn.classList.add('done');
+    setTimeout(() => { btn.textContent = 'AllCopy'; btn.classList.remove('done'); }, 1800);
+  });
+}
+
+// ─── 渡しパック Modal ─────────────────────────────────────────
+
+const MODAL_SECTIONS = [
+  { id: 'ms-spec',    label: '📋 設計仕様書',           content: () => SPEC_TEXT },
+  { id: 'ms-events',  label: '📦 events.json（進行）',   content: () => JSON_events },
+  { id: 'ms-chats',   label: '💬 chats.json（会話）',    content: () => JSON_chats },
+  { id: 'ms-choices', label: '🎲 choices.json（分岐）',  content: () => JSON_choices },
+  { id: 'ms-state',   label: '🧠 state.json（状態）',    content: () => JSON_state },
+  { id: 'ms-assets',  label: '📦 AssetOrderList.jsonc',  content: () => JSON_assets },
+];
+
+function showSpecModal() {
+  if (document.getElementById('spec-modal')) {
+    document.getElementById('spec-modal').style.display = 'flex';
+    return;
+  }
+  const modal = document.createElement('div');
+  modal.id = 'spec-modal';
+  modal.style.cssText = [
+    'position:fixed;inset:0;background:rgba(0,0,0,0.88);',
+    'display:flex;align-items:center;justify-content:center;',
+    'z-index:9999;padding:16px;',
+  ].join('');
+
+  const sectionsHtml = MODAL_SECTIONS.map(s => `
+    <div style="background:#0d0d20;border:0.5px solid rgba(255,255,255,0.09);border-radius:8px;overflow:hidden;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:0.5px solid rgba(255,255,255,0.07);">
+        <span style="font-size:12px;font-weight:600;color:#9ca3af;">${s.label}</span>
+        <button data-copy-id="${s.id}"
+          style="font-size:11px;padding:3px 10px;border-radius:5px;border:0.5px solid rgba(255,255,255,0.12);background:transparent;color:#6b7280;cursor:pointer;">
+          コピー
+        </button>
+      </div>
+      <pre id="${s.id}"
+        style="font-family:'Courier New',monospace;font-size:11.5px;line-height:1.72;
+               padding:14px 16px;background:transparent;color:#d1d5db;
+               margin:0;white-space:pre-wrap;word-break:break-word;max-height:280px;overflow-y:auto;"
+      >${escHtml(s.content())}</pre>
+    </div>`).join('');
+
+  modal.innerHTML = `
+    <div style="
+      background:#0a0a18;
+      border:0.5px solid rgba(167,139,250,0.25);
+      border-radius:12px;
+      width:100%;max-width:780px;
+      max-height:92vh;
+      display:flex;flex-direction:column;
+      overflow:hidden;
+      box-shadow:0 24px 60px rgba(0,0,0,0.7);
+    ">
+      <!-- header -->
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:0.5px solid rgba(255,255,255,0.08);flex-shrink:0;">
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#c4b5fd;">渡しパック — スキーマ Ver5.1</div>
+          <div style="font-size:11px;color:#6b7280;margin-top:2px;">AIエージェント向け全リソース一覧</div>
+        </div>
+        <div style="flex:1;"></div>
+        <button id="ms-copy-all-top"
+          style="font-size:12px;font-weight:600;padding:6px 16px;border-radius:6px;
+                 border:0.5px solid rgba(92,202,165,0.45);background:rgba(92,202,165,0.1);
+                 color:#5DCAA5;cursor:pointer;white-space:nowrap;">
+          全部コピー
+        </button>
+        <button id="ms-close"
+          style="background:none;border:none;color:#4b5563;cursor:pointer;font-size:20px;line-height:1;padding:4px 6px;margin-left:4px;">
+          ✕
+        </button>
+      </div>
+      <!-- body -->
+      <div style="overflow-y:auto;flex:1;padding:16px 18px;display:flex;flex-direction:column;gap:12px;">
+        ${sectionsHtml}
+      </div>
+      <!-- footer -->
+      <div style="padding:12px 18px;border-top:0.5px solid rgba(255,255,255,0.07);display:flex;justify-content:flex-end;gap:8px;flex-shrink:0;">
+        <button id="ms-close-foot"
+          style="font-size:12px;padding:7px 18px;border-radius:6px;
+                 border:0.5px solid rgba(255,255,255,0.1);background:transparent;color:#9ca3af;cursor:pointer;">
+          閉じる
+        </button>
+        <button id="ms-copy-all-foot"
+          style="font-size:12px;font-weight:700;padding:7px 22px;border-radius:6px;
+                 border:0.5px solid rgba(92,202,165,0.45);background:rgba(92,202,165,0.12);
+                 color:#5DCAA5;cursor:pointer;">
+          全部コピー
+        </button>
+      </div>
+    </div>`;
+
+  document.body.appendChild(modal);
+
+  // イベント登録
+  modal.addEventListener('click', e => { if (e.target === modal) closeSpecModal(); });
+  document.getElementById('ms-close').addEventListener('click', closeSpecModal);
+  document.getElementById('ms-close-foot').addEventListener('click', closeSpecModal);
+
+  function doCopyAll(btn) {
+    const all = [SPEC_TEXT, JSON_events, JSON_chats, JSON_choices, JSON_state, JSON_assets]
+      .join('\n\n' + '='.repeat(60) + '\n\n');
+    navigator.clipboard.writeText(all).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✓ コピー完了！';
+      setTimeout(() => { btn.textContent = orig; }, 1800);
+    });
+  }
+  document.getElementById('ms-copy-all-top').addEventListener('click', function() { doCopyAll(this); });
+  document.getElementById('ms-copy-all-foot').addEventListener('click', function() { doCopyAll(this); });
+
+  modal.querySelectorAll('[data-copy-id]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const text = document.getElementById(this.dataset.copyId).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        this.textContent = '✓ 完了';
+        this.style.color = '#5DCAA5';
+        this.style.borderColor = 'rgba(92,202,165,0.4)';
+        setTimeout(() => {
+          this.textContent = 'コピー';
+          this.style.color = '#6b7280';
+          this.style.borderColor = 'rgba(255,255,255,0.12)';
+        }, 1500);
+      });
+    });
+  });
+}
+
+function closeSpecModal() {
+  const m = document.getElementById('spec-modal');
+  if (m) m.style.display = 'none';
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>

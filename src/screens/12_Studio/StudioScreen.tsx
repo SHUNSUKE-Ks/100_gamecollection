@@ -1,5 +1,21 @@
 
 import React, { useState, useRef } from 'react';
+
+const PromptPreview: React.FC<{ prompt: string }> = ({ prompt }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="mt-2">
+      <button onClick={() => setOpen(v => !v)} className="text-[10px] text-slate-500 hover:text-slate-300 cursor-pointer bg-none border-none p-0">
+        {open ? '▲ Hide Prompt' : '▼ Show Prompt'}
+      </button>
+      {open && (
+        <p className="text-[10px] text-slate-400 mt-1 p-2 bg-slate-900 rounded max-h-20 overflow-y-auto">
+          {prompt}
+        </p>
+      )}
+    </div>
+  );
+};
 import { GeminiService, type OrderList, type AnalysisResult } from '@/core/services/GeminiService';
 import sampleOrder from '@/data/samplejson/character_order.json';
 
@@ -244,12 +260,7 @@ export const StudioScreen: React.FC = () => {
                                             {copiedId === asset.id ? '✓ Copied!' : '📋 Copy Prompt'}
                                         </button>
                                         {/* Show prompt preview */}
-                                        <details className="mt-2">
-                                            <summary className="text-[10px] text-slate-500 cursor-pointer hover:text-slate-300">Show Prompt</summary>
-                                            <p className="text-[10px] text-slate-400 mt-1 p-2 bg-slate-900 rounded max-h-20 overflow-y-auto">
-                                                {asset.prompt}
-                                            </p>
-                                        </details>
+                                        <PromptPreview prompt={asset.prompt} />
                                     </div>
 
                                     {/* Debug Prompt Hint on Hover (Optional) */}

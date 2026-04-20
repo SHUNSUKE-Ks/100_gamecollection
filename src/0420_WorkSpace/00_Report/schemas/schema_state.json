@@ -1,0 +1,50 @@
+{
+  "_readme": "ノベルエンジン — state.json スキーマ定義。ゲーム状態の Single Source of Truth。flags=チェックボックス / params=数値。",
+
+  "version": "v2.1",
+  "updated": "2026-04-20",
+
+  "types": {
+
+    "Flags": {
+      "_description": "ゲーム内フラグ。boolean（チェックボックス）で管理。choices の effects で上書きされる",
+      "_keyFormat": "小文字スネークケース推奨。例: brave / talked_to_elder",
+      "_valueType": "boolean",
+      "_updateRule": "上書き（代入）"
+    },
+
+    "Params": {
+      "_description": "ゲーム内パラメータ。number で管理。choices の effects で加算される",
+      "_keyFormat": "小文字スネークケース推奨。例: courage / exp / money",
+      "_valueType": "number",
+      "_updateRule": "加算（負数で減算）"
+    }
+
+  },
+
+  "rootSchema": {
+    "_description": "state.json のルート構造",
+    "version": { "type": "string", "required": true,  "example": "2.1" },
+    "flags":   { "type": "Flags",  "required": true,  "default": {}, "note": "初期値は全て false" },
+    "params":  { "type": "Params", "required": true,  "default": {}, "note": "初期値は任意の数値" }
+  },
+
+  "rules": [
+    "flags と params は必ず同一ファイルに保持する（分割禁止）",
+    "値の変更は choices.json の effects 経由のみ",
+    "初期値（デフォルト）はここに定義する"
+  ],
+
+  "sampleData": {
+    "version": "2.1",
+    "flags": {
+      "brave":   false,
+      "careful": false
+    },
+    "params": {
+      "courage": 0,
+      "exp":     0,
+      "money":   100
+    }
+  }
+}

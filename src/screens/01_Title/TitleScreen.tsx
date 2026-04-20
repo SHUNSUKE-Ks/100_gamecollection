@@ -2,11 +2,31 @@
 // NanoNovel - Title Screen (with Save/Load)
 // ============================================
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGameStore } from '@/core/stores/gameStore';
 import { SaveManager } from '@/core/managers/SaveManager';
 import { SaveLoadModal } from '@/parts/novel/components/SaveLoadModal';
 import './TitleScreen.css';
+
+// DevStudio: 本日タスク（localStorage から読み込み）
+interface TodayTask { id: string; title: string; status: 'pending' | 'in_progress' | 'done'; }
+const DS_TASKS_KEY = 'devstudio_tasks_v1';
+function loadTodayTasks(): TodayTask[] {
+  try {
+    const raw = localStorage.getItem(DS_TASKS_KEY);
+    const all: TodayTask[] = raw ? JSON.parse(raw) : [];
+    const today = new Date().toISOString().slice(0, 10);
+    // status != done のものを優先、最大3件
+    const active = all.filter((t: any) => t.status !== 'done' && (t.date ?? '').startsWith(today));
+    if (active.length > 0) return active.slice(0, 3);
+    // フォールバック: サンプル表示
+    return [
+      { id: 'demo1', title: 'DevStudio Dashboard スケルトン確認', status: 'in_progress' },
+      { id: 'demo2', title: '開発ログ初期データ整理', status: 'pending' },
+      { id: 'demo3', title: 'Orchestra タスク型定義レビュー', status: 'pending' },
+    ];
+  } catch { return []; }
+}
 
 export function TitleScreen() {
     const setScreen = useGameStore((state) => state.setScreen);
@@ -15,6 +35,8 @@ export function TitleScreen() {
     const setCollectionDeepLink = useGameStore((state) => state.setCollectionDeepLink);
 
     const [isLoadModalOpen, setIsLoadModalOpen] = useState(false);
+    const [todayTasks, setTodayTasks] = useState<TodayTask[]>([]);
+    useEffect(() => { setTodayTasks(loadTodayTasks()); }, []);
 
     // Check if continue is available
     const hasSaveData = SaveManager.hasSaveData();
@@ -44,6 +66,114 @@ export function TitleScreen() {
     return (
         <div className="title-screen">
             <div className="title-decoration title-decoration-top" />
+
+            {/* ── 左上 DevStudio アクセス ── */}
+            <div style={{
+                position: 'absolute', top: 16, left: 16,
+                display: 'flex', flexDirection: 'column', gap: 8,
+                zIndex: 10, width: 240,
+            }}>
+                {/* DevStudio ボタン */}
+                <button
+                    onClick={() => setScreen('DEVSTUDIO')}
+                    style={{
+                        display: 'flex', alignItems: 'center', gap: 8,
+                        background: 'linear-gradient(135deg, rgba(15,10,30,0.92), rgba(30,20,60,0.92))',
+                        border: '1px solid rgba(167,139,250,0.5)',
+                        borderRadius: 8, padding: '8px 14px',
+                        color: '#c4b5fd', fontSize: '0.82rem', fontWeight: 700,
+                        cursor: 'pointer', letterSpacing: '0.05em',
+                        boxShadow: '0 0 12px rgba(139,92,246,0.2)',
+                        width: '100%',
+                    }}
+                >
+                    <span style={{ fontSize: '1rem' }}>⬡</span>
+                    DEV STUDIO
+                    <span style={{
+                        marginLeft: 'auto', fontSize: '0.58rem',
+                        background: 'rgba(139,92,246,0.3)', padding: '1px 6px',
+                        borderRadius: 10, color: '#a78bfa',
+                    }}>β</span>
+                </button>
+
+                {/* Android DevStudio ボタン */}
+                <button
+                    onClick={() => setScreen('ANDROID_DEVSTUDIO')}
+                    style={{
+                        display: 'flex', alignItems: 'center', gap: 8,
+                        background: 'linear-gradient(135deg, rgba(5,20,15,0.92), rgba(10,35,25,0.92))',
+                        border: '1px solid rgba(52,211,153,0.5)',
+                        borderRadius: 8, padding: '8px 14px',
+                        color: '#34d399', fontSize: '0.82rem', fontWeight: 700,
+                        cursor: 'pointer', letterSpacing: '0.05em',
+                        boxShadow: '0 0 12px rgba(52,211,153,0.15)',
+                        width: '100%',
+                    }}
+                >
+                    <span style={{ fontSize: '1rem' }}>📱</span>
+                    ANDROID DEV STUDIO
+                    <span style={{
+                        marginLeft: 'auto', fontSize: '0.58rem',
+                        background: 'rgba(52,211,153,0.2)', padding: '1px 6px',
+                        borderRadius: 10, color: '#6ee7b7',
+                    }}>01</span>
+                </button>
+
+                {/* 本日のタスク（クエストカード風） */}
+                {todayTasks.length > 0 && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                        <div style={{
+                            fontSize: '0.58rem', fontWeight: 700, color: '#6b7280',
+                            letterSpacing: '0.1em', textTransform: 'uppercase',
+                            paddingLeft: 4,
+                        }}>
+                            TODAY'S TASKS
+                        </div>
+                        {todayTasks.map((task, i) => {
+                            const STATUS_COLOR = {
+                                in_progress: { bar: '#c9a227', bg: 'rgba(201,162,39,0.12)', text: '#fbbf24' },
+                                pending:     { bar: '#4b5563', bg: 'rgba(255,255,255,0.04)', text: '#6b7280' },
+                                done:        { bar: '#10b981', bg: 'rgba(16,185,129,0.08)',  text: '#34d399' },
+                            }[task.status];
+                            return (
+                                <button
+                                    key={task.id}
+                                    onClick={() => setScreen('DEVSTUDIO')}
+                                    style={{
+                                        display: 'flex', alignItems: 'center', gap: 8,
+                                        background: STATUS_COLOR.bg,
+                                        border: '1px solid rgba(255,255,255,0.06)',
+                                        borderLeft: `3px solid ${STATUS_COLOR.bar}`,
+                                        borderRadius: '0 6px 6px 0',
+                                        padding: '6px 10px',
+                                        cursor: 'pointer', textAlign: 'left', width: '100%',
+                                    }}
+                                >
+                                    <span style={{
+                                        fontSize: '0.58rem', fontWeight: 700,
+                                        color: '#4b5563', minWidth: 14,
+                                    }}>
+                                        {String(i + 1).padStart(2, '0')}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '0.7rem', color: '#d1d5db',
+                                        overflow: 'hidden', textOverflow: 'ellipsis',
+                                        whiteSpace: 'nowrap', flex: 1,
+                                    }}>
+                                        {task.title}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '0.58rem', fontWeight: 700,
+                                        color: STATUS_COLOR.text, flexShrink: 0,
+                                    }}>
+                                        {task.status === 'in_progress' ? '▶' : task.status === 'done' ? '✓' : '○'}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
 
             {/* 右上クイックアクセス */}
             <div className="title-quick-access">
@@ -96,9 +226,9 @@ export function TitleScreen() {
                 <button
                     className="title-quick-btn"
                     onClick={() => setScreen('WORKSPACE')}
-                    style={{ borderColor: '#a78bfa', color: '#a78bfa', width: '100%' }}
+                    style={{ borderColor: '#6b7280', color: '#6b7280', width: '100%', opacity: 0.7 }}
                 >
-                    📂 WorkSpace
+                    🗄 TestWS（旧）
                 </button>
             </div>
 

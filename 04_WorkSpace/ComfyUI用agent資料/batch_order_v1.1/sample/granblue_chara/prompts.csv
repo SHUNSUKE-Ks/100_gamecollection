@@ -1,0 +1,8 @@
+id,character,variant,positive_extra,negative_extra,seed,filename_prefix,width,height
+001,勇者,standing_front,hero male short brown hair red armor standing facing forward,,-1,chara_hero_standing,,
+002,勇者,face_smile,hero male short brown hair red armor smiling expression close-up,,-1,chara_hero_face_smile,512,512
+003,勇者,face_angry,hero male short brown hair red armor angry expression close-up,,-1,chara_hero_face_angry,512,512
+004,魔法使い,standing_front,wizard female long silver hair blue robe staff standing,,-1,chara_mage_standing,,
+005,魔法使い,face_smile,wizard female long silver hair blue robe smiling,,-1,chara_mage_face_smile,512,512
+006,盗賊,standing_front,thief male dark hair green cloak dagger standing,,-1,chara_thief_standing,,
+007,ヒーラー,standing_front,healer female blonde hair white dress holy symbol,,-1,chara_healer_standing,,

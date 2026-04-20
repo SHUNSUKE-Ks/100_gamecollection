@@ -142,7 +142,7 @@ export function StoryView({ deepLink, onDeepLinkConsumed }: StoryViewProps = {})
                         className={`story-sub-tab ${subTab === 'plot' ? 'active' : ''}`}
                         onClick={() => setSubTab('plot')}
                     >
-                        ✏ プロット手帳
+                        ✏ シナリオメモ
                     </button>
                     <button
                         className={`story-sub-tab ${subTab === 'schema' ? 'active' : ''}`}
@@ -180,8 +180,8 @@ export function StoryView({ deepLink, onDeepLinkConsumed }: StoryViewProps = {})
 
             {/* Main Content */}
             <div className="story-content">
-                {/* プロット手帳 */}
-                {subTab === 'plot' && <PlotNotebook />}
+                {/* シナリオメモ */}
+                {subTab === 'plot' && <PlotNotebook onBack={() => setSubTab('main')} />}
 
                 {/* スキーマーショート */}
                 {subTab === 'schema' && <SchemaShortView initialVersion={schemaInitialVersion} />}

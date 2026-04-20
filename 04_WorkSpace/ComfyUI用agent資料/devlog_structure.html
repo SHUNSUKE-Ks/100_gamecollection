@@ -1,0 +1,147 @@
+
+<style>
+.log-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 0.875rem 1rem; margin-bottom: 8px; }
+.log-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.badge { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 4px; }
+.badge-ai    { background: var(--color-background-info);    color: var(--color-text-info); }
+.badge-human { background: #EEEDFE; color: #3C3489; }
+.badge-sys   { background: var(--color-background-secondary); color: var(--color-text-secondary); }
+.badge-err   { background: var(--color-background-danger);  color: var(--color-text-danger); }
+.log-msg { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.meta-chip { font-size: 11px; color: var(--color-text-secondary); background: var(--color-background-secondary); border-radius: 4px; padding: 2px 7px; font-family: var(--font-mono); }
+.meta-chip.tag { color: var(--color-text-info); background: var(--color-background-info); }
+.ts-label { font-size: 11px; color: var(--color-text-tertiary); margin-left: auto; white-space: nowrap; }
+.section-label { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); letter-spacing: 0.05em; text-transform: uppercase; margin: 1.25rem 0 0.5rem; }
+.type-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 1.25rem; }
+.type-cell { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem; }
+.type-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; font-family: var(--font-mono); }
+.type-desc { font-size: 12px; color: var(--color-text-secondary); }
+.rule-box { background: var(--color-background-secondary); border-left: 3px solid var(--color-border-info); border-radius: 0; padding: 0.75rem 1rem; margin-top: 1rem; font-size: 13px; color: var(--color-text-secondary); }
+</style>
+
+<h2 class="sr-only">DevStudio logs 記録内容の詳細</h2>
+
+<div class="section-label">ログの4種類（type）</div>
+<div class="type-grid">
+  <div class="type-cell">
+    <div class="type-name">AI_PROCESS</div>
+    <div class="type-desc">Agentが何を・なぜ・どう変換したか</div>
+  </div>
+  <div class="type-cell">
+    <div class="type-name">TASK</div>
+    <div class="type-desc">タスクチケットの発行・承認・差し戻し</div>
+  </div>
+  <div class="type-cell">
+    <div class="type-name">USER_ACTION</div>
+    <div class="type-desc">人間の意思決定・設定変更・フェーズ移行</div>
+  </div>
+  <div class="type-cell">
+    <div class="type-name">SYSTEM</div>
+    <div class="type-desc">自動保存・エラー・IndexedDB同期</div>
+  </div>
+</div>
+
+<div class="section-label">ログエントリの例（時系列順）</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-human">TASK</span>
+    <span class="ts-label">2025-06-01 09:12</span>
+  </div>
+  <div class="log-msg">タスクチケット発行：プロローグシナリオ作成</div>
+  <div class="meta-row">
+    <span class="meta-chip">taskId: task_001</span>
+    <span class="meta-chip tag">scenario</span>
+    <span class="meta-chip tag">pm</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-ai">AI_PROCESS</span>
+    <span class="ts-label">2025-06-01 09:13</span>
+  </div>
+  <div class="log-msg">プロットを会話シナリオ化</div>
+  <div class="meta-row">
+    <span class="meta-chip">taskId: task_001</span>
+    <span class="meta-chip">agent: scenarioAgent</span>
+    <span class="meta-chip">skill: writeScenario</span>
+    <span class="meta-chip">intent: CREATE</span>
+    <span class="meta-chip tag">scenario</span>
+    <span class="meta-chip tag">generate</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-ai">AI_PROCESS</span>
+    <span class="ts-label">2025-06-01 09:14</span>
+  </div>
+  <div class="log-msg">会話を演出付きデータ化</div>
+  <div class="meta-row">
+    <span class="meta-chip">taskId: task_001</span>
+    <span class="meta-chip">agent: scenarioAgent</span>
+    <span class="meta-chip">skill: generateTags</span>
+    <span class="meta-chip">intent: TRANSFORM</span>
+    <span class="meta-chip tag">scenario</span>
+    <span class="meta-chip tag">tags</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-human">USER_ACTION</span>
+    <span class="ts-label">2025-06-01 09:18</span>
+  </div>
+  <div class="log-msg">レビュー承認：task_001 → Workspaceへ反映</div>
+  <div class="meta-row">
+    <span class="meta-chip">taskId: task_001</span>
+    <span class="meta-chip tag">review</span>
+    <span class="meta-chip tag">approved</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-human">USER_ACTION</span>
+    <span class="ts-label">2025-06-01 10:05</span>
+  </div>
+  <div class="log-msg">フェーズ移行：DESIGN → IMPLEMENT</div>
+  <div class="meta-row">
+    <span class="meta-chip">phase: IMPLEMENT</span>
+    <span class="meta-chip tag">pm</span>
+    <span class="meta-chip tag">phase</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-err">SYSTEM</span>
+    <span class="ts-label">2025-06-01 10:22</span>
+  </div>
+  <div class="log-msg">Agent実行エラー：uiAgent / createUI</div>
+  <div class="meta-row">
+    <span class="meta-chip">taskId: task_003</span>
+    <span class="meta-chip">agent: uiAgent</span>
+    <span class="meta-chip tag">error</span>
+    <span class="meta-chip tag">ui</span>
+  </div>
+</div>
+
+<div class="log-card">
+  <div class="log-header">
+    <span class="badge badge-sys">SYSTEM</span>
+    <span class="ts-label">2025-06-01 10:23</span>
+  </div>
+  <div class="log-msg">IndexedDB 自動保存</div>
+  <div class="meta-row">
+    <span class="meta-chip">projectId: project_001</span>
+    <span class="meta-chip tag">system</span>
+    <span class="meta-chip tag">persist</span>
+  </div>
+</div>
+
+<div class="rule-box">
+ルール：ログはタスク承認後のみ記録する。NG・差し戻し中のエントリは積まない。タグで絞り込むことで「scenarioだけ」「エラーだけ」を瞬時に参照できる。
+</div>

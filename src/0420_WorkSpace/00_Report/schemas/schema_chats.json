@@ -1,0 +1,56 @@
+{
+  "_readme": "ノベルエンジン — chats.json スキーマ定義。表示専用（副作用なし）。分岐・状態変更は持たない。",
+
+  "version": "v2.1",
+  "updated": "2026-04-20",
+
+  "types": {
+
+    "ChatLine": {
+      "_description": "1セリフ行。表示専用。ロジックを持たない",
+      "speaker": { "type": "string",  "required": true,  "default": "",             "note": "空文字列 = ナレーション行" },
+      "text":    { "type": "string",  "required": true,  "default": "",             "maxLength": 100 },
+      "icon":    { "type": "string",  "required": false, "example": "remi_normal",  "note": "キャラアイコン画像キー。省略時はデフォルトアイコン" },
+      "face":    { "type": "string",  "required": false, "example": "thinking",     "note": "表情差分キー。icon と組み合わせて使用" },
+      "tags":    { "type": "string[]","required": false, "default": [],             "note": "演出タグ。例: bg:tower_entrance / se:door_open / bgm:field" }
+    },
+
+    "Chat": {
+      "_description": "1チャットブロック。events.json の ref_id から参照される独立パーツ",
+      "chat_id": { "type": "string",      "required": true, "example": "CHAT_001" },
+      "lines":   { "type": "ChatLine[]",  "required": true, "minLength": 1 }
+    }
+
+  },
+
+  "rootSchema": {
+    "_description": "chats.json のルート構造",
+    "version": { "type": "string",  "required": true, "example": "2.1" },
+    "chats":   { "type": "Chat[]",  "required": true, "minLength": 1 }
+  },
+
+  "rules": [
+    "next・effects など進行・状態変更のフィールドを持ってはいけない",
+    "同じ chat_id を複数の Event から参照して再利用できる",
+    "icon / face は省略可。省略時はエンジン側のデフォルトを使う"
+  ],
+
+  "sampleData": {
+    "version": "2.1",
+    "chats": [
+      {
+        "chat_id": "CHAT_001",
+        "lines": [
+          { "speaker": "", "text": "古びた塔の扉が、重い音を立てて開いた。", "tags": ["bg:tower_entrance", "se:door_open"] }
+        ]
+      },
+      {
+        "chat_id": "CHAT_002",
+        "lines": [
+          { "speaker": "レミ", "text": "ここが…始まりの塔。", "icon": "remi_normal", "face": "normal", "tags": ["char:remi"] },
+          { "speaker": "レミ", "text": "どうする？", "icon": "remi_normal", "face": "thinking" }
+        ]
+      }
+    ]
+  }
+}

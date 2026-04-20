@@ -1,0 +1,25 @@
+{
+  "_comment": "グラブル風キャラクター立ち絵テンプレート Ver1.1",
+  "_model_type": "granblue_chara",
+  "VERSION": "1.1",
+
+  "CHECKPOINT": "novaOrangeXL_v140.safetensors",
+  "LORA": [
+    { "name": "granblue-klein9b.safetensors", "weight": 0.7 }
+  ],
+
+  "STYLE_BASE": "granblue fantasy style, anime illustration, official art, highly detailed character, vivid colors, clean lineart, flat shading, soft shadows, game cg, 1girl, standing",
+  "NEGATIVE_BASE": "lowres, bad anatomy, bad hands, worst quality, blurry, realistic, 3d render, western style, sketch, rough, unfinished, watermark, multiple characters, nsfw",
+
+  "STEPS": 28,
+  "CFG": 7.0,
+  "SAMPLER": "dpmpp_2m",
+  "SCHEDULER": "karras",
+  "DENOISE": 1.0,
+
+  "WIDTH": 512,
+  "HEIGHT": 768,
+
+  "OUTPUT_DIR": "D:/ai/ComfyUI/output/batch",
+  "COMFYUI_URL": "http://127.0.0.1:8188"
+}

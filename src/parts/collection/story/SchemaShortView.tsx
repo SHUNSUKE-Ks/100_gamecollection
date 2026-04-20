@@ -302,6 +302,56 @@ const SCHEMA_V31 = {
   ]
 };
 
+const SCHEMA_V41 = {
+  version: "4.1",
+  _note: "4ファイル分離構成 — events / chats / choices / state",
+  events: {
+    version: "2.1",
+    start_event_id: "EV_001",
+    events: [
+      { event_id: "EV_001", type: "CHAT",   ref_id: "CHAT_001",   next: "EV_002" },
+      { event_id: "EV_002", type: "CHAT",   ref_id: "CHAT_002",   next: "EV_003" },
+      { event_id: "EV_003", type: "CHOICE", ref_id: "CHOICE_001" },
+      { event_id: "EV_010", type: "CHAT",   ref_id: "CHAT_010",   next: "EV_030" },
+      { event_id: "EV_020", type: "CHAT",   ref_id: "CHAT_020",   next: "EV_030" },
+      { event_id: "EV_030", type: "CHAT",   ref_id: "CHAT_030" }
+    ]
+  },
+  chats: {
+    version: "2.1",
+    chats: [
+      { chat_id: "CHAT_001", lines: [
+        { speaker: "", text: "古びた塔の扉が、重い音を立てて開いた。", tags: ["bg:tower_entrance", "se:door_open"] }
+      ]},
+      { chat_id: "CHAT_002", lines: [
+        { speaker: "レミ", text: "ここが…始まりの塔。", icon: "remi_normal", face: "normal", tags: ["char:remi"] },
+        { speaker: "レミ", text: "どうする？", icon: "remi_normal", face: "thinking" }
+      ]},
+      { chat_id: "CHAT_010", lines: [{ speaker: "", text: "薄暗い回廊が続いていた。" }]},
+      { chat_id: "CHAT_020", lines: [{ speaker: "", text: "レミは入口で周囲を観察した。" }]},
+      { chat_id: "CHAT_030", lines: [{ speaker: "長老", text: "よく来た。待っておったぞ。" }]}
+    ]
+  },
+  choices: {
+    version: "2.1",
+    choices: [
+      {
+        choice_id: "CHOICE_001",
+        question: { speaker: "レミ", text: "この先へ進む？" },
+        options: [
+          { label: "奥へ進む",   next: "EV_010", effects: { flags: { brave: true },   params: { courage: 2, exp: 5 } }, result: { speaker: "", text: "レミは意を決して進んだ。" } },
+          { label: "様子を見る", next: "EV_020", effects: { flags: { careful: true }, params: { courage: -1 } },         result: { speaker: "", text: "レミは慎重に周囲を観察した。" } }
+        ]
+      }
+    ]
+  },
+  state: {
+    version: "2.1",
+    flags:  { brave: false, careful: false },
+    params: { courage: 0, exp: 0, money: 100 }
+  }
+};
+
 // ─────────────────────────────────────────────────────────
 // Field Spec
 // ─────────────────────────────────────────────────────────
@@ -355,10 +405,39 @@ const SPEC_V31_EXTRA: FieldRow[] = [
   { key: '  choice.options[].effects',     type: 'object|null', required: false, desc: '選択肢を選んだ時の効果（flagsとaxesを指定）' },
 ];
 
+const SPEC_V41: FieldRow[] = [
+  { key: 'events',                   type: 'object',           required: true,  desc: 'events.json — 進行制御スロット。中身を持たず ref_id で他ファイルを参照' },
+  { key: '  .start_event_id',        type: 'string',           required: true,  desc: 'シーン開始の最初のイベントID' },
+  { key: '  .events[]',              type: 'array',            required: true,  desc: 'イベントスロットの配列' },
+  { key: '    .event_id',            type: 'string',           required: true,  desc: 'イベントID。例: "EV_001"' },
+  { key: '    .type',                type: '"CHAT"|"CHOICE"',  required: true,  desc: 'イベント種別' },
+  { key: '    .ref_id',              type: 'string',           required: true,  desc: 'chats.chat_id または choices.choice_id を参照' },
+  { key: '    .next',                type: 'string',           required: false, desc: '次のイベントID。省略でシーン終了' },
+  { key: 'chats',                    type: 'object',           required: true,  desc: 'chats.json — 表示専用。副作用なし' },
+  { key: '  .chats[].chat_id',       type: 'string',           required: true,  desc: '会話ブロックID。例: "CHAT_001"' },
+  { key: '  .chats[].lines[]',       type: 'array',            required: true,  desc: 'セリフ行の配列' },
+  { key: '    .speaker',             type: 'string',           required: true,  desc: '話者名。空文字列 = ナレーション' },
+  { key: '    .text',                type: 'string',           required: true,  desc: '表示テキスト' },
+  { key: '    .icon',                type: 'string',           required: false, desc: 'キャラアイコン画像パス' },
+  { key: '    .face',                type: 'string',           required: false, desc: '表情差分パス。icon と組み合わせる' },
+  { key: '    .tags',                type: 'string[]',         required: false, desc: '演出タグ。例: bg:tower_entrance / se:door_open' },
+  { key: 'choices',                  type: 'object',           required: true,  desc: 'choices.json — 分岐＋state変更の唯一の責任ポイント' },
+  { key: '  .choices[].choice_id',   type: 'string',           required: true,  desc: '選択肢イベントID。例: "CHOICE_001"' },
+  { key: '  .choices[].question',    type: 'object',           required: true,  desc: '問いかけ表示。{ speaker, text }' },
+  { key: '  .choices[].options[]',   type: 'array',            required: true,  desc: '選択肢リスト。1つ以上' },
+  { key: '    .label',               type: 'string',           required: true,  desc: 'ボタン表示テキスト' },
+  { key: '    .next',                type: 'string',           required: true,  desc: '選択後に遷移するevent_id' },
+  { key: '    .effects',             type: 'object',           required: false, desc: 'state変更。{ flags, params }。省略可' },
+  { key: '    .result',              type: 'object',           required: false, desc: '結果テキスト。{ speaker, text }。省略可' },
+  { key: 'state',                    type: 'object',           required: true,  desc: 'state.json — Single Source of Truth' },
+  { key: '  .flags',                 type: 'object',           required: true,  desc: 'Bool フラグ。{ key: boolean }。choices.effects で上書き更新' },
+  { key: '  .params',                type: 'object',           required: true,  desc: '数値パラメーター。{ key: number }。choices.effects で加算更新' },
+];
+
 // ─────────────────────────────────────────────────────────
 // Version Config
 // ─────────────────────────────────────────────────────────
-type VersionId = 'v11' | 'v12' | 'v21' | 'v31';
+type VersionId = 'v11' | 'v12' | 'v21' | 'v31' | 'v41';
 
 interface VersionDef {
   id: VersionId;
@@ -397,6 +476,12 @@ const VERSIONS: VersionDef[] = [
     schema: SCHEMA_V31, spec: SPEC_V11, specExtra: [...SPEC_V12_EXTRA, ...SPEC_V21_EXTRA, ...SPEC_V31_EXTRA],
     icon: <Sliders size={14} />,
   },
+  {
+    id: 'v41', label: 'Ver 4.1', sub: '4ファイル分離構成',
+    badge: '4.1', badgeColor: 'border-emerald-500/60 text-emerald-300 bg-emerald-500/10',
+    schema: SCHEMA_V41, spec: SPEC_V41,
+    icon: <FileJson size={14} />,
+  },
 ];
 
 // Ver1.xグループのメンバー（最新優先）
@@ -421,7 +506,9 @@ const EMOTIONS = ['normal', 'smile', 'angry', 'sad', 'surprised'];
 // ─────────────────────────────────────────────────────────
 const CopyButton: React.FC<{ text: string; keyId: string; className?: string }> = ({ text, keyId: _keyId, className = '' }) => {
   const [copied, setCopied] = useState(false);
-  const onClick = () => {
+  const onClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
@@ -522,6 +609,7 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
   const [importedJson, setImportedJson] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [showReference, setShowReference] = useState(false);
+  const [sampleOpen, setSampleOpen] = useState(false);
 
   const vDef = VERSIONS.find(v => v.id === version)!;
   const schemaStr = JSON.stringify(vDef.schema, null, 2);
@@ -616,13 +704,13 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
 
           {/* バージョンバナー + AllCopy */}
           <div className="flex items-start gap-3 p-4 rounded-xl border relative"
-            style={{ borderColor: vDef.id === 'v11' ? '#475569' : vDef.id === 'v12' ? '#6366f1' : vDef.id === 'v21' ? '#ec4899' : '#eab308' }}
+            style={{ borderColor: vDef.id === 'v11' ? '#475569' : vDef.id === 'v12' ? '#6366f1' : vDef.id === 'v21' ? '#ec4899' : vDef.id === 'v41' ? '#10b981' : '#eab308' }}
           >
-            <div className="shrink-0 mt-0.5" style={{ color: vDef.id === 'v11' ? '#94a3b8' : vDef.id === 'v12' ? '#818cf8' : vDef.id === 'v21' ? '#f472b6' : '#facc15' }}>
+            <div className="shrink-0 mt-0.5" style={{ color: vDef.id === 'v11' ? '#94a3b8' : vDef.id === 'v12' ? '#818cf8' : vDef.id === 'v21' ? '#f472b6' : vDef.id === 'v41' ? '#34d399' : '#facc15' }}>
               {vDef.icon}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold mb-1" style={{ color: vDef.id === 'v11' ? '#94a3b8' : vDef.id === 'v12' ? '#a5b4fc' : vDef.id === 'v21' ? '#f9a8d4' : '#fde047' }}>
+              <p className="text-sm font-bold mb-1" style={{ color: vDef.id === 'v11' ? '#94a3b8' : vDef.id === 'v12' ? '#a5b4fc' : vDef.id === 'v21' ? '#f9a8d4' : vDef.id === 'v41' ? '#6ee7b7' : '#fde047' }}>
                 {vDef.label} — {vDef.sub}
               </p>
               <p className="text-xs text-slate-400 leading-relaxed">
@@ -630,6 +718,7 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
                 {vDef.id === 'v12' && 'Ver1.1に選択肢（CHOICE）と分岐シーン遷移を追加。returnToで分岐後のシーンを合流させられます。'}
                 {vDef.id === 'v21' && 'Ver1.2の拡張版。CollectionライブラリのキャラクターID・背景IDを参照して立ち絵・背景付きのビジュアルノベルが作れます。'}
                 {vDef.id === 'v31' && 'Ver2.1の拡張版。Bool型フラグと数値軸パラメーター（勇気・好感度など）を管理。選択肢やセリフ通過でパラメーターが変化し、フラグでシーン表示を制御できます。axes配下は自由に追加・命名できます。'}
+                {vDef.id === 'v41' && '進行(events) / 表示(chats) / 分岐(choices) / 状態(state) を4ファイルに完全分離したアーキテクチャ。EventはCHAT・CHOICEを差し込むスロット。chatsにはicon・face対応、choicesでのみstateを変更するという責務分離が設計の核心です。'}
               </p>
             </div>
             {/* AllCopy ボタン — 右寄せ */}
@@ -650,13 +739,21 @@ export const SchemaShortView: React.FC<SchemaShortViewProps> = ({ initialVersion
 
           {/* スキーマサンプル */}
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <SectionTitle icon={<FileJson size={14} />} title="スキーマサンプル" />
-              <CopyButton text={schemaStr} keyId={`sample_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50" />
+            <div className="flex items-center justify-between w-full">
+              <button
+                onClick={() => setSampleOpen(v => !v)}
+                className="flex items-center gap-2 text-left outline-none flex-1"
+              >
+                <SectionTitle icon={<FileJson size={14} />} title="スキーマサンプル" />
+                <ChevronDown size={14} className={`text-slate-500 transition-transform mb-2 ${sampleOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <CopyButton text={schemaStr} keyId={`sample_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50 mb-2" />
             </div>
-            <pre className="bg-slate-900 border border-slate-700/50 rounded-xl p-4 text-xs text-green-300 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
-              {schemaStr}
-            </pre>
+            {sampleOpen && (
+              <pre className="bg-slate-900 border border-slate-700/50 rounded-xl p-4 text-xs text-green-300 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
+                {schemaStr}
+              </pre>
+            )}
           </div>
 
           {/* インポートデータプレビュー */}
@@ -743,11 +840,11 @@ const SpecTable: React.FC<{ rows: FieldRow[]; title: string; accent?: boolean }>
 // SectionTitle
 // ─────────────────────────────────────────────────────────
 const SectionTitle: React.FC<{ icon: React.ReactNode; title: string }> = ({ icon, title }) => (
-  <div className="flex items-center gap-2 mb-2">
-    <span className="w-1 h-4 bg-yellow-500 rounded-full" />
+  <span className="flex items-center gap-2 mb-2">
+    <span className="inline-block w-1 h-4 bg-yellow-500 rounded-full" />
     <span className="text-slate-400">{icon}</span>
     <span className="text-xs font-bold text-slate-300 uppercase tracking-wide">{title}</span>
-  </div>
+  </span>
 );
 
 // ─────────────────────────────────────────────────────────
@@ -794,24 +891,38 @@ const JsonPreview: React.FC<{ jsonStr: string }> = ({ jsonStr }) => {
 // AiPromptBlock
 // ─────────────────────────────────────────────────────────
 const AiPromptBlock: React.FC<{ version: VersionId; schemaStr: string }> = ({ version, schemaStr }) => {
+  const [open, setOpen] = useState(false);
+
   const extra = version === 'v31'
     ? '\n※parametersのaxesは自由に追加・命名できます（例: "trust", "fear", "pride"など）。初期値・min・maxも自由に設定してください。'
     : version === 'v12' || version === 'v21'
     ? '\n※CHOICEがある場合は必ずnextSceneIdで遷移先シーンIDを指定し、分岐後のシーンにはreturnToで合流先シーンIDを入れてください。'
+    : version === 'v41'
+    ? '\n※4ファイル構成です。events / chats / choices / state それぞれを別ファイルとして出力してください。'
     : '';
 
   const prompt = `以下のJSONスキーマ（${VERSIONS.find(v => v.id === version)?.label}）に従って、私が書いた文章をノベルゲーム用JSONに変換してください。${extra}\n\nスキーマ:\n${schemaStr}\n\n変換する文章:\n（ここに文章を貼り付けてください）\n\n出力はJSONのみ、説明は不要です。`;
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
-        <SectionTitle icon={<User size={14} />} title="AIへの指示テンプレート" />
-        <CopyButton text={prompt} keyId={`prompt_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50" />
+      <div className="flex items-center justify-between w-full">
+        <button
+          onClick={() => setOpen(v => !v)}
+          className="flex items-center gap-2 text-left outline-none flex-1"
+        >
+          <SectionTitle icon={<User size={14} />} title="AIへの指示テンプレート" />
+          <ChevronDown size={14} className={`text-slate-500 transition-transform mb-2 ${open ? 'rotate-180' : ''}`} />
+        </button>
+        <CopyButton text={prompt} keyId={`prompt_${version}`} className="px-3 py-1.5 rounded-lg border border-slate-600/50 bg-slate-700/50 mb-2" />
       </div>
-      <p className="text-xs text-slate-500 mb-2">末尾の「変換する文章」部分に自分の文章を貼ってAIに渡してください。</p>
-      <pre className="bg-slate-900/80 border border-yellow-500/20 rounded-xl p-4 text-xs text-yellow-100/80 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
-        {prompt}
-      </pre>
+      {open && (
+        <div className="mt-2">
+          <p className="text-xs text-slate-500 mb-2">末尾の「変換する文章」部分に自分の文章を貼ってAIに渡してください。</p>
+          <pre className="bg-slate-900/80 border border-yellow-500/20 rounded-xl p-4 text-xs text-yellow-100/80 overflow-x-auto whitespace-pre-wrap leading-relaxed font-mono">
+            {prompt}
+          </pre>
+        </div>
+      )}
     </div>
   );
 };

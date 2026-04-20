@@ -1,0 +1,89 @@
+{
+  "_readme": "ノベルエンジン — choices.json スキーマ定義。分岐＋状態変更の唯一の責任ポイント。",
+
+  "version": "v2.1",
+  "updated": "2026-04-20",
+
+  "types": {
+
+    "Question": {
+      "_description": "選択肢の前に表示する問いかけ行",
+      "speaker": { "type": "string", "required": true, "default": "",            "note": "空文字列 = ナレーション" },
+      "text":    { "type": "string", "required": true, "default": "" }
+    },
+
+    "Effects": {
+      "_description": "選択後に state.json へ適用する変更",
+      "flags":  { "type": "Record<string, boolean>", "required": false, "default": {}, "note": "フラグ上書き" },
+      "params": { "type": "Record<string, number>",  "required": false, "default": {}, "note": "パラメータ加算（負数で減算）" }
+    },
+
+    "Result": {
+      "_description": "選択後に表示する演出テキスト（任意）",
+      "speaker": { "type": "string", "required": true, "default": "" },
+      "text":    { "type": "string", "required": true, "default": "" }
+    },
+
+    "Option": {
+      "_description": "1選択肢",
+      "label":   { "type": "string",  "required": true,                            "note": "ボタンに表示するテキスト" },
+      "next":    { "type": "string",  "required": true,  "example": "EV_010",      "note": "選択後に遷移する event_id" },
+      "effects": { "type": "Effects", "required": false, "default": {},            "note": "省略時は state 変更なし" },
+      "result":  { "type": "Result",  "required": false,                           "note": "省略時は結果表示なし" }
+    },
+
+    "Choice": {
+      "_description": "1選択肢イベント。question → options 選択 → effects 適用 → result 表示 → next 遷移",
+      "choice_id": { "type": "string",   "required": true,  "example": "CHOICE_001" },
+      "question":  { "type": "Question", "required": true },
+      "options":   { "type": "Option[]", "required": true,  "minLength": 1 }
+    }
+
+  },
+
+  "rootSchema": {
+    "_description": "choices.json のルート構造",
+    "version": { "type": "string",   "required": true, "example": "2.1" },
+    "choices": { "type": "Choice[]", "required": true, "minLength": 1 }
+  },
+
+  "processFlow": [
+    "question 表示",
+    "options をUI表示",
+    "プレイヤー選択",
+    "effects を state.json に適用",
+    "result 表示（省略時はスキップ）",
+    "next のイベントへ遷移"
+  ],
+
+  "rules": [
+    "question は必須",
+    "options は1つ以上",
+    "effects でのみ state を変更する（chat・event は変更不可）",
+    "result は任意（演出専用）"
+  ],
+
+  "sampleData": {
+    "version": "2.1",
+    "choices": [
+      {
+        "choice_id": "CHOICE_001",
+        "question": { "speaker": "レミ", "text": "この先へ進む？" },
+        "options": [
+          {
+            "label": "奥へ進む",
+            "next": "EV_010",
+            "effects": { "flags": { "brave": true }, "params": { "courage": 2, "exp": 5 } },
+            "result": { "speaker": "", "text": "レミは意を決して進んだ。" }
+          },
+          {
+            "label": "様子を見る",
+            "next": "EV_020",
+            "effects": { "flags": { "careful": true }, "params": { "courage": -1 } },
+            "result": { "speaker": "", "text": "レミは慎重に周囲を観察した。" }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -12,9 +12,8 @@ import { NPCDetailView } from '@/parts/collection/specific/NPCDetailView';
 import { EnemyDetailView } from '@/parts/collection/specific/EnemyDetailView';
 import { BackgroundDetailView } from '@/parts/collection/specific/BackgroundDetailView';
 import { BGMPlayerView } from '@/parts/collection/specific/BGMPlayerView';
-import { TagsView } from '@/parts/collection/specific/TagsView';
-import { StoryView } from '@/parts/collection/story/StoryView'; // [NEW] Import Story
-import { StudioScreen } from '@/screens/12_Studio/StudioScreen'; // [NEW] Import Studio
+import { TagsDBScreen } from '@/parts/collection/tagsdb/TagsDBScreen';
+import { StoryView } from '@/parts/collection/story/StoryView';
 import characterData from '@/data/collection/characters.json';
 import enemyData from '@/data/collection/enemies.json';
 import npcData from '@/data/collection/npcs.json';
@@ -22,16 +21,17 @@ import backgroundData from '@/data/collection/backgrounds.json';
 import bgmData from '@/data/collection/bgm.json';
 import seData from '@/data/collection/se.json';
 import itemData from '@/data/collection/items.json';
+import skillData from '@/data/collection/skills.json';
 // Settings Views
 import { SoundSettingsView } from '@/parts/collection/settings/SoundSettingsView';
 import { ScreenSettingsView } from '@/parts/collection/settings/ScreenSettingsView';
 import { KeyConfigView } from '@/parts/collection/settings/KeyConfigView';
-// Report Views
-import { ReportView } from '@/parts/collection/report/ReportView';
-// Document Inbox
-import { DocumentInboxView } from '@/parts/collection/document/DocumentInboxView';
 // WorkSpace Panel
 import { WorkspacePanel } from '@/parts/collection/workspace/WorkspacePanel';
+// Library Catalog
+import { LibraryCatalogScreen } from '@/screens/11_Collection/LibraryCatalogScreen';
+// Layout Samples
+import { CollectionSamplesScreen } from '@/screens/11_Collection/CollectionSamplesScreen';
 // Record Card
 import { RecordCardModal, type DbKey } from '@/parts/collection/specific/RecordCardModal';
 import './CollectionScreen.css';
@@ -189,6 +189,91 @@ const PLACE_COLUMNS: TableColumn[] = [
     { key: 'description', label: '説明' }
 ];
 
+const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
+    '攻撃':   { bg: '#ef444433', text: '#f87171' },
+    '回復':   { bg: '#10b98133', text: '#34d399' },
+    'バフ':   { bg: '#3b82f633', text: '#60a5fa' },
+    'デバフ': { bg: '#8b5cf633', text: '#a78bfa' },
+    'パッシブ': { bg: '#f59e0b33', text: '#fbbf24' },
+};
+const ELEMENT_COLORS: Record<string, string> = {
+    '物理': '#f87171', '火': '#fb923c', '水': '#60a5fa',
+    '風': '#34d399', '毒': '#a78bfa', '無': '#6b7280',
+};
+const TARGET_LABEL: Record<string, string> = {
+    enemy: '敵単体', all_enemies: '敵全体', ally: '味方単体',
+    all_allies: '味方全体', self: '自分',
+};
+const SCALE_LABEL: Record<string, string> = { str: 'STR', int: 'INT', dex: 'DEX' };
+
+const SKILL_COLUMNS: TableColumn[] = [
+    { key: 'iconTag', label: '', render: (icon: string) => <span style={{ fontSize: '1.1rem' }}>{icon}</span> },
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: 'スキル名', render: (v: string) => <span style={{ fontWeight: 600, color: '#e5e7eb' }}>{v}</span> },
+    {
+        key: 'category',
+        label: 'カテゴリ',
+        render: (v: string) => {
+            const c = CATEGORY_COLORS[v] || { bg: '#64748b33', text: '#94a3b8' };
+            return <span style={{ ...tagStyle, backgroundColor: c.bg, color: c.text, border: `1px solid ${c.text}55` }}>{v}</span>;
+        }
+    },
+    {
+        key: 'element',
+        label: '属性',
+        render: (v: string) => {
+            const color = ELEMENT_COLORS[v] || '#6b7280';
+            return <span style={{ ...tagStyle, backgroundColor: color + '22', color, border: `1px solid ${color}55` }}>{v}</span>;
+        }
+    },
+    {
+        key: 'target',
+        label: '対象',
+        render: (v: string) => <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>{TARGET_LABEL[v] ?? v}</span>
+    },
+    {
+        key: 'cost_mp',
+        label: 'MP',
+        render: (v: number) => <span style={{ color: '#60a5fa', fontWeight: 600 }}>{v}</span>
+    },
+    {
+        key: 'cost_cooldown',
+        label: 'CD',
+        render: (v: number) => <span style={{ color: v > 0 ? '#f59e0b' : '#4b5563' }}>{v > 0 ? `${v}T` : '—'}</span>
+    },
+    {
+        key: 'power_base',
+        label: '威力',
+        render: (v: number, item: any) => v > 0
+            ? <span style={{ color: '#e5e7eb' }}>{v} <span style={{ fontSize: '0.7rem', color: '#6b7280' }}>({SCALE_LABEL[item.power_scale] ?? item.power_scale})</span></span>
+            : <span style={{ color: '#4b5563' }}>—</span>
+    },
+    {
+        key: 'effects',
+        label: '効果',
+        render: (v: string[]) => (
+            <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                {(v || []).map(e => (
+                    <span key={e} style={{ ...tagStyle, backgroundColor: '#ffffff0a', color: '#9ca3af', border: '1px solid #ffffff18', fontSize: '0.7rem' }}>{e}</span>
+                ))}
+            </div>
+        )
+    },
+    {
+        key: 'tags',
+        label: 'タグ',
+        render: (tags: string[]) => (
+            <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                {(tags || []).filter(t => !t.endsWith('_SKILL')).map(tag => (
+                    <span key={tag} style={{ ...tagStyle, backgroundColor: '#ffffff0d', color: '#6b7280', border: '1px solid #ffffff15', fontSize: '0.68rem' }}>{tag}</span>
+                ))}
+            </div>
+        )
+    },
+    { key: 'learnCondition', label: '習得', render: (v: string) => <span style={{ fontSize: '0.75rem', color: '#6b7280' }}>{v}</span> },
+    { key: 'description', label: '説明' },
+];
+
 const ITEM_COLUMNS: TableColumn[] = [
     { key: 'id', label: 'ID' },
     { key: 'name', label: '名前' },
@@ -228,8 +313,8 @@ const ITEM_COLUMNS: TableColumn[] = [
 ];
 
 // Tab Types
-type PrimaryTab = 'item' | 'equipment' | 'skill' | 'ability' | 'story' | 'library' | 'sound' | 'keymap' | 'studio' | 'settings' | 'report' | 'document';
-type SecondaryTab = 'place' | 'character' | 'npc' | 'enemy' | 'item_dict' | 'event' | 'cg' | 'sound_db' | 'tag_db';
+type PrimaryTab = 'item' | 'equipment' | 'skill' | 'ability' | 'story' | 'library' | 'tagsdb' | 'sound' | 'keymap' | 'settings';
+type SecondaryTab = 'place' | 'character' | 'npc' | 'enemy' | 'item_dict' | 'skill_db' | 'event' | 'cg' | 'sound_db';
 type SettingsTab = 'sound_settings' | 'screen_settings' | 'key_settings';
 
 export function CollectionScreen() {
@@ -241,6 +326,8 @@ export function CollectionScreen() {
     const [settingsTab, setSettingsTab] = useState<SettingsTab>('sound_settings');
     const [storyDeepLink, setStoryDeepLink] = useState<string | null>(null);
     const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
+    const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+    const [isSamplesOpen, setIsSamplesOpen] = useState(false);
     const { viewMode, setViewMode } = useViewMode('list');
 
     // Firestore から読み込んだライブラリデータ
@@ -300,6 +387,7 @@ export function CollectionScreen() {
             enemy:     ['enemies',    enemyData.enemies || []],
             npc:       ['npcs',       npcData.npcs || []],
             item_dict: ['items',      itemData.items || []],
+            skill_db:  ['skills',     skillData.skills || []],
         };
         const entry = map[secondaryTab];
         if (entry) loadFromFirestore(entry[0], entry[1]);
@@ -328,6 +416,7 @@ export function CollectionScreen() {
                 case 'npc':       return firestoreData['npcs']        ?? npcData.npcs ?? [];
                 case 'place':     return backgroundData.categories ?? [];
                 case 'item_dict': return firestoreData['items']       ?? itemData.items ?? [];
+                case 'skill_db':  return firestoreData['skills']      ?? skillData.skills ?? [];
                 case 'sound_db': {
                     const bgmList = (bgmData.bgm || []).map((item: any) => ({ ...item, type: 'BGM' }));
                     const seList = (seData.se || []).map((item: any) => ({ ...item, type: 'SE' }));
@@ -346,6 +435,7 @@ export function CollectionScreen() {
             case 'npc': return NPC_COLUMNS;
             case 'place': return PLACE_COLUMNS;
             case 'item_dict': return ITEM_COLUMNS;
+            case 'skill_db': return SKILL_COLUMNS;
             case 'sound_db': return SOUND_COLUMNS;
             default: return [];
         }
@@ -358,9 +448,9 @@ export function CollectionScreen() {
         enemy:     'enemies',
         place:     'locations',
         item_dict: 'items',
+        skill_db:  'skills',
         event:     'events',
         sound_db:  'sounds',
-        tag_db:    'tags',
     };
 
     const currentData = getData();
@@ -373,12 +463,10 @@ export function CollectionScreen() {
         { id: 'ability', label: '能力' },
         { id: 'story', label: 'ストーリー' },
         { id: 'library', label: 'ライブラリー' },
+        { id: 'tagsdb', label: 'TagsDB' },
         { id: 'sound', label: '音' },
         { id: 'keymap', label: 'キーマップ' },
-        { id: 'studio', label: '工房' },
         { id: 'settings', label: '設定' },
-        { id: 'report', label: 'レポート' },
-        { id: 'document', label: '発注書' },
     ];
 
     const settingsTabs: { id: SettingsTab; label: string }[] = [
@@ -388,15 +476,15 @@ export function CollectionScreen() {
     ];
 
     const secondaryTabs: { id: SecondaryTab; label: string }[] = [
-        { id: 'place', label: '地名辞典' },
         { id: 'character', label: 'キャラクター図鑑' },
-        { id: 'npc', label: 'NPC図鑑' },
-        { id: 'enemy', label: 'エネミー図鑑' },
+        { id: 'enemy',     label: 'エネミー図鑑' },
+        { id: 'npc',       label: 'NPC図鑑' },
+        { id: 'skill_db',  label: 'スキル・能力DB' },
         { id: 'item_dict', label: 'アイテム図鑑' },
-        { id: 'event', label: 'イベントDB' },
-        { id: 'cg', label: 'CG・ギャラリー' },
-        { id: 'sound_db', label: 'サウンド図鑑' },
-        { id: 'tag_db', label: 'タグDB' },
+        { id: 'place',     label: '地名辞典' },
+        { id: 'event',     label: 'イベントDB' },
+        { id: 'cg',        label: 'CG・ギャラリー' },
+        { id: 'sound_db',  label: 'サウンド図鑑' },
     ];
 
     return (
@@ -473,6 +561,30 @@ export function CollectionScreen() {
                             🌱 DB初期化
                         </button>
                         <button
+                            onClick={() => setIsSamplesOpen(v => !v)}
+                            className="back-button"
+                            title="レイアウトサンプルを開く"
+                            style={{
+                                borderColor: isSamplesOpen ? '#a78bfa' : undefined,
+                                color:       isSamplesOpen ? '#a78bfa' : undefined,
+                                background:  isSamplesOpen ? 'rgba(167,139,250,0.1)' : undefined,
+                            }}
+                        >
+                            🎮 Samples
+                        </button>
+                        <button
+                            onClick={() => setIsCatalogOpen(v => !v)}
+                            className="back-button"
+                            title="Library Catalog を開く"
+                            style={{
+                                borderColor: isCatalogOpen ? '#34d399' : undefined,
+                                color:       isCatalogOpen ? '#34d399' : undefined,
+                                background:  isCatalogOpen ? 'rgba(52,211,153,0.1)' : undefined,
+                            }}
+                        >
+                            📚 Library
+                        </button>
+                        <button
                             onClick={() => setIsWorkspaceOpen(v => !v)}
                             className="back-button"
                             title="WorkSpace パネルを開く"
@@ -523,12 +635,8 @@ export function CollectionScreen() {
 
             {/* Main Content Area */}
             <main className="collection-content">
-                {/* Render Studio Screen directly if selected */}
-                {primaryTab === 'studio' ? (
-                    <StudioScreen />
-                ) : (
-                    <>
-                        {/* Normal Collection Content */}
+                <>
+                    {/* Normal Collection Content */}
                         <div className="collection-header">
                             <h2 className="collection-title">
                                 {primaryTab === 'library'
@@ -536,7 +644,7 @@ export function CollectionScreen() {
                                     : primaryTabs.find(t => t.id === primaryTab)?.label}
                             </h2>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginLeft: 'auto' }}>
-                                {primaryTab === 'library' && secondaryTab !== 'tag_db' && (
+                                {primaryTab === 'library' && (
                                     <ViewSwitcher currentView={viewMode} onViewChange={setViewMode as any} />
                                 )}
                                 {/* [+] 新規追加ボタン */}
@@ -577,14 +685,27 @@ export function CollectionScreen() {
                         </div>
 
                         {/* Content switching logic */}
-                        {primaryTab === 'library' && secondaryTab !== 'tag_db' ? (
+                        {primaryTab === 'library' ? (
                             <div className="collection-view-container">
                                 {viewMode === 'list' && <TableView data={currentData} columns={currentColumns} />}
                                 {viewMode === 'gallery' && <GalleryView data={currentData} />}
                                 {viewMode === 'kanban' && <KanbanView data={currentData} />}
                                 {viewMode === 'custom' && (
-                                    // Custom "Detail" View Switcher logic
                                     (() => {
+                                        const needsData = ['character','npc','enemy','place','item_dict'].includes(secondaryTab);
+                                        if (needsData && currentData.length === 0) {
+                                            return (
+                                                <div className="flex flex-col items-center justify-center h-64 gap-4 text-gray-500">
+                                                    <p className="text-lg">データがありません</p>
+                                                    <button
+                                                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded text-sm text-gray-700"
+                                                        onClick={() => setViewMode('list')}
+                                                    >
+                                                        ← 一覧に戻る
+                                                    </button>
+                                                </div>
+                                            );
+                                        }
                                         switch (secondaryTab) {
                                             case 'character':
                                                 return <CharacterDetailView data={currentData as any[]} />;
@@ -604,49 +725,47 @@ export function CollectionScreen() {
                                     })()
                                 )}
                             </div>
-                        ) : primaryTab === 'library' && secondaryTab === 'tag_db' ? null
-                        : primaryTab !== 'sound' ? (
+                        ) : primaryTab !== 'sound' && primaryTab !== 'tagsdb' ? (
                             <div className="p-8 text-center text-gray-500">
                                 <p>準備中...</p>
                             </div>
                         ) : null}
-                    </>
-                )}
 
-                {/* Render Sound/BGM Screen */}
-                {primaryTab === 'sound' && (
-                    <BGMPlayerView />
-                )}
+                    {/* Render Sound/BGM Screen */}
+                    {primaryTab === 'sound' && (
+                        <BGMPlayerView />
+                    )}
 
-                {/* Render Tags DB */}
-                {primaryTab === 'library' && secondaryTab === 'tag_db' && (
-                    <TagsView />
-                )}
+                    {/* Render TagsDB Screen */}
+                    {primaryTab === 'tagsdb' && (
+                        <TagsDBScreen />
+                    )}
 
-                {/* Render Story Screen */}
-                {primaryTab === 'story' && (
-                    <StoryView deepLink={storyDeepLink} onDeepLinkConsumed={() => setStoryDeepLink(null)} />
-                )}
+                    {/* Render Story Screen */}
+                    {primaryTab === 'story' && (
+                        <StoryView deepLink={storyDeepLink} onDeepLinkConsumed={() => setStoryDeepLink(null)} />
+                    )}
 
-                {/* Render Settings Screen */}
-                {primaryTab === 'settings' && (
-                    <div className="p-4">
-                        {settingsTab === 'sound_settings' && <SoundSettingsView />}
-                        {settingsTab === 'screen_settings' && <ScreenSettingsView />}
-                        {settingsTab === 'key_settings' && <KeyConfigView />}
-                    </div>
-                )}
-
-                {/* Render Report Screen */}
-                {primaryTab === 'report' && (
-                    <ReportView />
-                )}
-
-                {/* Render Document Inbox */}
-                {primaryTab === 'document' && (
-                    <DocumentInboxView />
-                )}
+                    {/* Render Settings Screen */}
+                    {primaryTab === 'settings' && (
+                        <div className="p-4">
+                            {settingsTab === 'sound_settings' && <SoundSettingsView />}
+                            {settingsTab === 'screen_settings' && <ScreenSettingsView />}
+                            {settingsTab === 'key_settings' && <KeyConfigView />}
+                        </div>
+                    )}
+                </>
             </main>
+
+            {/* Layout Samples */}
+            {isSamplesOpen && (
+                <CollectionSamplesScreen onClose={() => setIsSamplesOpen(false)} />
+            )}
+
+            {/* Library Catalog */}
+            {isCatalogOpen && (
+                <LibraryCatalogScreen onClose={() => setIsCatalogOpen(false)} />
+            )}
 
             {/* WorkSpace Panel */}
             {isWorkspaceOpen && (
