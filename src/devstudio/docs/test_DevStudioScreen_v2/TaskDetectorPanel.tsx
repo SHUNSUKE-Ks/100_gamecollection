@@ -1,7 +1,8 @@
 // src/devstudio/tasks/TaskDetectorPanel.tsx
 import { useState, useCallback } from 'react'
 import { AlertCircle, AlertTriangle, CheckCircle2, Package, FileCode2, Layers, Music } from 'lucide-react'
-import { useTaskDetectorStore, DetectedTask, TaskCategory } from './taskDetectorStore'
+import { useTaskDetectorStore } from './taskDetectorStore'
+import type { DetectedTask, TaskCategory } from './taskDetectorStore'
 import { analyzeGamePackage } from './useTaskDetector'
 
 // ---- サブコンポーネント ----

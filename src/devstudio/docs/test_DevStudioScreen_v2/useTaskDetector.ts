@@ -1,5 +1,5 @@
 // src/devstudio/tasks/useTaskDetector.ts
-import { DetectedTask, DetectorStats } from './taskDetectorStore'
+import type { DetectedTask, DetectorStats } from './taskDetectorStore'
 
 // ---- スキーマ Ver5.1 型定義 ----
 interface GameEvent {
