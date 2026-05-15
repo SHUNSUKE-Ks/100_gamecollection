@@ -16,6 +16,8 @@ import { AndroidLayout } from '@/screens/android/AndroidLayout';
 import { HomeScreen } from '@/screens/00_Home/HomeScreen';
 import { MenuScreen } from '@/screens/13_Menu/MenuScreen';
 import { DevStudioScreen } from '@/devstudio/DevStudioScreen';
+import { TitleLibraryScreen } from '@/screens/00_TitleLibrary/TitleLibraryScreen';
+import { TitleDetailScreen } from '@/screens/00_TitleLibrary/TitleDetailScreen';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,11 +32,12 @@ function App() {
 
   // Sync Zustand currentScreen → URL (migration bridge for Phase 1)
   useEffect(() => {
+    const currentTitleId = useGameStore((state) => state.currentTitleId);
     const screenToPath: Record<string, string> = {
       'HOME': '/',
       'TITLE': '/title-screen',
       'CHAPTER': '/chapter',
-      'NOVEL': '/novel',
+      'NOVEL': `/novel/${currentTitleId}`,
       'BATTLE': '/battle',
       'API_BATTLE': '/api-battle',
       'RESULT': '/result',
@@ -43,16 +46,18 @@ function App() {
       'MENU': '/menu',
       'DEVSTUDIO': '/devstudio',
     };
-    const path = screenToPath[currentScreen] ?? '/title-screen';
+    const path = screenToPath[currentScreen] ?? '/';
     navigate(path, { replace: true });
   }, [currentScreen, navigate]);
 
   return (
     <Routes>
-      <Route path="/" element={<HomeScreen />} />
+      <Route path="/" element={<TitleLibraryScreen />} />
+      <Route path="/title/:titleId" element={<TitleDetailScreen />} />
+      <Route path="/home" element={<HomeScreen />} />
       <Route path="/title-screen" element={<TitleScreen />} />
       <Route path="/chapter" element={<ChapterScreen />} />
-      <Route path="/novel/*" element={<NovelScreen />} />
+      <Route path="/novel/:titleId" element={<NovelScreen />} />
       <Route path="/battle" element={<BattleScreen />} />
       <Route path="/api-battle" element={<ApiBattleScreen />} />
       <Route path="/result" element={

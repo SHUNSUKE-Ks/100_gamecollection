@@ -1,0 +1,247 @@
+.title-library-screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.title-library-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.title-library-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.title-library-subtitle {
+    font-size: 1rem;
+    color: #cbd5e1;
+    margin-top: 0.5rem;
+}
+
+/* Genre Filters */
+.title-library-filters {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.genre-filter-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.genre-chips {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.genre-chip {
+    padding: 0.5rem 1rem;
+    border: 1px solid #475569;
+    border-radius: 20px;
+    background: transparent;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.genre-chip:hover {
+    border-color: #fbbf24;
+    color: #fbbf24;
+}
+
+.genre-chip.active {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(249, 115, 22, 0.2));
+    border-color: #fbbf24;
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+/* Title Count */
+.title-library-count {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 1rem;
+}
+
+/* Title Grid */
+.title-library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+.title-card {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.title-card:hover {
+    border-color: #fbbf24;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(251, 191, 36, 0.15);
+}
+
+.title-card-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.title-card-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title-card-thumbnail-placeholder {
+    font-size: 3rem;
+    opacity: 0.3;
+}
+
+.title-card-status {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.title-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    flex: 1;
+}
+
+.title-card-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: #f1f5f9;
+}
+
+.title-card-subtitle {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    margin: 0;
+    font-style: italic;
+}
+
+.title-card-description {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.title-card-genres {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.genre-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.title-card-play {
+    width: 100%;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: auto;
+}
+
+.title-card-play:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+/* Empty State */
+.title-library-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.title-library-empty p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .title-library-screen {
+        padding: 1rem;
+    }
+
+    .title-library-header h1 {
+        font-size: 2rem;
+    }
+
+    .title-library-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+
+    .title-card-thumbnail {
+        height: 150px;
+    }
+}

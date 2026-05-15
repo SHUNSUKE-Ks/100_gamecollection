@@ -2,6 +2,7 @@
     "characters": [
         {
             "id": "remi_unant",
+            "assetType": "character",
             "name": "レミ・ウナント",
             "description": "本作のヒロイン。明るく元気な性格だが、どこか影がある。",
             "tags": [
@@ -9,7 +10,7 @@
                 "HEROINE",
                 "MAGIC"
             ],
-            "image": "chara/remi_unant/standing_01.png",
+            "thumbnail": "chara/remi_unant/standing_01.png",
             "standing": [
                 "chara/remi_unant/standing_01.png",
                 "chara/remi_unant/face_smile.png",
