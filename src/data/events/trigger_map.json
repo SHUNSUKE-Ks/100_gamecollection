@@ -1,0 +1,20 @@
+{
+    "_comment": "発火条件一覧 — ゲーム制作中に参照する開発資料。status を見れば未設定のイベントがわかる。",
+    "_trigger_types": {
+        "LOCATION": "場所に入ったとき（target: エリアID）",
+        "TALK":     "NPCに話しかけたとき（target: NPCID）",
+        "ITEM":     "アイテムを使ったとき（target: アイテムID）",
+        "FLAG":     "フラグ条件が満たされたとき（condition: { flag, value }）",
+        "AUTO":     "自動発火（シーン開始・ゲーム起動など。target不要）",
+        "MANUAL":   "手動呼び出し（デバッグ・テスト用）"
+    },
+    "entries": [
+        {
+            "eventID": "EV_001",
+            "label": "塔の入り口の出会い",
+            "trigger": null,
+            "status": "未設定",
+            "note": "ゲーム開始時の導入イベント。AUTO が候補。"
+        }
+    ]
+}

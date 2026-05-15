@@ -7,3 +7,4 @@ export * from './character';
 export * from './config';
 export * from './enemy';
 export * from './skill';
+export * from './eventCard';

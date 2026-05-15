@@ -1,0 +1,95 @@
+[
+    {
+        "storyID": "Q_02_01_01",
+        "scene": 1,
+        "type": "SCENE_START",
+        "questTitle": "初任務達成",
+        "backgroundImage": "bg/plains_sunset.png",
+        "bgm": "field_sunset",
+        "note": "夕暮れの帰り道"
+    },
+    {
+        "storyID": "Q_02_01_02",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "あー、疲れた疲れた！ スライム退治って意外と地味で疲れるのね。",
+        "characterImage": "ch/wizard_mina_tired.png"
+    },
+    {
+        "storyID": "Q_02_01_03",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "だが、おかげで依頼は完遂だ。怪我もなく戻れるのが何よりだよ。",
+        "characterImage": "ch/knight_leo_smile.png"
+    },
+    {
+        "storyID": "Q_02_01_04",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "あんたって本当に堅実よねえ。もっとこう、ドラゴンの首を取る！みたいな派手なのないわけ？",
+        "characterImage": "ch/wizard_mina_stand.png"
+    },
+    {
+        "storyID": "Q_02_01_05",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "千里の道も一歩から、だ。さあ、ギルドへ戻って報告しよう。",
+        "characterImage": "ch/knight_leo_stand.png",
+        "backgroundImage": "bg/guild_hall.png",
+        "bgm": "guild_theme_01"
+    },
+    {
+        "storyID": "Q_02_01_06",
+        "scene": 1,
+        "speaker": "ギルド嬢",
+        "text": "おかえりなさいませ！ 初任務、無事達成ですね。確認いたしました。",
+        "characterImage": "npc/receptionist.png"
+    },
+    {
+        "storyID": "Q_02_01_07",
+        "scene": 1,
+        "speaker": "システム",
+        "text": "ギルドランクが少し上がりました！",
+        "note": "SE: レベルアップ音"
+    },
+    {
+        "storyID": "Q_02_01_08",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "やった！ これで報酬ゲットね。ねえレオ、約束通りケーキ食べに行きましょ！",
+        "characterImage": "ch/wizard_mina_smile.png"
+    },
+    {
+        "storyID": "Q_02_01_09",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "その前に……今回の戦闘で盾に傷がついた。道具の手入れが先だ。",
+        "characterImage": "ch/knight_leo_serious.png"
+    },
+    {
+        "storyID": "Q_02_01_10",
+        "scene": 1,
+        "speaker": "騎士レオ",
+        "text": "それに、稼いだ報酬で少し装備を整えたほうがいい。次の任務がスライムとは限らないからな。",
+        "characterImage": "ch/knight_leo_stand.png"
+    },
+    {
+        "storyID": "Q_02_01_11",
+        "scene": 1,
+        "speaker": "魔法使いミナ",
+        "text": "え〜っ！？ ……まあ、あんたが盾になってくれないと私が困るけどさ。仕方ない、付き合ってあげるわよ。",
+        "characterImage": "ch/wizard_mina_pout.png"
+    },
+    {
+        "storyID": "Q_02_01_12",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "二人は報酬を手に、街の商店街へと向かうことにした。",
+        "event": {
+            "type": "END",
+            "payload": {
+                "goto": "COLLECTION"
+            }
+        }
+    }
+]

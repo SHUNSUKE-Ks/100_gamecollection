@@ -1,0 +1,95 @@
+{
+  "_comment": "Old_Archive_0427 ドキュメント一覧。DevStudio Doc Library に自動登録される",
+  "version": "1.0",
+  "category": "Archive",
+  "documents": [
+    {
+      "id": "arc_index",
+      "title": "【Archive】資料目次 — Old_Archive_0427",
+      "description": "全アーカイブ資料の索引・目次。クイックアクセス・タグ検索・読者別ガイド付き",
+      "file": "00_INDEX.md",
+      "path": "/devstudio/docs/Old_Archive_0427/00_INDEX.md",
+      "tags": ["archive", "index", "navigation"]
+    },
+    {
+      "id": "arc_pm_2026",
+      "title": "【Archive】PM ダッシュボード — 2026-04-17",
+      "description": "進捗管理・マイルストーン・スケジュール",
+      "file": "04_WorkSpace/PM_2026-04-17.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/PM_2026-04-17.md",
+      "tags": ["archive", "pm", "dashboard"]
+    },
+    {
+      "id": "arc_phase2_spec",
+      "title": "【Archive】Phase 2 仕様書 — 2026-04-16",
+      "description": "Phase 2 の新機能・実装仕様",
+      "file": "04_WorkSpace/PHASE2_SPEC_2026-04-16.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/PHASE2_SPEC_2026-04-16.md",
+      "tags": ["archive", "spec", "design"]
+    },
+    {
+      "id": "arc_progress_2026",
+      "title": "【Archive】進捗報告 — 2026-04-16",
+      "description": "Phase 1完了・Phase 2進捗",
+      "file": "04_WorkSpace/PROGRESS_REPORT_2026-04-16.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/PROGRESS_REPORT_2026-04-16.md",
+      "tags": ["archive", "report", "progress"]
+    },
+    {
+      "id": "arc_screen_overview",
+      "title": "【Archive】スクリーン構成全体",
+      "description": "UI / 画面遷移 / 機能配置",
+      "file": "04_WorkSpace/screen_overview.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/screen_overview.md",
+      "tags": ["archive", "ui", "design"]
+    },
+    {
+      "id": "arc_collection_detail",
+      "title": "【Archive】Collection 画面詳細",
+      "description": "Collection 機能の実装仕様・コンポーネント構成",
+      "file": "04_WorkSpace/collection_detail.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/collection_detail.md",
+      "tags": ["archive", "ui", "collection"]
+    },
+    {
+      "id": "arc_api_test",
+      "title": "【Archive】API テスト資料",
+      "description": "API 連携テストガイド・チェックリスト・結果報告",
+      "file": "04_WorkSpace/API_test/README.md",
+      "path": "/devstudio/docs/Old_Archive_0427/04_WorkSpace/API_test/README.md",
+      "tags": ["archive", "api", "test"]
+    },
+    {
+      "id": "arc_game_manager",
+      "title": "【Archive】ゲーム製作管理（旧資料）",
+      "description": "初期段階のゲーム製作フロー・管理方式",
+      "file": "過去フォルダー0402/00_WorkSpace/00_GameManager/README.md",
+      "path": "/devstudio/docs/Old_Archive_0427/過去フォルダー0402/00_WorkSpace/00_GameManager/README.md",
+      "tags": ["archive", "game", "management"]
+    },
+    {
+      "id": "arc_scenario_manual",
+      "title": "【Archive】シナリオ制作マニュアル",
+      "description": "JSON シナリオ制作方法・仕様書",
+      "file": "過去フォルダー0402/00_WorkSpace/20_ScenarioWriter/01_シナリオ制作マニュアル_JSON仕様書.md",
+      "path": "/devstudio/docs/Old_Archive_0427/過去フォルダー0402/00_WorkSpace/20_ScenarioWriter/01_シナリオ制作マニュアル_JSON仕様書.md",
+      "tags": ["archive", "scenario", "manual"]
+    },
+    {
+      "id": "arc_graphics_spec",
+      "title": "【Archive】グラフィック規格書",
+      "description": "素材解像度・形式・命名規則",
+      "file": "過去フォルダー0402/00_WorkSpace/30_Graphicker/01_素材規格書.md",
+      "path": "/devstudio/docs/Old_Archive_0427/過去フォルダー0402/00_WorkSpace/30_Graphicker/01_素材規格書.md",
+      "tags": ["archive", "graphics", "spec"]
+    },
+    {
+      "id": "arc_sound_spec",
+      "title": "【Archive】サウンド規格書",
+      "description": "BGM・SE 仕様・ファイル形式・命名規則",
+      "file": "過去フォルダー0402/00_WorkSpace/50_SoundCreator/01_音声規格書.md",
+      "path": "/devstudio/docs/Old_Archive_0427/過去フォルダー0402/00_WorkSpace/50_SoundCreator/01_音声規格書.md",
+      "tags": ["archive", "sound", "spec"]
+    }
+  ]
+}

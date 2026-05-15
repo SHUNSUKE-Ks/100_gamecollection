@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.tsx$\")",
+      "Bash(xargs wc *)",
+      "Bash(過去フォルダー\")",
+      "PowerShell(Get-ChildItem \"C:\\\\202604_claude_workspace\\\\100_gamecollection\\\\\" -Force | Where-Object { $_.Name -match \"04_WorkSpace|過去フォルダー\" })",
+      "Bash(Get-ChildItem -Path \"C:\\\\202604_claude_workspace\\\\100_gamecollection\\\\src\" -Directory)",
+      "Bash(Select-Object Name)"
+    ]
+  }
+}

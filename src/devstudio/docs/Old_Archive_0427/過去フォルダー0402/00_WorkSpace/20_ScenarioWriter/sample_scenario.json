@@ -1,0 +1,75 @@
+[
+    {
+        "storyID": "M_01_01_01",
+        "scene": 1,
+        "type": "SCENE_START",
+        "questTitle": "Episode 1: 理の探求",
+        "backgroundImage": "bg/tower_entrance.png",
+        "bgm": "theme_song",
+        "note": "ゲーム開始・メインストーリー導入"
+    },
+    {
+        "storyID": "M_01_01_02",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "あなたは不思議な塔の前に立っていた。古びた石造りの塔は、空高くそびえ立っている。"
+    },
+    {
+        "storyID": "M_01_01_03",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "塔の入り口には、奇妙な紋様が刻まれた扉がある。その扉は、まるであなたを待っていたかのように、ゆっくりと開いた。"
+    },
+    {
+        "storyID": "M_01_01_04",
+        "scene": 1,
+        "speaker": "???",
+        "text": "……ようこそ、旅人よ。",
+        "characterImage": "ch/mysterious_mage.png"
+    },
+    {
+        "storyID": "M_01_01_05",
+        "scene": 1,
+        "speaker": "謎の魔法使い",
+        "text": "私はこの塔の番人。あなたが来るのを、長い間待っていた。",
+        "characterImage": "ch/mysterious_mage.png"
+    },
+    {
+        "storyID": "M_01_01_06",
+        "scene": 1,
+        "speaker": "ナレーション",
+        "text": "魔法使いはあなたに向かって手を差し出した。"
+    },
+    {
+        "storyID": "M_01_01_07",
+        "scene": 1,
+        "speaker": "謎の魔法使い",
+        "text": "この塔には、世界の理を解き明かす知識が眠っている。あなたには、その資格があるようだ。",
+        "characterImage": "ch/mysterious_mage.png"
+    },
+    {
+        "storyID": "M_01_01_08",
+        "scene": 1,
+        "speaker": "謎の魔法使い",
+        "text": "さあ、冒険を始めよう。まずは簡単な依頼から……腕試しといこうか。",
+        "characterImage": "ch/mysterious_mage_smile.png"
+    },
+    {
+        "storyID": "M_01_01_09",
+        "scene": 1,
+        "speaker": "システム",
+        "text": "【クエスト解放】ギルドで依頼を受けられるようになりました。",
+        "note": "クエスト機能解放通知"
+    },
+    {
+        "storyID": "M_01_01_10",
+        "scene": 1,
+        "event": {
+            "type": "END",
+            "payload": {
+                "goto": "COLLECTION"
+            }
+        },
+        "note": "メインストーリー導入終了、Collectionへ遷移"
+    }
+]

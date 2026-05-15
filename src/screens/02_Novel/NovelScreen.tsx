@@ -11,6 +11,7 @@ import './NovelScreen.css';
 
 export function NovelScreen() {
     const setScreen = useGameStore((state) => state.setScreen);
+    const currentTitleId = useGameStore((state) => state.currentTitleId);
 
     // Use the scenario hook
     const {
@@ -23,7 +24,7 @@ export function NovelScreen() {
         selectChoice,
         isSceneStart,
         titleCallText,
-    } = useScenario();
+    } = useScenario(currentTitleId);
 
     // UI State
     const [isAuto, setIsAuto] = useState(false);

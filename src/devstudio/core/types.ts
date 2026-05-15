@@ -112,10 +112,29 @@ export interface AIOutput {
   timestamp: number;
 }
 
+// ─── DocLibrary ──────────────────────────────────────────────
+
+export interface DocTag {
+  id: string;
+  name: string;
+  color: string;
+  createdAt: number;
+}
+
+export interface Doc {
+  id: string;
+  title: string;
+  body: string;
+  tagIds: string[];   // relation → DocTag.id[]
+  createdAt: number;
+  updatedAt: number;
+  source?: string;
+}
+
 // ─── Profile / UI ────────────────────────────────────────────
 
 export type ViewProfile   = 'PM' | 'Planner01' | 'Planner02' | 'Planner03' | 'Programmer' | 'Writer' | 'Designer';
-export type StudioSection = 'DASHBOARD' | 'EPIC' | 'TASKS' | 'LOGS' | 'WORKSPACE' | 'ORCHESTRA' | 'SCHEMA' | 'GAME_PACKAGE';
+export type StudioSection = 'DASHBOARD' | 'EPIC' | 'TASKS' | 'LOGS' | 'WORKSPACE' | 'ORCHESTRA' | 'SCHEMA' | 'GAME_PACKAGE' | 'DOC_LIBRARY';
 
 export interface StudioUIState {
   section:        StudioSection;

@@ -21,7 +21,16 @@
       "Bash(powershell -Command \"Set-Location 'c:\\\\202604_claude_workspace\\\\100_gamecollection'; npx vite build 2>&1 | Select-Object -Last 20\")",
       "Bash(xargs grep:*)",
       "Bash(npx vite:*)",
-      "Bash(npx vercel:*)"
+      "Bash(npx vercel:*)",
+      "Bash(Select-String -Path \"c:\\\\202604_claude_workspace\\\\100_gamecollection\\\\src\\\\core\\\\stores\\\\gameStore.ts\" -Pattern \"currentScreen|ScreenName|type \")",
+      "Bash(Select-Object -First 30)",
+      "PowerShell(npx tsc -b 2>&1)",
+      "PowerShell(head -20)",
+      "PowerShell(npx vite build 2>&1)",
+      "PowerShell(Copy-Item -Path \"src/data/novel/scenario.json\" -Destination \"src/data/titles/proj_nannovel/scenarios/\")",
+      "PowerShell(Copy-Item -Path \"src/data/novel/quest_001.json\" -Destination \"src/data/titles/proj_nannovel/scenarios/\")",
+      "PowerShell(Copy-Item -Path \"src/data/novel/quest_002.json\" -Destination \"src/data/titles/proj_nannovel/scenarios/\")",
+      "PowerShell(Copy-Item -Path \"src/data/novel/quest_api_test.json\" -Destination \"src/data/titles/proj_nannovel/scenarios/\")"
     ]
   }
 }

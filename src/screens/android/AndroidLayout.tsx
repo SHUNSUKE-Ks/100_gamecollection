@@ -282,13 +282,6 @@ export function AndroidLayout() {
         PC
       </button>
 
-      {/* WorkSpace フルページ */}
-      <button
-        onClick={() => setScreen('WORKSPACE')} title="WorkSpace フルページ"
-        style={{ ...btnReset, fontSize: '0.6rem', color: '#a78bfa', padding: '4px 5px' }}
-      >
-        📂
-      </button>
     </header>
   );
 

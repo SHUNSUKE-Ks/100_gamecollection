@@ -1,0 +1,78 @@
+{
+    "eventID": "EV_001",
+    "label": "塔の入り口の出会い",
+    "trigger": null,
+    "nodes": [
+        {
+            "index": 0,
+            "speaker": "ナレーション",
+            "text": "あなたは不思議な塔の前に立っていた。古びた石造りの塔は、空高くそびえ立っている。",
+            "backgroundImage": "bg/tower_entrance.png",
+            "bgm": "theme_song",
+            "slot": null
+        },
+        {
+            "index": 1,
+            "speaker": "ナレーション",
+            "text": "塔の入り口には、奇妙な紋様が刻まれた扉がある。その扉は、まるであなたを待っていたかのように、ゆっくりと開いた。",
+            "slot": null
+        },
+        {
+            "index": 2,
+            "speaker": "???",
+            "text": "……ようこそ、旅人よ。",
+            "characterImage": "ch/mysterious_mage.png",
+            "slot": null
+        },
+        {
+            "index": 3,
+            "speaker": "謎の魔法使い",
+            "text": "私はこの塔の番人。あなたが来るのを、長い間待っていた。",
+            "characterImage": "ch/mysterious_mage.png",
+            "slot": null
+        },
+        {
+            "index": 4,
+            "speaker": "謎の魔法使い",
+            "text": "この塔には、世界の理を解き明かす知識が眠っている。あなたには、その資格があるようだ。",
+            "characterImage": "ch/mysterious_mage.png",
+            "slot": null
+        },
+        {
+            "index": 5,
+            "speaker": "謎の魔法使い",
+            "text": "さあ、冒険を始めよう。まずは簡単な依頼から……腕試しといこうか。",
+            "characterImage": "ch/mysterious_mage_smile.png",
+            "slot": {
+                "type": "CHOICE",
+                "payload": {
+                    "choices": [
+                        { "label": "受けて立つ！", "nextIndex": 6 },
+                        { "label": "（様子を見る）", "nextIndex": 6 }
+                    ]
+                }
+            }
+        },
+        {
+            "index": 6,
+            "speaker": "システム",
+            "text": "【クエスト解放】ギルドで依頼を受けられるようになりました。",
+            "slot": {
+                "type": "FLAG",
+                "payload": {
+                    "key": "guild_unlocked",
+                    "value": true
+                }
+            }
+        },
+        {
+            "index": 7,
+            "slot": {
+                "type": "END",
+                "payload": {
+                    "goto": "COLLECTION"
+                }
+            }
+        }
+    ]
+}

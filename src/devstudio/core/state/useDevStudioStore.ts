@@ -6,7 +6,9 @@ import { create } from 'zustand';
 import type {
   Task, DevLog, Epic, EpicReport, AIOutput, Milestone, MilestoneCriterion,
   DevPhase, StudioUIState, StudioSection, ViewProfile,
+  Doc, DocTag,
 } from '../types';
+import { ARCHIVE_TAG, ARCHIVE_DOCS, shouldInitializeArchiveDocs } from '@/devstudio/utils/archiveDocLoader';
 
 // ─── Storage Keys v2 ─────────────────────────────────────────
 
@@ -17,6 +19,8 @@ const KEYS = {
   phase:      'devstudio_phase_v2',
   ui:         'devstudio_ui_v2',
   milestones: 'devstudio_milestones_v1',
+  docs:       'devstudio_docs_v1',
+  docTags:    'devstudio_doctags_v1',
 } as const;
 
 // ─── Helpers ─────────────────────────────────────────────────
@@ -273,6 +277,8 @@ interface DevStudioStore {
   epics:      Epic[];
   milestones: Milestone[];
   aiOutputs: AIOutput[];
+  docs:      Doc[];
+  docTags:   DocTag[];
   ui:        StudioUIState;
 
   // ── Phase ──
@@ -305,6 +311,16 @@ interface DevStudioStore {
   // ── AI Outputs ──
   addAIOutput: (output: AIOutput) => void;
 
+  // ── Docs ──
+  addDoc:    (doc: Doc)    => void;
+  updateDoc: (doc: Doc)    => void;
+  deleteDoc: (id: string)  => void;
+
+  // ── DocTags ──
+  addDocTag:    (tag: DocTag)   => void;
+  updateDocTag: (tag: DocTag)   => void;
+  deleteDocTag: (id: string)    => void;
+
   // ── UI ──
   setSection:  (section: StudioSection) => void;
   setProfile:  (profile: ViewProfile)   => void;
@@ -328,6 +344,20 @@ export const useDevStudioStore = create<DevStudioStore>((set, get) => ({
   epics:      seedIfEmpty(KEYS.epics,      SEED_EPICS),
   milestones: seedIfEmpty(KEYS.milestones, SEED_MILESTONES),
   aiOutputs: [],
+  docs:    (() => {
+    const loaded = load<Doc[]>(KEYS.docs, []);
+    if (shouldInitializeArchiveDocs(loaded)) {
+      return [...ARCHIVE_DOCS, ...loaded];
+    }
+    return loaded;
+  })(),
+  docTags: (() => {
+    const loaded = load<DocTag[]>(KEYS.docTags, []);
+    if (!loaded.some(t => t.id === 'tag_archive')) {
+      return [ARCHIVE_TAG, ...loaded];
+    }
+    return loaded;
+  })(),
   ui: load<StudioUIState>(KEYS.ui, {
     section:        'DASHBOARD',
     profile:        'PM',
@@ -392,6 +422,38 @@ export const useDevStudioStore = create<DevStudioStore>((set, get) => ({
   addAIOutput: (output) => {
     const aiOutputs = [output, ...get().aiOutputs];
     set({ aiOutputs });
+  },
+
+  // ── Docs ──
+  addDoc: (doc) => {
+    const docs = [doc, ...get().docs];
+    set({ docs }); save(KEYS.docs, docs);
+  },
+  updateDoc: (doc) => {
+    const docs = get().docs.map(d => d.id === doc.id ? doc : d);
+    set({ docs }); save(KEYS.docs, docs);
+  },
+  deleteDoc: (id) => {
+    const docs = get().docs.filter(d => d.id !== id);
+    set({ docs }); save(KEYS.docs, docs);
+  },
+
+  // ── DocTags ──
+  addDocTag: (tag) => {
+    const docTags = [...get().docTags, tag];
+    set({ docTags }); save(KEYS.docTags, docTags);
+  },
+  updateDocTag: (tag) => {
+    const docTags = get().docTags.map(t => t.id === tag.id ? tag : t);
+    set({ docTags }); save(KEYS.docTags, docTags);
+  },
+  deleteDocTag: (id) => {
+    const docTags = get().docTags.filter(t => t.id !== id);
+    // remove the tag from all docs that reference it
+    const docs = get().docs.map(d => ({ ...d, tagIds: d.tagIds.filter(tid => tid !== id) }));
+    set({ docTags, docs });
+    save(KEYS.docTags, docTags);
+    save(KEYS.docs, docs);
   },
 
   // ── Milestones ──

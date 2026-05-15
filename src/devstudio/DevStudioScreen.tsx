@@ -12,6 +12,7 @@ import { TasksScreen } from '@/devstudio/tasks/TasksScreen';
 import { EpicsScreen } from '@/devstudio/epics/EpicsScreen';
 import { SchemaView } from '@/devstudio/schema/SchemaView';
 import { GamePackageScreen } from '@/devstudio/gamepackage/GamePackageScreen';
+import { DocLibraryScreen } from '@/devstudio/docLibrary/DocLibraryScreen';
 
 // ─── Nav / Profile config ────────────────────────────────────
 
@@ -24,6 +25,7 @@ const SECTIONS: { id: StudioSection; label: string; icon: string }[] = [
 // { id: 'ORCHESTRA',  label: 'Orchestra',  icon: '🤖' },
   { id: 'SCHEMA',       label: 'Schema',     icon: '📐' },
   { id: 'GAME_PACKAGE', label: 'GamePkg',    icon: '📦' },
+  { id: 'DOC_LIBRARY',  label: 'Docs',       icon: '📚' },
 ];
 
 const PROFILES: ViewProfile[] = ['PM', 'Planner01', 'Planner02', 'Planner03', 'Programmer', 'Writer', 'Designer'];
@@ -137,8 +139,8 @@ export function DevStudioScreen() {
         {/* Main content */}
         <main style={{
           flex: 1,
-          overflow: (section === 'LOGS' || section === 'EPIC' || section === 'SCHEMA' || section === 'GAME_PACKAGE') ? 'hidden' : 'auto',
-          padding: (section === 'SCHEMA' || section === 'GAME_PACKAGE') ? 0 : 20,
+          overflow: (section === 'LOGS' || section === 'EPIC' || section === 'SCHEMA' || section === 'GAME_PACKAGE' || section === 'DOC_LIBRARY') ? 'hidden' : 'auto',
+          padding: (section === 'SCHEMA' || section === 'GAME_PACKAGE' || section === 'DOC_LIBRARY') ? 0 : 20,
           display: 'flex', flexDirection: 'column',
         }}>
           <SectionContent section={section} profile={profile} />
@@ -160,6 +162,7 @@ function SectionContent({ section, profile }: { section: StudioSection; profile:
     case 'ORCHESTRA':  return <OrchestraView />;
     case 'SCHEMA':       return <SchemaView />;
     case 'GAME_PACKAGE': return <GamePackageScreen />;
+    case 'DOC_LIBRARY':  return <DocLibraryScreen />;
     default:             return <DashboardView profile={profile} />;
   }
 }

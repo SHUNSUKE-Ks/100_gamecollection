@@ -4,10 +4,6 @@
 
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useGameStore } from '@/core/stores/gameStore';
-import scenarioData from '@/data/novel/scenario.json';
-import quest001 from '@/data/novel/quest_001.json';
-import quest002 from '@/data/novel/quest_002.json';
-import questApiTest from '@/data/novel/quest_api_test.json';
 import type { Choice } from '@/core/types';
 
 // Flexible story node type that handles both old and new schema
@@ -35,41 +31,69 @@ interface StoryNode {
     note?: string;
 }
 
-// Type assertion and data merging
-// scenario.json might be { scenario: Story[] } or just Story[]
-const mainScenario = Array.isArray(scenarioData) ? scenarioData : (scenarioData as any).scenario || [];
-const scenarios: StoryNode[] = [
-    ...(mainScenario as StoryNode[]),
-    ...(quest001 as unknown as StoryNode[]),
-    ...(quest002 as unknown as StoryNode[]),
-    ...(questApiTest as unknown as StoryNode[])
-];
-
 interface LogEntry {
     storyID: string;
     speaker: string;
     text: string;
 }
 
-export function useScenario() {
+export function useScenario(titleId: string = 'proj_nannovel') {
     const { currentStoryID, setStoryID, setFlag, addItem, setScreen } = useGameStore();
     const [logs, setLogs] = useState<LogEntry[]>([]);
+    const [scenarios, setScenarios] = useState<StoryNode[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Load scenarios dynamically based on titleId
+    useEffect(() => {
+        setIsLoading(true);
+        const loadScenarios = async () => {
+            try {
+                // Use import.meta.glob for static analysis at build time
+                const allFiles = import.meta.glob('/src/data/titles/*/scenarios/*.json');
+                const matched = Object.entries(allFiles)
+                    .filter(([path]) => path.includes(`/titles/${titleId}/scenarios/`));
+
+                const loadedModules = await Promise.all(
+                    matched.map(([, load]) => (load as any)())
+                );
+
+                const combined: StoryNode[] = [];
+                loadedModules.forEach((m: any) => {
+                    const data = m.default;
+                    if (Array.isArray(data)) {
+                        combined.push(...(data as StoryNode[]));
+                    } else if (data?.scenario && Array.isArray(data.scenario)) {
+                        combined.push(...(data.scenario as StoryNode[]));
+                    }
+                });
+
+                setScenarios(combined);
+            } catch (err) {
+                console.error(`Failed to load scenarios for title ${titleId}:`, err);
+                setScenarios([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadScenarios();
+    }, [titleId]);
 
     // Current story
     const currentStory = useMemo(() => {
         return scenarios.find(s => s.storyID === currentStoryID) || scenarios[0];
-    }, [currentStoryID]);
+    }, [currentStoryID, scenarios]);
 
     // Current index
     const currentIndex = useMemo(() => {
         return scenarios.findIndex(s => s.storyID === currentStoryID);
-    }, [currentStoryID]);
+    }, [currentStoryID, scenarios]);
 
     // Next story (within same file, by array order)
     const nextStory = useMemo(() => {
         if (currentIndex < 0) return undefined;
         return scenarios[currentIndex + 1];
-    }, [currentIndex]);
+    }, [currentIndex, scenarios]);
 
     // Is this a SCENE_START node (for title call)
     const isSceneStart = useMemo(() => {
@@ -101,7 +125,7 @@ export function useScenario() {
     const progress = useMemo(() => {
         if (scenarios.length === 0) return 0;
         return Math.round((currentIndex / (scenarios.length - 1)) * 100);
-    }, [currentIndex]);
+    }, [currentIndex, scenarios.length]);
 
     // Add to log (skip SCENE_START nodes without text)
     useEffect(() => {
@@ -202,6 +226,7 @@ export function useScenario() {
         logs,
         isSceneStart,
         titleCallText,
+        isLoading,
 
         // Actions
         advance,

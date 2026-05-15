@@ -96,28 +96,6 @@ export function TitleScreen() {
                     }}>β</span>
                 </button>
 
-                {/* Android DevStudio ボタン */}
-                <button
-                    onClick={() => setScreen('ANDROID_DEVSTUDIO')}
-                    style={{
-                        display: 'flex', alignItems: 'center', gap: 8,
-                        background: 'linear-gradient(135deg, rgba(5,20,15,0.92), rgba(10,35,25,0.92))',
-                        border: '1px solid rgba(52,211,153,0.5)',
-                        borderRadius: 8, padding: '8px 14px',
-                        color: '#34d399', fontSize: '0.82rem', fontWeight: 700,
-                        cursor: 'pointer', letterSpacing: '0.05em',
-                        boxShadow: '0 0 12px rgba(52,211,153,0.15)',
-                        width: '100%',
-                    }}
-                >
-                    <span style={{ fontSize: '1rem' }}>📱</span>
-                    ANDROID DEV STUDIO
-                    <span style={{
-                        marginLeft: 'auto', fontSize: '0.58rem',
-                        background: 'rgba(52,211,153,0.2)', padding: '1px 6px',
-                        borderRadius: 10, color: '#6ee7b7',
-                    }}>01</span>
-                </button>
 
                 {/* 本日のタスク（クエストカード風） */}
                 {todayTasks.length > 0 && (
@@ -217,19 +195,12 @@ export function TitleScreen() {
                     </button>
                     <button
                         className="title-quick-btn"
-                        onClick={() => setScreen('ANDROID_COLLECTION')}
+                        onClick={() => setScreen('COLLECTION')}
                         style={{ borderColor: '#34d399', color: '#34d399' }}
                     >
                         📱 Android View
                     </button>
                 </div>
-                <button
-                    className="title-quick-btn"
-                    onClick={() => setScreen('WORKSPACE')}
-                    style={{ borderColor: '#6b7280', color: '#6b7280', width: '100%', opacity: 0.7 }}
-                >
-                    🗄 TestWS（旧）
-                </button>
             </div>
 
             <div className="title-content">
@@ -286,18 +257,6 @@ export function TitleScreen() {
                         }}
                     >
                         🧪 API Battle Test
-                    </button>
-                    <button
-                        className="btn"
-                        onClick={() => setScreen('HONO_API_TEST')}
-                        style={{
-                            background: 'linear-gradient(135deg, #0f2027, #203a43)',
-                            border: '1px solid #10b981',
-                            color: '#10b981',
-                            marginTop: '0.25rem',
-                        }}
-                    >
-                        🔌 HONO_API テスト
                     </button>
                 </div>
             </div>

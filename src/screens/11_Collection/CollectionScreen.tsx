@@ -12,6 +12,7 @@ import { NPCDetailView } from '@/parts/collection/specific/NPCDetailView';
 import { EnemyDetailView } from '@/parts/collection/specific/EnemyDetailView';
 import { BackgroundDetailView } from '@/parts/collection/specific/BackgroundDetailView';
 import { BGMPlayerView } from '@/parts/collection/specific/BGMPlayerView';
+import { SoundCollectionView } from '@/parts/collection/sound/SoundCollectionView';
 import { TagsDBScreen } from '@/parts/collection/tagsdb/TagsDBScreen';
 import { StoryView } from '@/parts/collection/story/StoryView';
 import characterData from '@/data/collection/characters.json';
@@ -733,7 +734,7 @@ export function CollectionScreen() {
 
                     {/* Render Sound/BGM Screen */}
                     {primaryTab === 'sound' && (
-                        <BGMPlayerView />
+                        <SoundCollectionView />
                     )}
 
                     {/* Render TagsDB Screen */}

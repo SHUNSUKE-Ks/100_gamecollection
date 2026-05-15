@@ -1,0 +1,84 @@
+{
+  "id": "ect",
+  "label": "ect",
+  "description": "ect album",
+  "artworkPath": "src/assets/sound/bgm/ect/artwork.jpg",
+  "tracks": [
+    {
+      "filename": "Battle_igiigi.mp3",
+      "title": "Battle_igiigi"
+    },
+    {
+      "filename": "Cafeinebgm.m4a",
+      "title": "Cafeinebgm"
+    },
+    {
+      "filename": "GameOp.m4a",
+      "title": "GameOp"
+    },
+    {
+      "filename": "Game_Op.mp3",
+      "title": "Game_Op"
+    },
+    {
+      "filename": "OP不可思議.m4a",
+      "title": "OP不可思議"
+    },
+    {
+      "filename": "Rakushun - bgm1.m4a",
+      "title": "Rakushun - bgm1"
+    },
+    {
+      "filename": "_OP_.mp3",
+      "title": "_OP_"
+    },
+    {
+      "filename": "bgm_heiya1.wav",
+      "title": "bgm_heiya1"
+    },
+    {
+      "filename": "evergreen_inst-4キー_hu_ringo_inst_202507100648.mp3",
+      "title": "evergreen_inst-4キー_hu_ringo_inst_202507100648"
+    },
+    {
+      "filename": "kazeno.mp3",
+      "title": "kazeno"
+    },
+    {
+      "filename": "mori01.m4a",
+      "title": "mori01"
+    },
+    {
+      "filename": "ブレイク１.mp3",
+      "title": "ブレイク１"
+    },
+    {
+      "filename": "君と描いたあの日から…_hatsushiba_kenji_202507100655.mp3",
+      "title": "君と描いたあの日から…_hatsushiba_kenji_202507100655"
+    },
+    {
+      "filename": "幻想の出会い.mp3",
+      "title": "幻想の出会い"
+    },
+    {
+      "filename": "戦いの交響曲.mp3",
+      "title": "戦いの交響曲"
+    },
+    {
+      "filename": "戦いの鼓動.mp3",
+      "title": "戦いの鼓動"
+    },
+    {
+      "filename": "空が青い理由_hyuganatsu_ongaku.mp3",
+      "title": "空が青い理由_hyuganatsu_ongaku"
+    },
+    {
+      "filename": "紙飛行機_inst．_hu_ringo_inst_202507100646.mp3",
+      "title": "紙飛行機_inst．_hu_ringo_inst_202507100646"
+    },
+    {
+      "filename": "終焉の刃.mp3",
+      "title": "終焉の刃"
+    }
+  ]
+}

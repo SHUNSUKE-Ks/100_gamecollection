@@ -35,11 +35,17 @@ interface GameState {
     // Current screen
     currentScreen: ScreenType;
 
+    // Current title (for multi-title support)
+    currentTitleId: string;
+
     // Collection deep link (e.g. 'story:plot' でプロット手帳へ直接遷移)
     collectionDeepLink: string | null;
 
-    // Story progress
+    // Story progress (旧ノベル型)
     currentStoryID: string;
+
+    // EventCard system (RPGイベント型)
+    currentEventID: string | null;
 
     // Flags
     flags: Record<string, unknown>;
@@ -57,10 +63,13 @@ interface GameState {
 
     // Actions - Screen
     setScreen: (screen: ScreenType) => void;
+    setTitleId: (titleId: string) => void;
     setCollectionDeepLink: (link: string | null) => void;
 
-    // Actions - Story
+    // Actions - Story (旧ノベル型)
     setStoryID: (storyID: string) => void;
+    // Actions - EventCard (RPGイベント型)
+    setEventID: (eventID: string | null) => void;
     setFlag: (key: string, value: unknown) => void;
 
     // Actions - Inventory
@@ -88,8 +97,10 @@ interface GameState {
 
 const initialState = {
     currentScreen: 'TITLE' as ScreenType,
+    currentTitleId: 'proj_nannovel',
     collectionDeepLink: null as string | null,
     currentStoryID: '01_01_01',
+    currentEventID: null as string | null,
     flags: {},
     inventory: [],
     party: [],
@@ -109,10 +120,13 @@ export const useGameStore = create<GameState>()(
 
             // Screen
             setScreen: (screen) => set({ currentScreen: screen }),
+            setTitleId: (titleId) => set({ currentTitleId: titleId }),
             setCollectionDeepLink: (link) => set({ collectionDeepLink: link }),
 
-            // Story
+            // Story (旧ノベル型)
             setStoryID: (storyID) => set({ currentStoryID: storyID }),
+            // EventCard (RPGイベント型)
+            setEventID: (eventID) => set({ currentEventID: eventID }),
             setFlag: (key, value) => set((state) => ({
                 flags: { ...state.flags, [key]: value }
             })),
